@@ -3,11 +3,12 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import { config } from "dotenv";
 
-import { router as projectRoutes } from "./routes/projects.js";
+import projectRoutes from "./routes/projects.js";
 
 config();
 
 const app = express();
+app.use(express.json());
 
 // middleware
 app.use((req, res, next) => {
@@ -16,7 +17,7 @@ app.use((req, res, next) => {
 });
 
 // routes
-app.use(("/api/projects", projectRoutes));
+app.use("/api/projects", projectRoutes);
 
 // connect to DB
 mongoose
