@@ -6,6 +6,7 @@ import { config } from "dotenv";
 import { router as projectRoutes } from "./routes/projects.js";
 
 config();
+
 const app = express();
 
 // middleware
@@ -17,6 +18,14 @@ app.use((req, res, next) => {
 // routes
 app.use(("/api/projects", projectRoutes));
 
-app.listen(process.env.PORT, () => {
-  console.log("listening on port " + process.env.PORT);
-});
+// connect to DB
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log("listening on port " + process.env.PORT);
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });
