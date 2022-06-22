@@ -1,0 +1,18 @@
+@import "../../scss/variables";
+
+.container[data-section="footer"] {
+  background-color: $primary-green;
+  height: 150px;
+}
+
+.content-wrapper[data-section="footer"] {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 5rem;
+
+  p {
+    color: white;
+    font-size: 13px;
+  }
+}

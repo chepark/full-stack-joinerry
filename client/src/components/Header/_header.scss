@@ -1,0 +1,20 @@
+.content-wrapper[data-section="header"] {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.header-left > div {
+  font-size: 13px;
+}
