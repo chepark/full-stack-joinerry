@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import { config } from "dotenv";
@@ -8,6 +9,7 @@ import projectRoutes from "./routes/projects.js";
 config();
 
 const app = express();
+app.use(cors()); // Resolve No-Access-Control-Allow origin issue.
 app.use(express.json());
 
 // middleware

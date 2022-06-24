@@ -1,0 +1,6 @@
+@import "./variables";
+
+@mixin subText1 {
+  font-size: 15px;
+  color: $text-inactive-color;
+}

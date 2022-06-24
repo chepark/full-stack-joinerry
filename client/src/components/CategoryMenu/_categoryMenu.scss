@@ -1,0 +1,11 @@
+@import "../../scss/typography";
+
+.category-list {
+  display: flex;
+  flex-direction: row;
+  gap: 2.5rem;
+}
+
+.category-item {
+  @include subText1;
+}

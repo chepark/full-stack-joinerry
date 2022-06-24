@@ -1,4 +1,15 @@
+@import "../../scss/variables";
+
+main.container,
+.category-wrapper {
+  background-color: $bg-color;
+}
+
 .content-wrapper[data-section="main-projects"] {
+  background-color: $bg-color;
+
   display: grid;
   grid-template-columns: 20% 80%;
+
+  padding: 4rem 2rem;
 }

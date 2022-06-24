@@ -1,0 +1,6 @@
+.projects-wrapper {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px 20px;
+}

@@ -13,14 +13,14 @@ const projectSchema = new Schema(
           role: String,
           number: Number,
           isOpened: Boolean,
-          startDate: Date,
-          endDate: Date,
         },
       ],
       required: true,
     },
     content: { type: String, required: true },
     creator: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    startDate: Date,
+    endDate: Date,
   },
   { timestamps: true }
 );

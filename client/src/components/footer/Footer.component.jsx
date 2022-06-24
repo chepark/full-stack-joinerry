@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className="container" data-section="footer">
       <div className="content-wrapper" data-section="footer">
-        <p>&copy; Joinnery</p>
+        <p>&copy; Joinnerry</p>
         <p>FAQ</p>
         <p>Terms</p>
         <p>Privacy</p>

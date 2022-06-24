@@ -67,7 +67,7 @@ const updateProject = async (req, res) => {
 // delete a project
 const deleteProject = async (req, res) => {
   const { id } = req.params;
-  const { userId } = req.body;
+  //   const { userId } = req.body;
 
   // check id is valid.
   if (!mongoose.Types.ObjectId.isValid(id))
