@@ -1,6 +1,28 @@
+@import "../../scss/variables";
+
 .projects-wrapper {
   margin-top: 3rem;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px 20px;
+}
+
+.button-wrapper {
+  width: 100%;
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: center;
+
+  button {
+    background-color: $primary-green;
+    border: none;
+    border-radius: 30px;
+
+    padding: 0.8rem 2rem;
+
+    color: white;
+    font: inherit;
+
+    cursor: pointer;
+  }
 }

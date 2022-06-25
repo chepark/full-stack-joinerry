@@ -1,0 +1,36 @@
+@import "../../scss/variables";
+@import "../../scss/typography";
+
+.creator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.card__meta {
+  position: relative;
+
+  .like-button {
+    position: absolute;
+    right: 0;
+    top: -40px;
+
+    width: 40px;
+    height: 40px;
+
+    background-color: white;
+    border-radius: 50%;
+    border: 1px solid $border-color;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+  }
+}
+
+.createdBy {
+  @include subText2;
+}

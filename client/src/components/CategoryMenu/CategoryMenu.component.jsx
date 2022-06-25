@@ -1,9 +1,14 @@
 import "./_categoryMenu.scss";
 
-const CategoryMenu = () => {
+const CategoryMenu = ({ setCategory }) => {
+  const handleCategoryClick = (e) => {
+    const selectedCategory = e.target.dataset.category;
+    setCategory(selectedCategory);
+  };
+
   return (
     <div className="category-wrapper">
-      <ul className="category-list">
+      <ul className="category-list" onClick={handleCategoryClick}>
         <li className="category-item" data-category="latest">
           Latest
         </li>

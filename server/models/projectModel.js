@@ -18,7 +18,7 @@ const projectSchema = new Schema(
       required: true,
     },
     content: { type: String, required: true },
-    creator: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    creator: { type: Schema.Types.ObjectId, ref: "user", required: true },
     startDate: Date,
     endDate: Date,
   },

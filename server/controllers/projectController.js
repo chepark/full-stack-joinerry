@@ -6,6 +6,7 @@ import Project from "../models/projectModel.js";
 // get all projects
 const getProjects = async (req, res) => {
   const projects = await Project.find({}).sort({ createdAt: -1 });
+  console.log(req.query); // I am getting multiple query
 
   res.status(200).json(projects);
 };

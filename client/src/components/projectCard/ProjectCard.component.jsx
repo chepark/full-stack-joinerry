@@ -1,7 +1,8 @@
 import "./_projectCard.scss";
+import { v4 as uuidv4 } from "uuid";
 import { useState, useEffect } from "react";
 
-const ProjectCard = ({ project }) => {
+const ProjectCard = ({ project, children }) => {
   const { title, techStack, creator, roles } = project;
   let [capitalizedTitle, setCapitalizedTitle] = useState("");
 
@@ -19,26 +20,31 @@ const ProjectCard = ({ project }) => {
         <h2 className="card__title">{title && capitalizedTitle}</h2>
         <div className="tags">
           {techStack.map((tag) => {
-            return <p className="tag">#{tag}</p>;
+            return (
+              <p key={uuidv4()} className="tag">
+                #{tag}
+              </p>
+            );
           })}
         </div>
         <div className="roles">
+          [Open Position]
           {roles.map((role) => {
             return (
-              <p className="role" key={role._id}>
-                <div
+              <p className="role" key={uuidv4()}>
+                {/* <div
                   className="role-opened"
                   data-isopened={role.isOpened}
-                ></div>
-                <div className="role-meta" data-isopened={role.isOpened}>
-                  {role.role}({role.number})
-                </div>
+                ></div> */}
+                <p className="role-meta" data-isopened={role.isOpened}>
+                  - {role.role}
+                </p>
               </p>
             );
           })}
         </div>
       </div>
-      <div className="card__subContent">hello</div>
+      <div className="card__subContent">{children}</div>
     </div>
   );
 };

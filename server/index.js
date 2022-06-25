@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import { config } from "dotenv";
 
 import projectRoutes from "./routes/projects.js";
+import userRoutes from "./routes/users.js";
 
 config();
 
@@ -20,6 +21,7 @@ app.use((req, res, next) => {
 
 // routes
 app.use("/api/projects", projectRoutes);
+app.use("/api/users", userRoutes);
 
 // connect to DB
 mongoose

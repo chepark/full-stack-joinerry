@@ -1,0 +1,33 @@
+@import "../../scss/typography";
+@import "../../scss/variables";
+
+.tags-wrapper {
+  margin-right: 2rem;
+}
+
+.tags-header {
+  @include subText1;
+}
+
+.tag-list {
+  margin-top: 1rem;
+  height: 500px;
+  overflow-y: scroll;
+  padding-right: 10px;
+}
+
+.tag-button {
+  @include subText2;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  margin-bottom: 5px;
+  border-radius: 20px;
+
+  cursor: pointer;
+  &:hover {
+    background-color: white;
+    color: $primary-green;
+    text-decoration: underline;
+  }
+}

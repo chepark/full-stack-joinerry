@@ -1,4 +1,5 @@
 @import "../../scss/variables";
+@import "../../scss/typography";
 
 .project-card {
   height: 350px;
@@ -10,7 +11,7 @@
 }
 
 .card__mainContent {
-  padding: 1.5rem 1.2rem;
+  padding: 2rem 1.2rem;
 }
 
 .card__subContent {
@@ -20,6 +21,7 @@
 
 .card__title {
   font-size: 25px;
+  line-height: 1.2;
   overflow-y: hidden;
 }
 
@@ -36,15 +38,20 @@
   margin-right: 10px;
 }
 
+.roles {
+  @include subText1;
+}
+
 .role {
   display: flex;
-  gap: 10px;
-  margin-bottom: 1rem;
+  align-items: center;
+  gap: 5px;
+  margin: 0.5rem 0;
 }
 
 .role-opened {
-  height: 15px;
-  width: 15px;
+  height: 12px;
+  width: 12px;
   border-radius: 50%;
   display: inline-block;
 }
@@ -63,4 +70,10 @@
 
 .role-meta[data-isopened="false"] {
   text-decoration: line-through;
+}
+
+.card__subContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

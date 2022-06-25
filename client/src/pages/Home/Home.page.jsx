@@ -4,22 +4,26 @@ import { useState } from "react";
 import Banner from "../../components/Banner/Banner.component";
 import CategoryMenu from "../../components/CategoryMenu/CategoryMenu.component";
 import ProjectCards from "../../components/ProjectCards/ProjectCards.component";
+import Sidebar from "../../components/Sidebar/Sibebar.component";
 
 import "./_home.scss";
 
 const Home = () => {
   const [category, setCategory] = useState("latest");
-  const [techStacks, setTechStacks] = useState(null);
+  const [techStackTags, setTechStackTags] = useState(null);
 
   return (
     <>
       <Banner />
       <main className="container" data-sectioin="main-projects">
         <div className="content-wrapper" data-section="main-projects">
-          <div className="techStack-tags">Tech Stack</div>
+          <Sidebar
+            techStackTags={techStackTags}
+            setTechStacks={setTechStackTags}
+          />
           <div className="projects">
-            <CategoryMenu />
-            <ProjectCards category={category} techStacks={techStacks} />
+            <CategoryMenu setCategory={setCategory} />
+            <ProjectCards category={category} techStackTags={techStackTags} />
           </div>
         </div>
       </main>
