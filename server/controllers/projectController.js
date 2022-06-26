@@ -5,8 +5,20 @@ import Project from "../models/projectModel.js";
 
 // get all projects
 const getProjects = async (req, res) => {
-  const projects = await Project.find({}).sort({ createdAt: -1 });
-  console.log(req.query); // I am getting multiple query
+  let projects;
+
+  if (!req.query) projects = await Project.find({}).sort({ createdAt: -1 });
+  else {
+    let query = {};
+    // Set query for category
+    req.query.category !== "latest" && (query.category = req.query.category);
+    // Set query for tech stack tags
+    req.query.tags !== "" && (query.techStack = { $in: [req.query.tags] });
+    projects = await Project.find(query).sort({ createdAt: -1 });
+    // console.log("check query", query);
+    // console.log("projects:", projects);
+  }
+  // console.log(req.query);
 
   res.status(200).json(projects);
 };
