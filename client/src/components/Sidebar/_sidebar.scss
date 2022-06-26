@@ -25,9 +25,25 @@
   border-radius: 20px;
 
   cursor: pointer;
-  &:hover {
-    background-color: white;
-    color: $primary-green;
-    text-decoration: underline;
-  }
+  display: flex;
+  align-items: center;
 }
+
+.tag-button:hover,
+[data-selected="true"] {
+  background-color: white;
+  color: $primary-green;
+  text-decoration: underline;
+
+  //   position: relative;
+}
+
+// [data-selected="true"]::after {
+//   position: absolute;
+//   right: 20px;
+
+//   color: $primary-green;
+
+//   content: "X";
+//   text-align: center;
+// }
