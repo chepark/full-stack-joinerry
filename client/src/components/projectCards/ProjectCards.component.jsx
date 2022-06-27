@@ -8,8 +8,6 @@ import ProjectCardMeta from "../ProjectCardSubContent/ProjectCardMeta";
 
 const ProjectCards = ({ category, techStackTags }) => {
   const { projects, dispatch } = useProjectContext();
-  // set project cards.
-  const { projectCards, setProjectCards } = useState(null);
 
   // useEffect(() => {
   //   const fetchProjects = async () => {
@@ -53,7 +51,7 @@ const ProjectCards = ({ category, techStackTags }) => {
         ))}
       </div>
       <div className="button-wrapper">
-        <button>See More</button>
+        <button>Load More</button>
       </div>
     </>
   );
