@@ -14,17 +14,20 @@ const Sidebar = ({ techStackTags, setTechStacks }) => {
 
     if (wasTagSelected) {
       tagsToUpdate = techStackTags.filter((tag) => tag !== selectedTag);
+
+      tagsToUpdate.length === 0
+        ? setTechStacks(null)
+        : setTechStacks(tagsToUpdate);
     } else {
       tagsToUpdate = [...techStackTags, selectedTag];
       e.target.classList.add("selected");
+      setTechStacks(tagsToUpdate);
     }
-    setTechStacks(tagsToUpdate);
   };
 
   return (
     <div className="tags-wrapper">
       <div className="tags-header">Tech Stack</div>
-
       <ul className="tag-list">
         {techTags.map((tag) => {
           return (

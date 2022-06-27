@@ -11,22 +11,18 @@ const ProjectCards = ({ category, techStackTags }) => {
   // set project cards.
   const { projectCards, setProjectCards } = useState(null);
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      const response = await fetch("http://localhost:4000/api/projects");
-      // const response = await axios({
-      //   method: "GET",
-      //   url: "http://localhost:4000/api/projects",
-      // });
-      const projectsJson = await response.json();
+  // useEffect(() => {
+  //   const fetchProjects = async () => {
+  //     const response = await fetch("http://localhost:4000/api/projects");
+  //     const projectsJson = await response.json();
 
-      if (response.ok) {
-        dispatch({ type: GET_PROJECTS, payload: projectsJson });
-      }
-    };
+  //     if (response.ok) {
+  //       dispatch({ type: GET_PROJECTS, payload: projectsJson });
+  //     }
+  //   };
 
-    fetchProjects();
-  }, [dispatch]);
+  //   fetchProjects();
+  // }, [dispatch]);
 
   useEffect(() => {
     const fetchProjectByFilter = async () => {
@@ -38,6 +34,9 @@ const ProjectCards = ({ category, techStackTags }) => {
           })
       );
       const json = await response.json();
+      if (response.ok) {
+        dispatch({ type: GET_PROJECTS, payload: json });
+      }
       console.log("testing filter: ", json);
     };
     fetchProjectByFilter();
