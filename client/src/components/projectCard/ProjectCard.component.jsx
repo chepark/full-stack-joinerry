@@ -1,8 +1,8 @@
 import "./_projectCard.scss";
 import { v4 as uuidv4 } from "uuid";
-import { useState, useEffect } from "react";
+import { useState, useEffect, forwardRef } from "react";
 
-const ProjectCard = ({ project, children }) => {
+const ProjectCard = ({ project, children }, ref) => {
   const { title, techStack, creator, roles } = project;
   let [capitalizedTitle, setCapitalizedTitle] = useState("");
 
@@ -15,7 +15,7 @@ const ProjectCard = ({ project, children }) => {
   }, [title]);
 
   return (
-    <div className="project-card">
+    <div className="project-card" ref={ref}>
       <div className="card__mainContent">
         <h2 className="card__title">{title && capitalizedTitle}</h2>
         <div className="tags">
@@ -48,5 +48,6 @@ const ProjectCard = ({ project, children }) => {
     </div>
   );
 };
+const forwarededProjectCard = forwardRef(ProjectCard);
 
-export default ProjectCard;
+export default forwarededProjectCard;
