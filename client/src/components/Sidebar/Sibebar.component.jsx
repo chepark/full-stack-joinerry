@@ -2,10 +2,11 @@ import "./_sidebar.scss";
 import techStacksJson from "../../assets/techstacks.json";
 import { v4 as uuidV4 } from "uuid";
 
-const Sidebar = ({ techStackTags, setTechStacks }) => {
+const Sidebar = ({ techStackTags, setTechStacks, setPageNumber }) => {
   const techTags = techStacksJson.teachstacks;
 
   const handleTagClick = (e) => {
+    setPageNumber(1);
     const selectedTag = e.target.getAttribute("data-tag");
     const wasTagSelected = techStackTags?.includes(selectedTag);
     let tagsToUpdate;

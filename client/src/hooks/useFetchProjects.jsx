@@ -4,7 +4,7 @@ import useProjectContext from "./useProjectContext";
 import { GET_PROJECTS } from "../constants/actionTypes";
 
 const useFetchProjects = (category, tags, pageNumber) => {
-  const { dispatch } = useProjectContext();
+  const { projects, dispatch } = useProjectContext();
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -25,15 +25,23 @@ const useFetchProjects = (category, tags, pageNumber) => {
               {
                 category: category,
                 tags: tags,
-                page: pageNumber,
+                pageNumber: pageNumber,
               },
               { signal }
             )
         );
         const json = await response.json();
+
         if (response.ok) {
-          dispatch({ type: GET_PROJECTS, payload: json });
+          pageNumber > 1
+            ? dispatch({
+                type: GET_PROJECTS,
+                payload: [...projects, ...json.projects],
+              })
+            : dispatch({ type: GET_PROJECTS, payload: json.projects });
+
           setLoading(false);
+          json.hasMore ? setHasMore(json.hasMore) : setHasMore(false);
         }
       } catch (error) {
         if (error.name === "AbortError") {
@@ -47,7 +55,7 @@ const useFetchProjects = (category, tags, pageNumber) => {
     fetchProjectsByFilter();
 
     return fetchController.abort(signal);
-  }, [category, tags]);
+  }, [category, tags, pageNumber]);
 
   return { loading, error, hasMore };
 };

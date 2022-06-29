@@ -5,22 +5,38 @@ import Project from "../models/projectModel.js";
 
 // get all projects
 const getProjects = async (req, res) => {
-  let projects;
+  let query = {};
 
-  if (req.query.category === "latest" && req.query.tags === "null")
-    projects = await Project.find({}).sort({ createdAt: -1 });
+  // create query object.
+  if (req.query.category === "latest" && req.query.tags === "null") query = {};
   else {
-    let query = {};
-    // Set query for category
     req.query.category !== "latest" && (query.category = req.query.category);
-    // Set query for tech stack tags
     req.query.tags !== "null" && (query.techStack = { $in: [req.query.tags] });
-    projects = await Project.find(query).sort({ createdAt: -1 });
-    console.log(query);
-    console.log(projects);
   }
 
-  res.status(200).json(projects);
+  // set values to pass them as skip() and limit() arguments.
+  const numberOfDocuments = await Project.countDocuments(query).exec();
+  const pageNumber = parseInt(req.query.pageNumber);
+  const limit = 15;
+
+  const startIndex = (pageNumber - 1) * limit;
+  const endIndex = pageNumber * limit;
+  let results = {};
+
+  if (endIndex < numberOfDocuments) {
+    results.hasMore = {
+      page: pageNumber + 1,
+      limit: limit,
+    };
+  }
+
+  results.projects = await Project.find(query).skip(startIndex).limit(limit);
+  // .sort({
+  //   createdAt: -1,
+  // });
+  // console.log(results);
+  console.log(req.query);
+  res.status(200).json(results);
 };
 
 // get a project

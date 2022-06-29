@@ -11,6 +11,7 @@ import "./_home.scss";
 const Home = () => {
   const [category, setCategory] = useState("latest");
   const [techStackTags, setTechStackTags] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
 
   return (
     <>
@@ -20,10 +21,20 @@ const Home = () => {
           <Sidebar
             techStackTags={techStackTags}
             setTechStacks={setTechStackTags}
+            setPageNumber={setPageNumber}
+            category={category}
           />
           <div className="projects">
-            <CategoryMenu setCategory={setCategory} />
-            <ProjectCards category={category} techStackTags={techStackTags} />
+            <CategoryMenu
+              setCategory={setCategory}
+              setPageNumber={setPageNumber}
+            />
+            <ProjectCards
+              category={category}
+              techStackTags={techStackTags}
+              pageNumber={pageNumber}
+              setPageNumber={setPageNumber}
+            />
           </div>
         </div>
       </main>

@@ -1,7 +1,8 @@
 import "./_categoryMenu.scss";
 
-const CategoryMenu = ({ setCategory }) => {
+const CategoryMenu = ({ setCategory, setPageNumber }) => {
   const handleCategoryClick = (e) => {
+    setPageNumber(1);
     const selectedCategory = e.target.dataset.category;
     setCategory(selectedCategory);
   };
