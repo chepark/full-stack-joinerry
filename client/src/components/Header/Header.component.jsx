@@ -3,7 +3,7 @@ import "./_header.scss";
 
 const Header = () => {
   return (
-    <header className="container">
+    <header className="container" id="header">
       <div className="content-wrapper" data-section="header">
         <h1 id="logo">Joinerry</h1>
         <div className="header-left">

@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
-const Schema = mongoose.Schema();
+const Schema = mongoose.Schema;
 
-const userSchema = new Shema(
+const userSchema = new Schema(
   {
+    authId: { type: String, required: true },
     userName: String,
     profileImage: String,
     email: { type: String, required: true },

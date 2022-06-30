@@ -2,7 +2,7 @@ import "./_footer.scss";
 
 const Footer = () => {
   return (
-    <footer className="container" data-section="footer">
+    <footer className="container" id="footer" data-section="footer">
       <div className="content-wrapper" data-section="footer">
         <p>&copy; Joinnerry</p>
         <p>FAQ</p>

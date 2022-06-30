@@ -35,7 +35,6 @@ const getProjects = async (req, res) => {
   //   createdAt: -1,
   // });
   // console.log(results);
-  console.log(req.query);
   res.status(200).json(results);
 };
 
