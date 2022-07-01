@@ -2,6 +2,8 @@ import express from "express";
 import passport from "passport";
 
 const router = express.Router();
+const authSuccessURL = "http://localhost:4000/auth/google/current_user";
+const authErrorURL = "http://localhost:4000/auth/google/error";
 
 router.get(
   "/google",
@@ -9,6 +11,22 @@ router.get(
     scope: ["profile", "email"],
   })
 ); // Ask permission to Google
-router.get("/google/callback", passport.authenticate("google")); // getting code from Google
+
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    failureMessage: "Cannot login with Google. Please try again.",
+    failureRedirect: authErrorURL,
+    successRedirect: authSuccessURL,
+  }),
+  (req, res) => {
+    console.log("req: ", req);
+    res.send("Thank you for sign in.");
+  }
+); // getting code from Google
+
+router.get("/google/current_user", (req, res) => {
+  res.send("Thank you.");
+});
 
 export default router;
