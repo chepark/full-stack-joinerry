@@ -2,9 +2,9 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
-import cookieSession from "cookie-session";
 import session from "express-session";
 import passport from "passport";
+import MongoStore from "connect-mongo";
 import { config } from "dotenv";
 import { googleStrategy, passportConfig } from "./services/passport.js";
 
@@ -20,13 +20,25 @@ passportConfig();
 const app = express();
 app.use(cors()); // Resolve No-Access-Control-Allow origin issue.
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// const connection = mongoose.createConnection(process.env.MONGO_URI, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
+// const MongoStore = connectMongo(session);
+// const sessionStore = new MongoStore({
+//   mongooseConnection: connection,
+//   collection: "sessions",
+// });
 
 app.use(
   session({
     secret: process.env.COOKIE_KEY,
     resave: false,
-    saveUninitialized: false,
-    cookie: { secure: true },
+    saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
+    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 },
   })
 );
 

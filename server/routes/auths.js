@@ -20,13 +20,12 @@ router.get(
     successRedirect: authSuccessURL,
   }),
   (req, res) => {
-    console.log("req: ", req);
-    res.send("Thank you for sign in.");
+    console.log("req.session: ", req.session);
   }
 ); // getting code from Google
 
 router.get("/google/current_user", (req, res) => {
-  res.send("Thank you.");
+  res.send(req.session);
 });
 
 export default router;

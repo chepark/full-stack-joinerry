@@ -13,6 +13,7 @@ const SignUp = () => {
     >
       <div className="content-wrapper">
         <h2>Sign Up</h2>
+        <button>Sign Up with Google</button>
       </div>
     </div>
   );

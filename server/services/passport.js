@@ -6,7 +6,7 @@ import User from "../models/userModel.js";
 const passportConfig = () => {
   // generate an identifying token
   passport.serializeUser((user, done) => {
-    console.log("serialized");
+    console.log("serialized done. Printing userId: ", user.id);
     done(null, user.id); // user.id is document id in mongoDB
   });
 
