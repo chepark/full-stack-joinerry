@@ -1,0 +1,47 @@
+@import "../../scss/variables";
+
+.container[data-section="main"] {
+  background-color: $bg-color;
+}
+
+.container[data-section="main"] .content-wrapper {
+  background-color: white;
+  padding: 3rem;
+  border-radius: 50px;
+  max-width: 650px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2 {
+    font-size: 33px;
+    font-weight: 400;
+    line-height: 50px;
+  }
+}
+
+.signup-btns {
+  width: 80%;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.signup-btn {
+  border: 1px solid black;
+  padding: 0.5rem 2rem;
+
+  gap: 1rem;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+#github {
+  background-color: black;
+  color: white;
+}

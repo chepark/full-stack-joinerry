@@ -2,7 +2,7 @@ import express from "express";
 import passport from "passport";
 
 const router = express.Router();
-const authSuccessURL = "http://localhost:4000/auth/google/current_user";
+const authSuccessURL = "http://localhost:4000/api/users/current_user";
 const authErrorURL = "http://localhost:4000/auth/google/error";
 
 router.get(
@@ -23,9 +23,5 @@ router.get(
     console.log("req.session: ", req.session);
   }
 ); // getting code from Google
-
-router.get("/google/current_user", (req, res) => {
-  res.send(req.session);
-});
 
 export default router;
