@@ -1,10 +1,16 @@
 import "./_login.scss";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
 import useUserContext from "../../hooks/useUserContext";
 import { GET_USER } from "../../constants/actionTypes";
+import { useEffect } from "react";
 
 const LogIn = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const { user, dispatch } = useUserContext();
   const [windowHeight, windowWidth] = useWindowSize();
   const HEADER_FOOTER_HEIGHTS = 198;
@@ -21,6 +27,7 @@ const LogIn = () => {
 
       const json = await response.json();
       dispatch({ type: GET_USER, payload: json });
+      navigate(from, { replace: true });
       console.log(json);
     } catch (error) {
       console.log("Errors in fetchUser: ", error);
@@ -43,6 +50,8 @@ const LogIn = () => {
         if (newWindow.closed) {
           fetchUser();
           if (timer) clearInterval(timer);
+          // console.log("from", from);
+          navigate("/", { replace: true });
         }
       }, 500);
     }

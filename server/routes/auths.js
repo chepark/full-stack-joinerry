@@ -1,9 +1,11 @@
 import express from "express";
 import passport from "passport";
+import { logoutUser } from "../controllers/authController.js";
 
 const router = express.Router();
 const authSuccessURL = "http://localhost:3000/success";
 const authErrorURL = "http://localhost:3000/error";
+const mainPageURL = "http://localhost:3000/";
 
 router.get(
   "/google",
@@ -24,11 +26,6 @@ router.get(
   }
 ); // getting code from Google
 
-router.get("/logout", (req, res) => {
-  req.logout((error) => {
-    if (error) next(error);
-  });
-  res.redirect("/"); //
-});
+router.get("/logout", logoutUser);
 
 export default router;

@@ -1,4 +1,5 @@
 import "./App.scss";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header.component";
 import Footer from "./components/Footer/Footer.component";
@@ -6,6 +7,8 @@ import Home from "./pages/Home/Home.page";
 import SignUp from "./pages/SignUp/SignUp";
 import Success from "./pages/Success/Success";
 import LogIn from "./pages/LogIn/LogIn";
+import CreateProject from "./pages/CreateProject/CreateProject";
+import PrivateOutlet from "./components/PrivateOutlet/PrivateOutlet";
 
 function App() {
   return (
@@ -17,6 +20,10 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<LogIn />} />
           <Route path="/success" element={<Success />} />
+
+          <Route element={<PrivateOutlet />}>
+            <Route path="/project/create" element={<CreateProject />} />
+          </Route>
         </Routes>
         <Footer />
       </BrowserRouter>

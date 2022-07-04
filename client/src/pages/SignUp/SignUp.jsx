@@ -1,10 +1,11 @@
 import "./_signup.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
 import useUserContext from "../../hooks/useUserContext";
 import { GET_USER } from "../../constants/actionTypes";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const { user, dispatch } = useUserContext();
   const [windowHeight, windowWidth] = useWindowSize();
   const HEADER_FOOTER_HEIGHTS = 198;
@@ -43,6 +44,7 @@ const SignUp = () => {
         if (newWindow.closed) {
           fetchUser();
           if (timer) clearInterval(timer);
+          navigate("/");
         }
       }, 500);
     }

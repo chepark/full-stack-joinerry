@@ -8,13 +8,25 @@
   margin-right: 2rem;
 }
 
-.header-left {
+.header-right {
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
 }
 
-.header-left > div {
+.header-right > div {
   font-size: 13px;
+}
+
+.header-profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.logout-btn {
+  cursor: pointer;
 }
