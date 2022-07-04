@@ -1,21 +1,51 @@
 import "./_signup.scss";
-import React from "react";
+import { Link } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
-
-import GoogleIcon from "@mui/icons-material/Google";
+import useUserContext from "../../hooks/useUserContext";
+import { GET_USER } from "../../constants/actionTypes";
 
 const SignUp = () => {
+  const { user, dispatch } = useUserContext();
   const [windowHeight, windowWidth] = useWindowSize();
   const HEADER_FOOTER_HEIGHTS = 198;
 
+  const fetchUser = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:4000/api/users/current_user",
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      const json = await response.json();
+      dispatch({ type: GET_USER, payload: json });
+      console.log(json);
+    } catch (error) {
+      console.log("Errors in fetchUser: ", error);
+    }
+  };
+
   const redirectToGoogleSSO = async (e) => {
     e.preventDefault();
+    let timer;
+
     const googleLoginUrl = "http://localhost:4000/auth/google";
     const newWindow = window.open(
       googleLoginUrl,
       "_blank",
       "width=500, heigth=600"
     );
+
+    if (newWindow) {
+      timer = setInterval(() => {
+        if (newWindow.closed) {
+          fetchUser();
+          if (timer) clearInterval(timer);
+        }
+      }, 500);
+    }
   };
 
   return (
@@ -27,8 +57,8 @@ const SignUp = () => {
       <div className="content-wrapper">
         <h2>Sign Up</h2>
 
-        <div className="signup-btns">
-          <button className="signup-btn" onClick={redirectToGoogleSSO}>
+        <div className="auth-btns">
+          <button className="auth-btn" onClick={redirectToGoogleSSO}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
@@ -65,7 +95,7 @@ const SignUp = () => {
 
             <div>Sign Up with Google</div>
           </button>
-          <button className="signup-btn" id="github">
+          <button className="auth-btn" id="github">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
@@ -83,7 +113,12 @@ const SignUp = () => {
             <div>Sign Up with Github</div>
           </button>
         </div>
-        <div>Already have an account? Log In</div>
+        <div>
+          Already have an account?{" "}
+          <Link to="/login" style={{ textDecoration: "none" }}>
+            Log In
+          </Link>
+        </div>
       </div>
     </div>
   );

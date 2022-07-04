@@ -1,6 +1,6 @@
 import { GET_USER, UPDATE_USER } from "../constants/actionTypes";
 
-export const userReducer = ({ state, action }) => {
+export const userReducer = (state, action) => {
   const { type, payload } = action;
 
   switch (type) {

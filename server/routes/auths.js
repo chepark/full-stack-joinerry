@@ -2,8 +2,8 @@ import express from "express";
 import passport from "passport";
 
 const router = express.Router();
-const authSuccessURL = "http://localhost:4000/api/users/current_user";
-const authErrorURL = "http://localhost:4000/auth/google/error";
+const authSuccessURL = "http://localhost:3000/success";
+const authErrorURL = "http://localhost:3000/error";
 
 router.get(
   "/google",
@@ -23,5 +23,12 @@ router.get(
     console.log("req.session: ", req.session);
   }
 ); // getting code from Google
+
+router.get("/logout", (req, res) => {
+  req.logout((error) => {
+    if (error) next(error);
+  });
+  res.redirect("/"); //
+});
 
 export default router;

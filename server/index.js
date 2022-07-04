@@ -18,19 +18,9 @@ googleStrategy(); //passport googleStrategy
 passportConfig();
 
 const app = express();
-app.use(cors()); // Resolve No-Access-Control-Allow origin issue.
+app.use(cors({ origin: "http://localhost:3000", credentials: true })); // Resolve No-Access-Control-Allow origin issue.
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// const connection = mongoose.createConnection(process.env.MONGO_URI, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-// const MongoStore = connectMongo(session);
-// const sessionStore = new MongoStore({
-//   mongooseConnection: connection,
-//   collection: "sessions",
-// });
 
 app.use(
   session({

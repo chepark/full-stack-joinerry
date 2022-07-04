@@ -1,6 +1,11 @@
 import "./_footer.scss";
+import { useLocation } from "react-router-dom";
 
 const Footer = () => {
+  const { pathname } = useLocation();
+
+  if (pathname === "/success") return null;
+
   return (
     <footer className="container" id="footer" data-section="footer">
       <div className="content-wrapper" data-section="footer">

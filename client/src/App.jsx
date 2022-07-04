@@ -4,20 +4,22 @@ import Header from "./components/Header/Header.component";
 import Footer from "./components/Footer/Footer.component";
 import Home from "./pages/Home/Home.page";
 import SignUp from "./pages/SignUp/SignUp";
-import SignUpSuccess from "./pages/SignUp/SignUpSuccess";
+import Success from "./pages/Success/Success";
+import LogIn from "./pages/LogIn/LogIn";
 
 function App() {
   return (
     <div className="App">
-      <Header />
       <BrowserRouter>
+        <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<SignUp />} />
-          {/* <Route path="/signup/success" element={<SignUpSuccess />} /> */}
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/success" element={<Success />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
-      <Footer />
     </div>
   );
 }

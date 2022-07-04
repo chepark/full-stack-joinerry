@@ -7,7 +7,7 @@ const useUserContext = () => {
   if (!context) {
     throw Error("useUsertContext must be used inside a UserContextProvider");
   }
-
+  console.log(context);
   return context;
 };
 

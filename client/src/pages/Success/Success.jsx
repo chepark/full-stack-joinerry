@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 
-const SignUpSuccess = () => {
+const Success = () => {
   useEffect(() => {
     setTimeout(() => {
       window.close();
-    }, 500);
+    }, 1000);
   }, []);
-  return <div>SignUpSuccess</div>;
+  return <div>Success</div>;
 };
 
-export default SignUpSuccess;
+export default Success;
