@@ -13,7 +13,6 @@ const LogIn = () => {
 
   const { user, dispatch } = useUserContext();
   const [windowHeight, windowWidth] = useWindowSize();
-  const HEADER_FOOTER_HEIGHTS = 198;
 
   const fetchUser = async () => {
     try {
@@ -39,11 +38,7 @@ const LogIn = () => {
     let timer;
 
     const googleLoginUrl = "http://localhost:4000/auth/google";
-    const newWindow = window.open(
-      googleLoginUrl,
-      "_blank",
-      "width=500, heigth=600"
-    );
+    const newWindow = window.open(googleLoginUrl, "", "width=500,height=600");
 
     if (newWindow) {
       timer = setInterval(() => {
@@ -61,7 +56,7 @@ const LogIn = () => {
     <div
       className="container"
       data-section="main"
-      style={{ height: windowHeight - HEADER_FOOTER_HEIGHTS }}
+      style={{ height: windowHeight }}
     >
       <div className="content-wrapper">
         <h2>Log In</h2>

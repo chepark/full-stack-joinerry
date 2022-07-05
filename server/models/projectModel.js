@@ -21,6 +21,7 @@ const projectSchema = new Schema(
     creator: { type: Schema.Types.ObjectId, ref: "user", required: true },
     startDate: Date,
     endDate: Date,
+    contact: { type: String, required: true },
   },
   { timestamps: true }
 );

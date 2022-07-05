@@ -1,0 +1,28 @@
+@import "../../scss/variables";
+
+.container[data-section="project-editor"] {
+  background-color: $bg-color;
+
+  display: flex;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.content-wrapper[data-section="project-editor"] {
+  background-color: white;
+  border-radius: 30px;
+  padding: 2rem 3rem;
+
+  width: 80vw;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.editor-meta,
+.editor-date {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}

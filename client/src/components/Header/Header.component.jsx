@@ -31,7 +31,7 @@ const Header = () => {
   if (pathname === "/success") return null;
   return (
     <header className="container" id="header">
-      {console.log(user)}
+      {/* {console.log(user)} */}
       <div className="content-wrapper" data-section="header">
         <h1 id="logo">
           <Link to="/" style={{ textDecoration: "none" }}>

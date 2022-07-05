@@ -3,17 +3,22 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+
+import customMuiTheme from "./muiCustomTheme";
+import { ThemeProvider } from "@mui/material/styles";
 import { ProjectContextProvider } from "./contexts/projectContext";
 import { UserContextProvider } from "./contexts/userContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <UserContextProvider>
-      <ProjectContextProvider>
-        <App />
-      </ProjectContextProvider>
-    </UserContextProvider>
+    <ThemeProvider theme={customMuiTheme}>
+      <UserContextProvider>
+        <ProjectContextProvider>
+          <App />
+        </ProjectContextProvider>
+      </UserContextProvider>
+    </ThemeProvider>
   </React.StrictMode>
 );
 

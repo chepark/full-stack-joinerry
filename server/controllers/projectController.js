@@ -54,7 +54,17 @@ const getProject = async (req, res) => {
 
 // create a project
 const createProject = async (req, res) => {
-  const { title, category, techStack, roles, content, creator } = req.body;
+  const {
+    title,
+    category,
+    techStack,
+    roles,
+    content,
+    creator,
+    startDate,
+    endDate,
+    contact,
+  } = req.body;
 
   try {
     const project = await Project.create({
@@ -64,6 +74,9 @@ const createProject = async (req, res) => {
       roles,
       content,
       creator,
+      startDate,
+      endDate,
+      contact,
     });
 
     res.status(200).json(project);

@@ -1,12 +1,12 @@
 import React from "react";
 import ProjectEditor from "../../components/ProjectEditor/ProjectEditor";
 
-const CreateProject = () => {
+const EditProject = () => {
   return (
     <div>
-      <ProjectEditor mode="add" />
+      <ProjectEditor mode="edit" />
     </div>
   );
 };
 
-export default CreateProject;
+export default EditProject;

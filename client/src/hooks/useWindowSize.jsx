@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 
 const useWindowSize = () => {
-  const [size, setSize] = useState([window.innerHeight, window.innerWidth]);
+  const HEADER_FOOTER_HEIGHTS = 198;
+  const [size, setSize] = useState([
+    window.innerHeight - HEADER_FOOTER_HEIGHTS,
+    window.innerWidth,
+  ]);
 
   useEffect(() => {
     const handleResize = () => {
-      setSize([window.innerHeight, window.innerWidth]);
+      setSize([window.innerHeight - HEADER_FOOTER_HEIGHTS, window.innerWidth]);
     };
 
     // window.addEventListener("resize", handleResize);
@@ -16,7 +20,6 @@ const useWindowSize = () => {
     };
   }, []);
 
-  console.log(size[0]);
   return size;
 };
 

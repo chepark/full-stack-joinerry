@@ -89,6 +89,24 @@ input {
   border-radius: 0;
 }
 
+.btn-primary {
+  background-color: #34cc99;
+  border: none;
+  border-radius: 50px;
+  color: white;
+  padding: 1rem 2rem;
+  cursor: pointer;
+}
+
+.btn-outlined {
+  background-color: white;
+  border: 1px solid #34cc99;
+  border-radius: 50px;
+  color: #34cc99;
+  padding: 1rem 2rem;
+  cursor: pointer;
+}
+
 .container {
   width: 100vw;
   display: -webkit-box;
@@ -106,5 +124,19 @@ input {
   max-width: 1400px;
   width: 100%;
   height: auto;
+}
+
+button {
+  background: none;
+  border: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 /*# sourceMappingURL=App.css.map */

@@ -22,7 +22,7 @@ const CategoryMenu = ({ setCategory, setPageNumber }) => {
         <li className="category-item" data-category="game development">
           Game Dev
         </li>
-        <li className="category-item" data-category="web development">
+        <li className="category-item" data-category="website development">
           Website Dev
         </li>
         <li className="category-item" data-category="others">
