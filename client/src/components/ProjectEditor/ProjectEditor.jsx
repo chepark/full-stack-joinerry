@@ -75,6 +75,10 @@ const ProjectEditor = ({ mode }) => {
         <div className="editor-content">
           <TextEditor title={(title, setTitle, content, setContent)} />
         </div>
+        <div className="editor-btns">
+          <button className="editor-btn">CANCEL</button>
+          <button className="editor-btn">SAVE</button>
+        </div>
       </div>
     </div>
   );

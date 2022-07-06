@@ -15,7 +15,9 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           boxShadow: "none",
-          border: "1px solid #ccc",
+          borderTop: "1px solid #ccc",
+          borderLeft: "1px solid #ccc",
+          borderRight: "1px solid #ccc",
         },
       },
     },

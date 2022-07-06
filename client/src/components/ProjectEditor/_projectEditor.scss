@@ -26,3 +26,9 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
 }
+
+.editor-btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
