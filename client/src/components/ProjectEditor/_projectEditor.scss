@@ -31,4 +31,26 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  gap: 1rem;
+
+  .editor-btn {
+    border: 2px solid $primary-green;
+    border-radius: 10px;
+    padding: 0.7rem 1rem;
+    font-family: "Poppins", sans-serif;
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    &.cancel {
+      color: $primary-green;
+      font-weight: 600;
+    }
+
+    &.save {
+      color: white;
+      background-color: $primary-green;
+      border: none;
+    }
+  }
 }

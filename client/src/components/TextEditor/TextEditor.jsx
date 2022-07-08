@@ -8,15 +8,13 @@ import "react-quill/dist/quill.snow.css";
 
 const TextEditor = ({ title, setTitle, content, setContent }) => {
   const CustomizedTextField = styled(TextField)(({ theme }) => ({
-    // Change the default underline color to gray.
     "& .MuiInput-underline": {
       "&::before": {
         borderBottom: "1px solid #ccc",
       },
-      // Change the underline border style on hover.
       "&:hover": {
         "&:before": {
-          borderBottom: "1px solid black",
+          borderBottom: "1px solid black !important",
         },
       },
     },
