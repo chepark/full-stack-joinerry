@@ -19,13 +19,6 @@ const ProjectEditor = ({ mode }) => {
   const tagOptions = tagsJson.teachstacks;
 
   const [editorMode, setEditorMode] = useState(null);
-  // const [category, setCategory] = useState("latest");
-  // const [tags, setTags] = useState(null);
-  // const [roles, setRoles] = useState([]);
-  // const [startDate, setStartDate] = useState(new Date());
-  // const [endDate, setEndDate] = useState(new Date());
-  // const [title, setTitle] = useState("");
-  // const [content, setContent] = useState("");
 
   useEffect(() => {
     setEditorMode(mode);

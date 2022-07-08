@@ -19,16 +19,21 @@ const useTableForm = (validateOnChange = false) => {
       };
     });
 
-    if (validateOnChange) validate({ [name]: inputValue });
+    if (validateOnChange) {
+      validate({ [name]: inputValue });
+    }
   };
 
   const handleAdd = () => {
     if (validate()) {
       //   console.log(true);
-      setRoles([...roles, values]);
+      setRoles(() => {
+        return [...roles, values];
+      });
     }
+
+    // resetTableForm();
     // console.log(false);
-    resetTableForm();
   };
 
   const validate = (fieldValues = values) => {

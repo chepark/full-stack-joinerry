@@ -67,7 +67,6 @@ const TableInputDup = ({ roleOptions }) => {
   const renderLastRow = () => {
     return (
       <TableRow key={0}>
-        {/* {console.log(newRole, num, isOpened)} */}
         <TableCell align="center">
           <AutoCompleteInput
             value={values.role || null}
@@ -97,19 +96,6 @@ const TableInputDup = ({ roleOptions }) => {
             error={errors.number ? true : undefined}
             helperText={errors.number}
           />
-          {/* <TextField
-            sx={{ width: "150px" }}
-            label="Type in number"
-            value={values.number || null}
-            onChange={(e) => {
-              handleInputChange("number", e.target.value);
-            }}
-            InputProps={{
-              inputComponent: NumberInput,
-            }}
-            error={errors.number ? true : undefined}
-            helperText={errors.number}
-          /> */}
         </TableCell>
 
         <TableCell align="center">
@@ -148,7 +134,7 @@ const TableInputDup = ({ roleOptions }) => {
     <>
       <TableContainer component={Paper}>
         {console.log("ERR:", errors)}
-        {console.log("VAL:", values)}
+
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
