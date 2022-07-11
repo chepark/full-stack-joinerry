@@ -22,22 +22,18 @@ import { NumberInput } from "./NumberInput";
 const TableInputDup = ({ roleOptions }) => {
   const {
     roles,
-    setRoles,
     values,
-    setValues,
     errors,
-    setErrors,
     handleInputChange,
     handleAdd,
-    onReset,
+    handleEdit,
+    handleRemove,
   } = useTableForm(true);
 
   const handleAddClick = (e) => {
     e.preventDefault();
     handleAdd();
   };
-
-  const handleRemove = () => {};
 
   const renderRows = () => {
     return roles.map((role) => {
@@ -51,11 +47,15 @@ const TableInputDup = ({ roleOptions }) => {
           <TableCell align="center">{role.isOpened}</TableCell>
 
           <TableCell align="center">
-            <div className="btn-wrapper" onClick={handleAddClick}>
-              <ModeEditOutlineOutlinedIcon style={{ cursor: "pointer" }} /> |
+            <div className="btn-wrapper">
+              <ModeEditOutlineOutlinedIcon
+                style={{ cursor: "pointer" }}
+                onClick={() => handleEdit(role)}
+              />{" "}
+              |
               <DeleteOutlineIcon
                 style={{ cursor: "pointer" }}
-                onClick={handleRemove(id)}
+                onClick={() => handleRemove(role)}
               />
             </div>
           </TableCell>
@@ -133,7 +133,7 @@ const TableInputDup = ({ roleOptions }) => {
   return (
     <>
       <TableContainer component={Paper}>
-        {console.log("ERR:", errors)}
+        {console.log("saved roles:", roles)}
 
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

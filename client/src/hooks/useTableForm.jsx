@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useEffect } from "react";
 
 const useTableForm = (validateOnChange = false) => {
@@ -9,7 +9,6 @@ const useTableForm = (validateOnChange = false) => {
     number: "",
     isOpened: "",
   });
-  const [onReset, setOnReset] = useState(false);
 
   const handleInputChange = (name, inputValue) => {
     setValues((values) => {
@@ -26,21 +25,51 @@ const useTableForm = (validateOnChange = false) => {
 
   const handleAdd = () => {
     if (validate()) {
-      //   console.log(true);
       setRoles(() => {
         return [...roles, values];
       });
     }
+  };
 
-    // resetTableForm();
-    // console.log(false);
+  const handleEdit = (roleToEdit) => {
+    const { role, number, isOpened } = roleToEdit;
+    // put the value to the last row.
+    setValues({ role: role, number: number, isOpened: isOpened });
+
+    if (roles.length > 1) {
+      const otherRoles = roles.filter((role) => {
+        return role.role !== roleToEdit.role;
+      });
+
+      setRoles(otherRoles);
+    } else setRoles([]);
+  };
+
+  const handleRemove = (roleToRemove) => {
+    if (roles.length > 1) {
+      const otherRoles = roles.filter((role) => {
+        return role.role !== roleToRemove.role;
+      });
+
+      setRoles(otherRoles);
+    } else setRoles([]);
+  };
+
+  const findDuplicates = (fieldValues) => {
+    return roles.find((role) => {
+      return role.role === fieldValues.role;
+    });
   };
 
   const validate = (fieldValues = values) => {
     let tempErrors = { ...errors };
 
-    if ("role" in fieldValues)
+    if ("role" in fieldValues) {
       tempErrors.role = fieldValues.role === "" ? "Required field." : "";
+      tempErrors.role = findDuplicates(fieldValues)
+        ? "Role already exists."
+        : "";
+    }
 
     if ("number" in fieldValues)
       tempErrors.number =
@@ -53,25 +82,10 @@ const useTableForm = (validateOnChange = false) => {
         fieldValues.isOpened === "" ? "Required field." : "";
 
     setErrors({ ...tempErrors });
-    console.log("fieldValues !==values");
-    console.log("FieldValues:", fieldValues);
-    console.log("VALUES: ", values);
+
     if (fieldValues === values) {
-      console.log("fieldvalue === values");
-      console.log("FieldValues:", fieldValues);
-      console.log("VALUES: ", values);
       return Object.values(tempErrors).every((x) => x === "");
     }
-  };
-
-  const resetTableForm = () => {
-    setValues(() => {
-      return { role: "", number: "", isOpened: "" };
-    });
-
-    setErrors(() => {
-      return {};
-    });
   };
 
   return {
@@ -83,7 +97,8 @@ const useTableForm = (validateOnChange = false) => {
     setErrors,
     handleInputChange,
     handleAdd,
-    onReset,
+    handleEdit,
+    handleRemove,
   };
 };
 
