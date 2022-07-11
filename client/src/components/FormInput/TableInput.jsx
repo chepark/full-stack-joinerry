@@ -1,5 +1,7 @@
 import "./_tableInput.scss";
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
+import { v4 as uuidV4 } from "uuid";
+import useTableForm from "../../hooks/useTableForm";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -14,113 +16,32 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 
 import AutoCompleteInput from "./AutoCompleteInput";
-
-import { NumberInput } from "./NumberInput";
+import NumberFormat from "react-number-format";
 
 const TableInput = ({ roleOptions }) => {
-  const [roles, setRoles] = useState([]);
+  // Perhaps in future,
+  // I need to set up useEffect for setRoles and setValues.
+  // When a user clicks edit button,
+  // saved project values will be used.
 
-  const [errors, setErrors] = useState({});
+  const {
+    roles,
+    values,
+    errors,
+    handleInputChange,
+    handleAdd,
+    handleEdit,
+    handleRemove,
+  } = useTableForm(true);
 
-  const [newRole, setNewRole] = useState(null);
-  const [num, setNum] = useState(0);
-  const [isOpened, setIsOpened] = useState(null);
-  const [tempId, setTempId] = useState(1);
-
-  const handleAddClick = () => {
-    validateInputs();
-    console.log(errors);
-
-    let isError = Object.values(errors).every(Boolean);
-
-    if (isError) return;
-    else console.log("ADD");
-    // addRole(tempId, newRole, num, isOpened);
-    // resetValues();
-  };
-
-  const handleRemoveClick = (id) => {
-    deleteRole(id);
-  };
-
-  const addRole = (tempId, newRole, num, isOpened) => {
-    const roleToAdd = {
-      id: tempId,
-      role: newRole,
-      number: num,
-      isOpened: isOpened,
-    };
-
-    setRoles((roles) => {
-      return [...roles, roleToAdd];
-    });
-    setTempId((tempId) => {
-      return tempId + 1;
-    });
-  };
-
-  const deleteRole = (id) => {
-    const updatedRoles = roles.filter((role) => {
-      if (role._id) {
-        return role._id !== id;
-      } else {
-        return role.tempId !== id;
-      }
-    });
-
-    // setProject((prevState) => {
-    //   return { ...prevState, roles: updatedRoles };
-    // });
-  };
-
-  const resetValues = () => {
-    setNewRole((prevState) => {
-      return null;
-    });
-    setNum((prevState) => {
-      return 0;
-    });
-    setIsOpened((prevState) => {
-      return null;
-    });
-  };
-
-  const validateInputs = () => {
-    if (!newRole)
-      setErrors((errors) => {
-        return { ...errors, newRole: true };
-      });
-
-    if (num === 0 || !num)
-      setErrors((errors) => {
-        return { ...errors, num: true };
-      });
-
-    if (!isOpened)
-      setErrors((errors) => {
-        return { ...errors, isOpened: true };
-      });
-  };
-
-  const handleChange = (section, newInput) => {
-    switch (section) {
-      case "newRole":
-        setErrors({ ...errors, newRole: undefined });
-        return setNewRole(newInput);
-      case "num":
-        setErrors({ ...errors, num: undefined });
-        return setNum(newInput);
-      case "isOpened":
-        setErrors({ ...errors, isOpened: undefined });
-        return setIsOpened(newInput);
-      default:
-        return;
-    }
+  const handleAddClick = (e) => {
+    e.preventDefault();
+    handleAdd();
   };
 
   const renderRows = () => {
     return roles.map((role) => {
-      let id = role?.id ? role.id : tempId;
+      let id = role?.id ? role.id : uuidV4();
       return (
         <TableRow key={id}>
           <TableCell align="center">{role.role}</TableCell>
@@ -130,11 +51,15 @@ const TableInput = ({ roleOptions }) => {
           <TableCell align="center">{role.isOpened}</TableCell>
 
           <TableCell align="center">
-            <div className="btn-wrapper" onClick={handleAddClick}>
-              <ModeEditOutlineOutlinedIcon style={{ cursor: "pointer" }} /> |
+            <div className="btn-wrapper">
+              <ModeEditOutlineOutlinedIcon
+                style={{ cursor: "pointer" }}
+                onClick={() => handleEdit(role)}
+              />
+              <div>or</div>
               <DeleteOutlineIcon
                 style={{ cursor: "pointer" }}
-                onClick={handleRemoveClick(id)}
+                onClick={() => handleRemove(role)}
               />
             </div>
           </TableCell>
@@ -148,10 +73,9 @@ const TableInput = ({ roleOptions }) => {
       <TableRow key={0}>
         <TableCell align="center">
           <AutoCompleteInput
-            name="newRole"
-            value={newRole}
+            value={values.role || null}
             onInputChange={(e, newInput) => {
-              console.log(e);
+              handleInputChange("role", newInput);
             }}
             options={roleOptions}
             renderInput={(params) => (
@@ -159,35 +83,30 @@ const TableInput = ({ roleOptions }) => {
                 {...params}
                 required
                 label="Select role"
-                error={errors.newRole ? true : undefined}
-                helperText={errors.newRole ? "Required field" : undefined}
+                error={errors.role ? true : undefined}
+                helperText={errors.role}
               />
             )}
           />
         </TableCell>
 
         <TableCell align="center">
-          <TextField
-            sx={{ width: "150px" }}
-            label="Type in number"
-            value={num}
-            onChange={(e) => {
-              handleChange(e.target.value.name);
-            }}
-            InputProps={{
-              inputComponent: NumberInput,
-            }}
-            error={errors.num ? true : undefined}
-            helperText={errors.num ? "Must be greater than 0." : undefined}
+          <NumberFormat
+            customInput={TextField}
+            value={values.number}
+            onValueChange={(values) =>
+              handleInputChange("number", values.value)
+            }
+            error={errors.number ? true : undefined}
+            helperText={errors.number}
           />
         </TableCell>
 
         <TableCell align="center">
           <AutoCompleteInput
-            name="isOpened"
-            value={isOpened}
+            value={values.isOpened || null}
             onInputChange={(e, newInput) => {
-              console.log(e.target.name);
+              handleInputChange("isOpened", newInput);
             }}
             options={["opened", "filled"]}
             renderInput={(params) => (
@@ -196,7 +115,7 @@ const TableInput = ({ roleOptions }) => {
                 required
                 label="Select status"
                 error={errors.isOpened ? true : undefined}
-                helperText={errors.isOpened ? "Required field" : undefined}
+                helperText={errors.isOpened}
               />
             )}
           />
@@ -204,7 +123,11 @@ const TableInput = ({ roleOptions }) => {
 
         <TableCell align="center">
           <div className="btn-wrapper" onClick={handleAddClick}>
-            <AddCircleOutlineIcon style={{ cursor: "pointer" }} /> ADD ROLE
+            <AddCircleOutlineIcon
+              style={{ cursor: "pointer" }}
+              onClick={(e) => handleAddClick(e)}
+            />{" "}
+            ADD ROLE
           </div>
         </TableCell>
       </TableRow>
