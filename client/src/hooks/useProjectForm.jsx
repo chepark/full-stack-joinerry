@@ -12,6 +12,7 @@ const useProjectForm = () => {
     content: "",
   });
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (name, inputValue) => {
     setValues({ ...values, [name]: inputValue });
@@ -19,7 +20,38 @@ const useProjectForm = () => {
     validate({ [name]: inputValue });
   };
 
-  const handleSave = () => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const project = values;
+
+    const response = await fetch("http://localhost:4000/api/projects", {
+      method: "POST",
+      body: JSON.stringify(project),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const json = await response.json();
+
+    if (!response.ok) {
+      console.log("Erros in POST request.", json.error);
+    }
+
+    if (response.ok) {
+      setValues({
+        category: "",
+        techStack: [],
+        roles: [],
+        startDate: null,
+        endDate: null,
+        contact: "",
+        title: "",
+        content: "",
+      });
+    }
+  };
 
   const handleCancel = () => {};
 
@@ -81,7 +113,7 @@ const useProjectForm = () => {
     values,
     setValues,
     handleChange,
-    handleSave,
+    handleSubmit,
     handleCancel,
     validate,
   };

@@ -19,8 +19,15 @@ const ProjectEditor = ({ mode }) => {
   const tagOptions = tagsJson.teachstacks;
 
   const [editorMode, setEditorMode] = useState(null);
-  const { errors, values, setValues, handleChange, handleCancel, handleSave } =
-    useProjectForm();
+  const {
+    errors,
+    values,
+    setValues,
+    handleChange,
+    handleCancel,
+    handleSubmit,
+    validate,
+  } = useProjectForm();
 
   useEffect(() => {
     setEditorMode(mode);
@@ -28,7 +35,12 @@ const ProjectEditor = ({ mode }) => {
 
   return (
     <div className="container" data-section="project-editor">
-      <div className="content-wrapper" data-section="project-editor">
+      <form
+        className="content-wrapper"
+        data-section="project-editor"
+        noValidate
+        onSubmit={(e) => handleSubmit(e)}
+      >
         <h2>Create Project</h2>
 
         <div className="editor-meta">
@@ -68,7 +80,11 @@ const ProjectEditor = ({ mode }) => {
           />
         </div>
         <div className="editor-roles">
-          <TableInput roleOptions={roleOptions} />
+          <TableInput
+            roleOptions={roleOptions}
+            setFormValues={setValues}
+            formValues={values}
+          />
         </div>
         <div className="editor-date">
           <TimePickerInput
@@ -116,14 +132,21 @@ const ProjectEditor = ({ mode }) => {
           />
         </div>
         <div className="editor-content">
-          <TextEditor />
+          <TextEditor
+            handleChange={handleChange}
+            values={values}
+            setValues={setValues}
+            errors={errors}
+            validate={validate}
+          />
         </div>
         <div className="editor-btns">
-          {console.log("errors", values)}
           <button className="editor-btn cancel">CANCEL</button>
-          <button className="editor-btn save">SAVE</button>
+          <button className="editor-btn publish" type="submit">
+            PUBLISH
+          </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

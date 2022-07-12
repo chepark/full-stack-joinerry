@@ -1,5 +1,5 @@
 import "./_tableInput.scss";
-// import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { v4 as uuidV4 } from "uuid";
 import useTableForm from "../../hooks/useTableForm";
 
@@ -18,29 +18,59 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 import AutoCompleteInput from "./AutoCompleteInput";
 import NumberFormat from "react-number-format";
 
-const TableInput = ({ roleOptions }) => {
-  // Perhaps in future,
-  // I need to set up useEffect for setRoles and setValues.
-  // When a user clicks edit button,
-  // saved project values will be used.
+const TableInput = ({ roleOptions, setFormValues, formValues }) => {
+  const { values, errors, validate, setValues } = useTableForm(
+    formValues.roles || []
+  );
 
-  const {
-    roles,
-    values,
-    errors,
-    handleInputChange,
-    handleAdd,
-    handleEdit,
-    handleRemove,
-  } = useTableForm(true);
-
-  const handleAddClick = (e) => {
+  const handleAdd = (e) => {
     e.preventDefault();
-    handleAdd();
+    if (validate()) {
+      setFormValues({ ...formValues, roles: [...formValues.roles, values] });
+    }
+  };
+
+  const handleEdit = (roleToEdit) => {
+    const { role, number, isOpened } = roleToEdit;
+    // put the value to the last row.
+    setValues({ role: role, number: number, isOpened: isOpened });
+
+    if (formValues.roles.length > 1) {
+      const otherRoles = formValues.roles.filter((role) => {
+        return role.role !== roleToEdit.role;
+      });
+
+      setFormValues({ ...formValues, roles: otherRoles });
+    } else {
+      setFormValues({ ...formValues, roles: [] });
+    }
+  };
+
+  const handleRemove = (roleToRemove) => {
+    if (formValues.roles.length > 1) {
+      const otherRoles = formValues.roles.filter((role) => {
+        return role.role !== roleToRemove.role;
+      });
+
+      setFormValues({ ...formValues, roles: otherRoles });
+    } else {
+      setFormValues({ ...formValues, roles: [] });
+    }
+  };
+
+  const handleInputChange = (name, inputValue) => {
+    setValues((values) => {
+      return {
+        ...values,
+        [name]: inputValue,
+      };
+    });
+
+    validate({ [name]: inputValue });
   };
 
   const renderRows = () => {
-    return roles.map((role) => {
+    return formValues?.roles.map((role) => {
       let id = role?.id ? role.id : uuidV4();
       return (
         <TableRow key={id}>
@@ -122,10 +152,10 @@ const TableInput = ({ roleOptions }) => {
         </TableCell>
 
         <TableCell align="center">
-          <div className="btn-wrapper" onClick={handleAddClick}>
+          <div className="btn-wrapper">
             <AddCircleOutlineIcon
               style={{ cursor: "pointer" }}
-              onClick={(e) => handleAddClick(e)}
+              onClick={(e) => handleAdd(e)}
             />{" "}
             ADD ROLE
           </div>
@@ -137,6 +167,7 @@ const TableInput = ({ roleOptions }) => {
   return (
     <>
       <TableContainer component={Paper}>
+        {console.log(formValues)}
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -147,7 +178,7 @@ const TableInput = ({ roleOptions }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {roles?.length > 0 && renderRows()}
+            {formValues.roles?.length > 0 && renderRows()}
             {renderLastRow()}
           </TableBody>
         </Table>
