@@ -1,5 +1,5 @@
 import "./_textEditor.scss";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import TextField from "@mui/material/TextField";
 
@@ -8,6 +8,7 @@ import "react-quill/dist/quill.snow.css";
 
 const TextEditor = ({ handleChange, values, setValues, errors, validate }) => {
   const quillFormats = ["h1", "h2"];
+  const quillRef = useRef();
 
   const customTextFieldStyle = [
     {
@@ -24,11 +25,20 @@ const TextEditor = ({ handleChange, values, setValues, errors, validate }) => {
     },
   ];
 
+  const renderQuillErrorMessage = () => {
+    return (
+      errors?.content && (
+        <div className="ql-error-message">{errors.content}</div>
+      )
+    );
+  };
+
   return (
     <div className="textEditor-wrapper">
+      {console.log("ref", quillRef.getEditingArea)}
       <TextField
         sx={customTextFieldStyle}
-        id="standard-basic"
+        required
         label="Title"
         variant="standard"
         value={values?.title}
@@ -38,15 +48,19 @@ const TextEditor = ({ handleChange, values, setValues, errors, validate }) => {
         error={errors.title ? true : undefined}
         helperText={errors.title}
       />
-      <ReactQuill
-        theme="snow"
-        placeholder="Explain about the project in detail."
-        onChange={(contentHtml) =>
-          setValues({ ...values, content: contentHtml })
-        }
-        onBlur={(e) => validate({ content: e.index })}
-      />
-      {errors?.content ? errors.content : null}
+
+      <div>
+        <ReactQuill
+          theme="snow"
+          placeholder="Explain about the project in detail."
+          onChange={(contentHtml) =>
+            setValues({ ...values, content: contentHtml })
+          }
+          onBlur={(e) => validate({ content: e.index })}
+          ref={quillRef}
+        />
+      </div>
+      {renderQuillErrorMessage()}
     </div>
   );
 };

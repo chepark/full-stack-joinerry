@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import useUserContext from "../../hooks/useUserContext";
 

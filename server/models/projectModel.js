@@ -12,7 +12,7 @@ const projectSchema = new Schema(
         {
           role: String,
           number: Number,
-          isOpened: Boolean,
+          isOpened: String,
         },
       ],
       required: true,

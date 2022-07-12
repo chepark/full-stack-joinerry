@@ -11,6 +11,7 @@ import LogIn from "./pages/LogIn/LogIn";
 import PrivateOutlet from "./components/PrivateOutlet/PrivateOutlet";
 import CreateProject from "./pages/CreateProject/CreateProject";
 import EditProject from "./pages/EditProject/EditProject";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 function App() {
   return (
@@ -24,9 +25,11 @@ function App() {
           <Route path="/success" element={<Success />} />
 
           {/* insert into private outlet later. */}
-          <Route path="/project/create" element={<CreateProject />} />
+
           <Route element={<PrivateOutlet />}>
+            <Route path="/project/create" element={<CreateProject />} />
             <Route path="/project/edit" element={<EditProject />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Route>
         </Routes>
         <Footer />

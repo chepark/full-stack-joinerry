@@ -18,10 +18,22 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 import AutoCompleteInput from "./AutoCompleteInput";
 import NumberFormat from "react-number-format";
 
-const TableInput = ({ roleOptions, setFormValues, formValues }) => {
+const TableInput = ({
+  roleOptions,
+  setFormValues,
+  formValues,
+  onSubmit,
+  setOnSubmit,
+}) => {
   const { values, errors, validate, setValues } = useTableForm(
-    formValues.roles || []
+    formValues.roles
   );
+
+  useEffect(() => {
+    if (onSubmit) {
+      validate(values);
+    }
+  }, [onSubmit]);
 
   const handleAdd = (e) => {
     e.preventDefault();
@@ -167,7 +179,6 @@ const TableInput = ({ roleOptions, setFormValues, formValues }) => {
   return (
     <>
       <TableContainer component={Paper}>
-        {console.log(formValues)}
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>

@@ -1,5 +1,6 @@
 import "./_projectEditor.scss";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import categoriesJson from "../../assets/categories.json";
 import rolesJson from "../../assets/roles.json";
@@ -10,28 +11,81 @@ import TableInput from "../FormInput/TableInput";
 import TimePickerInput from "../FormInput/TimePickerInput";
 import TextEditor from "../TextEditor/TextEditor";
 import TextField from "@mui/material/TextField";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import useProjectForm from "../../hooks/useProjectForm";
+import useUserContext from "../../hooks/useUserContext";
 
 const ProjectEditor = ({ mode }) => {
   const categoryOptions = categoriesJson.categories;
   const roleOptions = rolesJson.roles;
   const tagOptions = tagsJson.teachstacks;
 
+  const { user } = useUserContext();
   const [editorMode, setEditorMode] = useState(null);
-  const {
-    errors,
-    values,
-    setValues,
-    handleChange,
-    handleCancel,
-    handleSubmit,
-    validate,
-  } = useProjectForm();
+  const [onSubmit, setOnSubmit] = useState(false);
+  const { errors, values, setValues, handleChange, validate } =
+    useProjectForm();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setEditorMode(mode);
   }, [mode]);
+
+  const createProject = async () => {
+    const project = { ...values, creator: user._id };
+    console.log("user id in editor", user);
+    const response = await fetch("http://localhost:4000/api/projects", {
+      method: "POST",
+      body: JSON.stringify(project),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const json = await response.json();
+
+    if (!response.ok) {
+      console.log("Erros in POST request.", json.error);
+      setOnSubmit(false);
+    }
+
+    if (response.ok) {
+      console.log("response ok");
+      setValues({
+        category: "",
+        techStack: [],
+        roles: [],
+        startDate: null,
+        endDate: null,
+        contact: "",
+        title: "",
+        content: "",
+      });
+
+      setOnSubmit(false);
+      navigate("/dashboard", { replace: true });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // setSubmit(true); // If onSubmit is true, TableInput validates role values.
+    setOnSubmit(true);
+
+    if (!validate(values)) {
+      console.log("validate fail", errors);
+      return;
+    }
+
+    createProject();
+  };
+
+  const handleCancel = () => {
+    navigate("/", { replace: true });
+  };
 
   return (
     <div className="container" data-section="project-editor">
@@ -61,12 +115,12 @@ const ProjectEditor = ({ mode }) => {
             )}
           />
           <AutoCompleteInput
-            multiple
-            limitTags={5}
             value={values.teachStack || undefined}
             onChange={(e, newInput) => {
               handleChange("techStack", newInput);
             }}
+            multiple
+            limitTags={5}
             options={tagOptions}
             renderInput={(params) => (
               <TextField
@@ -84,6 +138,8 @@ const ProjectEditor = ({ mode }) => {
             roleOptions={roleOptions}
             setFormValues={setValues}
             formValues={values}
+            onSubmit={onSubmit}
+            setOnSubmit={setOnSubmit}
           />
         </div>
         <div className="editor-date">
@@ -95,7 +151,6 @@ const ProjectEditor = ({ mode }) => {
             disablePast
             onError={(reasons, value) => {
               console.log("reasons", reasons);
-              console.log("on error val,", value);
             }}
             renderInput={(params) => (
               <TextField
@@ -141,7 +196,9 @@ const ProjectEditor = ({ mode }) => {
           />
         </div>
         <div className="editor-btns">
-          <button className="editor-btn cancel">CANCEL</button>
+          <button className="editor-btn cancel" onClick={handleCancel}>
+            CANCEL
+          </button>
           <button className="editor-btn publish" type="submit">
             PUBLISH
           </button>

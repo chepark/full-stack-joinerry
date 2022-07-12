@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const useTableForm = (roles) => {
+const useTableForm = (roles = []) => {
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
     role: "",
@@ -18,10 +18,10 @@ const useTableForm = (roles) => {
     let tempErrors = { ...errors };
 
     if ("role" in fieldValues) {
-      tempErrors.role = fieldValues.role === "" ? "Required field." : "";
-      tempErrors.role = findDuplicates(fieldValues)
-        ? "Role already exists."
-        : "";
+      console.log("fieldvalue", fieldValues);
+      if (fieldValues.role === "") tempErrors.role = "Required field.";
+      else if (findDuplicates(fieldValues)) tempErrors.role = "Already exists.";
+      else tempErrors.role = "";
     }
 
     if ("number" in fieldValues)
