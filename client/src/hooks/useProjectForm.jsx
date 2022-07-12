@@ -24,7 +24,6 @@ const useProjectForm = () => {
   const handleCancel = () => {};
 
   const compareDates = (tempErrors, option) => {
-    console.log("triggerd");
     let today = new Date();
     today = today.getTime();
 
@@ -40,8 +39,6 @@ const useProjectForm = () => {
         endDateInMilliSeconds < startDateInMilliSeconds
           ? "Should be greater than start date."
           : "";
-
-    console.log("compare", startDateInMilliSeconds < today);
   };
 
   const validate = (fieldValues = values) => {
@@ -69,9 +66,9 @@ const useProjectForm = () => {
     if ("title" in fieldValues)
       tempErrors.title = fieldValues.title === "" ? "Required field." : "";
 
-    if ("content" in fieldValues)
-      tempErrors.content = fieldValues.content === "" ? "Required field." : "";
-
+    if ("content" in fieldValues) {
+      tempErrors.content = fieldValues.content === 0 ? "Required field." : "";
+    }
     setErrors(tempErrors);
 
     if (fieldValues === values) {
@@ -79,7 +76,15 @@ const useProjectForm = () => {
     }
   };
 
-  return { errors, values, setValues, handleChange, handleSave, handleCancel };
+  return {
+    errors,
+    values,
+    setValues,
+    handleChange,
+    handleSave,
+    handleCancel,
+    validate,
+  };
 };
 
 export default useProjectForm;

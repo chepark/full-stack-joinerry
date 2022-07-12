@@ -119,7 +119,7 @@ const ProjectEditor = ({ mode }) => {
           <TextEditor />
         </div>
         <div className="editor-btns">
-          {console.log("errors", errors)}
+          {console.log("errors", values)}
           <button className="editor-btn cancel">CANCEL</button>
           <button className="editor-btn save">SAVE</button>
         </div>
