@@ -1,5 +1,5 @@
 import "./_sidebar.scss";
-import techStacksJson from "../../assets/techstacks.json";
+import techStacksJson from "../../data/techstacks.json";
 import { v4 as uuidV4 } from "uuid";
 
 const Sidebar = ({ techStackTags, setTechStacks, setPageNumber }) => {

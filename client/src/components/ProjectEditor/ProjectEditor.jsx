@@ -2,9 +2,9 @@ import "./_projectEditor.scss";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import categoriesJson from "../../assets/categories.json";
-import rolesJson from "../../assets/roles.json";
-import tagsJson from "../../assets/techstacks.json";
+import categoriesJson from "../../data/categories.json";
+import rolesJson from "../../data/roles.json";
+import tagsJson from "../../data/techstacks.json";
 
 import AutoCompleteInput from "../FormInput/AutoCompleteInput";
 import TableInput from "../FormInput/TableInput";

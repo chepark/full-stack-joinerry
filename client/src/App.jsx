@@ -8,6 +8,7 @@ import Home from "./pages/Home/Home.page";
 import SignUp from "./pages/SignUp/SignUp";
 import Success from "./pages/Success/Success";
 import LogIn from "./pages/LogIn/LogIn";
+import ProjectDetail from "./pages/ProjectDetail/ProjectDetail";
 import PrivateOutlet from "./components/PrivateOutlet/PrivateOutlet";
 import CreateProject from "./pages/CreateProject/CreateProject";
 import EditProject from "./pages/EditProject/EditProject";
@@ -23,7 +24,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<LogIn />} />
           <Route path="/success" element={<Success />} />
-
+          <Route path="/project/:id" element={<ProjectDetail />} />
           {/* insert into private outlet later. */}
 
           <Route element={<PrivateOutlet />}>

@@ -1,10 +1,12 @@
 import "./_projectCard.scss";
 import { v4 as uuidv4 } from "uuid";
 import { useState, useEffect, forwardRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ProjectCard = ({ project, children }, ref) => {
-  const { title, techStack, creator, roles } = project;
+  const { title, techStack, creator, roles, _id } = project;
   let [capitalizedTitle, setCapitalizedTitle] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const capitalizeTitle = (title) => {
@@ -14,8 +16,12 @@ const ProjectCard = ({ project, children }, ref) => {
     setCapitalizedTitle(capitalizeTitle(title));
   }, [title]);
 
+  const handleCardClick = () => {
+    navigate("/project/" + _id, { replace: true });
+  };
+
   return (
-    <div className="project-card" ref={ref}>
+    <div className="project-card" ref={ref} onClick={handleCardClick}>
       <div className="card__mainContent">
         <h2 className="card__title">{title && capitalizedTitle}</h2>
         <div className="tags">

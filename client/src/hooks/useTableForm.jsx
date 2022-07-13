@@ -18,7 +18,6 @@ const useTableForm = (roles = []) => {
     let tempErrors = { ...errors };
 
     if ("role" in fieldValues) {
-      console.log("fieldvalue", fieldValues);
       if (fieldValues.role === "") tempErrors.role = "Required field.";
       else if (findDuplicates(fieldValues)) tempErrors.role = "Already exists.";
       else tempErrors.role = "";
@@ -34,7 +33,7 @@ const useTableForm = (roles = []) => {
       tempErrors.isOpened =
         fieldValues.isOpened === "" ? "Required field." : "";
 
-    setErrors({ ...tempErrors });
+    console.log("tempErr", tempErrors);
 
     if (fieldValues === values) {
       return Object.values(tempErrors).every((x) => x === "");
