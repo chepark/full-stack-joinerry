@@ -1,0 +1,58 @@
+@import "../../scss/typography";
+@import "../../scss/variables";
+
+#detail-wrapper {
+  padding: 0;
+  max-width: 850px;
+}
+
+.detail-card {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-header-wrapper,
+.detail-icons-wrapper {
+  padding: 2rem;
+}
+
+.detail-icons-wrapper {
+  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+
+  .detail-icon {
+    cursor: pointer;
+  }
+}
+
+.detail-about-wrapper {
+  display: grid;
+  grid-template-columns: 70% 30%;
+
+  .detail-about__left {
+    border-right: 1px solid $border-color;
+  }
+
+  .detail-about__left,
+  .detail-about__right {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    padding: 2rem;
+  }
+}
+
+.detail-subtitle {
+  @include subText1;
+  color: $primary-green;
+}

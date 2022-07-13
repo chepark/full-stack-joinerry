@@ -19,20 +19,31 @@ const ProjectDetail = () => {
     fetchProject();
   }, []);
 
+  const handleShareClick = () => {};
+
+  const handleLikeClick = () => {};
+
   return (
     <div
       className="container"
       data-section="main"
       style={{ height: windowHeight }}
     >
-      <div className="content-wrapper">
+      <div className="content-wrapper" id="detail-wrapper">
+        {/* <div>Project Detail</div> */}
+        {console.log(project)}
         <div className="detail-card">
           <div className="detail-header-wrapper">
             <h2 className="detail-title">{project.title}</h2>
-            <div className="detail-creator"></div>
+            <div className="detail-creator">
+              created by {project.creator.userName}
+            </div>
           </div>
           <div className="detail-icons-wrapper">
-            <div className="detail-icon detail-icon__share">
+            <div
+              className="detail-icon detail-icon__share"
+              onClick={handleShareClick}
+            >
               <svg
                 id="ios_share_black_24dp"
                 xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +66,10 @@ const ProjectDetail = () => {
                 />
               </svg>
             </div>
-            <div className="detail-icon detail-icon__like">
+            <div
+              className="detail-icon detail-icon__like"
+              onClick={handleLikeClick}
+            >
               <svg
                 id="favorite_border_black_24dp"
                 xmlns="http://www.w3.org/2000/svg"
@@ -83,7 +97,7 @@ const ProjectDetail = () => {
             <div className="detail-about__left">
               <div className="detail-techStack">
                 <div className="detail-subtitle">Tech Stack</div>
-                {/*!! Map all stacks !!*/}
+                {project?.techStack?.map((tech) => "#" + tech)}
               </div>
               <div className="detail-content">
                 <div className="detail-subtitle">Description</div>
@@ -91,30 +105,28 @@ const ProjectDetail = () => {
               </div>
             </div>
 
-            <div className="deatil-about__right">
-              <div className="detail-meta">
-                <div className="detail-submeta submeta__created">
-                  <div className="detail-subtitle">Posted On</div>
-                  <div className="detail-createdDate">{project.createdAt}</div>
-                </div>
-                <div className="detail-submeta submeta__roles">
-                  <div className="detail-subtitle">Role Openings</div>
-                  {project?.roles?.map((role) => {
-                    return role.role;
-                  })}
-                </div>
-                <div className="detail-submeta submeta__period">
-                  {project?.startDate ? (
-                    <div>{project.startDate}</div>
-                  ) : (
-                    <div>Not specifed</div>
-                  )}
-                  {project?.endDate ? (
-                    <div>{project.endDate}</div>
-                  ) : (
-                    <div>Not specifed</div>
-                  )}
-                </div>
+            <div className="detail-about__right">
+              <div className="detail-submeta submeta__created">
+                <div className="detail-subtitle">Posted On</div>
+                <div className="detail-createdDate">{project.createdAt}</div>
+              </div>
+              <div className="detail-submeta submeta__roles">
+                <div className="detail-subtitle">Role Openings</div>
+                {project?.roles?.map((role) => {
+                  return role.role;
+                })}
+              </div>
+              <div className="detail-submeta submeta__period">
+                {project?.startDate ? (
+                  <div>{project.startDate}</div>
+                ) : (
+                  <div>Not specifed</div>
+                )}
+                {project?.endDate ? (
+                  <div>{project.endDate}</div>
+                ) : (
+                  <div>Not specifed</div>
+                )}
               </div>
             </div>
           </div>
