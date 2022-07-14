@@ -1,13 +1,30 @@
 import "./_projectDetail.scss";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
+import { v4 as uuidV4 } from "uuid";
 import Parser from "html-react-parser";
 import useWindowSize from "../../hooks/useWindowSize";
+import formatDate from "../../utils/formatDate";
+import avatarLetter from "../../utils/avatarLetter";
+import useUserContext from "../../hooks/useUserContext";
+import useLikeToggle from "../../hooks/useLikeToggle";
+import OpeningStatus from "./OpeningStatus";
+import { ProfileModal, SocialShareModal } from "../../components/Modal";
+import { LikeFilled, LikeOutlined, ShareOutlined } from "../../assets/icons";
+import { Avatar } from "@mui/material";
+import ModalLayout from "../../components/Modal/ModalLayout";
 
 const ProjectDetail = () => {
   const { id } = useParams();
+
+  const location = useLocation();
+  const shareUrl = location.pathname;
+
   const [project, setProject] = useState({});
+  const [openShare, setOpenShare] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
   const [windowHeight, windowWidth] = useWindowSize();
+  const { likeToggle, likeOrUnlike } = useLikeToggle(id);
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -19,9 +36,17 @@ const ProjectDetail = () => {
     fetchProject();
   }, []);
 
-  const handleShareClick = () => {};
+  const handleCreatorClick = () => {
+    setOpenProfile(true);
+  };
 
-  const handleLikeClick = () => {};
+  const handleShareClick = () => {
+    setOpenShare(true);
+  };
+
+  const handleLikeClick = () => {
+    likeOrUnlike();
+  };
 
   return (
     <div
@@ -30,67 +55,50 @@ const ProjectDetail = () => {
       style={{ height: windowHeight }}
     >
       <div className="content-wrapper" id="detail-wrapper">
-        {/* <div>Project Detail</div> */}
-        {console.log(project)}
         <div className="detail-card">
           <div className="detail-header-wrapper">
             <h2 className="detail-title">{project.title}</h2>
-            <div className="detail-creator">
-              created by {project.creator.userName}
+            <div className="detail-creator" onClick={handleCreatorClick}>
+              created by
+              <div className="creator-name">
+                {project.creator?.userName
+                  ? project.creator?.userName
+                  : "no name"}
+              </div>
+              <Avatar>{avatarLetter(project.creator)}</Avatar>
             </div>
+            {openProfile && (
+              <ModalLayout
+                onClose={() => {
+                  setOpenProfile(false);
+                }}
+              >
+                <ProfileModal creator={project.creator} />
+              </ModalLayout>
+            )}
           </div>
           <div className="detail-icons-wrapper">
             <div
               className="detail-icon detail-icon__share"
               onClick={handleShareClick}
             >
-              <svg
-                id="ios_share_black_24dp"
-                xmlns="http://www.w3.org/2000/svg"
-                width="33.43"
-                height="33.762"
-                viewBox="0 0 33.43 33.762"
-              >
-                <path
-                  id="Path_9"
-                  data-name="Path 9"
-                  d="M0,0H33.43V33.762H0Z"
-                  fill="none"
-                />
-                <path
-                  id="Path_10"
-                  data-name="Path 10"
-                  d="M20.715,6.627l-1.978,2L16.522,6.388V22.1H13.764V6.388L11.55,8.625l-1.978-2L15.143,1Zm5.572,7.034V29.135A2.808,2.808,0,0,1,23.5,31.949H6.786A2.8,2.8,0,0,1,4,29.135V13.661a2.79,2.79,0,0,1,2.786-2.814h4.179v2.814H6.786V29.135H23.5V13.661H19.322V10.847H23.5A2.8,2.8,0,0,1,26.287,13.661Z"
-                  transform="translate(1.572 0.407)"
-                  fill="#a7aaaa"
-                />
-              </svg>
+              <ShareOutlined />
             </div>
+            {openShare ? (
+              <ModalLayout
+                onClose={(e) => {
+                  e.preventDefault();
+                  setOpenShare(false);
+                }}
+              >
+                <SocialShareModal shareUrl={shareUrl} />
+              </ModalLayout>
+            ) : null}
             <div
               className="detail-icon detail-icon__like"
               onClick={handleLikeClick}
             >
-              <svg
-                id="favorite_border_black_24dp"
-                xmlns="http://www.w3.org/2000/svg"
-                width="33.43"
-                height="33.762"
-                viewBox="0 0 33.43 33.762"
-              >
-                <path
-                  id="Path_7"
-                  data-name="Path 7"
-                  d="M0,0H33.43V33.762H0Z"
-                  fill="none"
-                />
-                <path
-                  id="Path_8"
-                  data-name="Path 8"
-                  d="M22.2,3a8.308,8.308,0,0,0-6.268,2.94A8.308,8.308,0,0,0,9.661,3,7.625,7.625,0,0,0,2,10.737c0,5.318,4.736,9.65,11.91,16.234l2.02,1.843,2.02-1.857c7.174-6.57,11.91-10.9,11.91-16.22A7.625,7.625,0,0,0,22.2,3ZM16.069,24.875l-.139.141-.139-.141c-6.63-6.063-11-10.072-11-14.138A4.784,4.784,0,0,1,9.661,5.814a5.445,5.445,0,0,1,4.973,3.32h2.6A5.411,5.411,0,0,1,22.2,5.814a4.784,4.784,0,0,1,4.875,4.924C27.073,14.8,22.7,18.812,16.069,24.875Z"
-                  transform="translate(0.786 1.22)"
-                  fill="#a7aaaa"
-                />
-              </svg>
+              {likeToggle ? <LikeFilled /> : <LikeOutlined />}
             </div>
           </div>
           <div className="detail-about-wrapper">
@@ -108,25 +116,39 @@ const ProjectDetail = () => {
             <div className="detail-about__right">
               <div className="detail-submeta submeta__created">
                 <div className="detail-subtitle">Posted On</div>
-                <div className="detail-createdDate">{project.createdAt}</div>
+                <div className="detail-createdDate">
+                  {formatDate(project.createdAt)}
+                </div>
               </div>
               <div className="detail-submeta submeta__roles">
                 <div className="detail-subtitle">Role Openings</div>
                 {project?.roles?.map((role) => {
-                  return role.role;
+                  return (
+                    <div key={uuidV4()} className="detail-role">
+                      <div>{role.role}</div>
+                      <OpeningStatus status={role.isOpened} />
+                    </div>
+                  );
                 })}
               </div>
               <div className="detail-submeta submeta__period">
-                {project?.startDate ? (
-                  <div>{project.startDate}</div>
-                ) : (
-                  <div>Not specifed</div>
-                )}
-                {project?.endDate ? (
-                  <div>{project.endDate}</div>
-                ) : (
-                  <div>Not specifed</div>
-                )}
+                <div className="detail-subtitle">Project Period</div>
+                <div className="period-from">
+                  From
+                  <span className="project-date">
+                    {project?.startDate
+                      ? formatDate(project.startDate)
+                      : "not specifed"}
+                  </span>
+                </div>
+                <div className="period-to">
+                  To
+                  <span className="project-date">
+                    {project?.endDate
+                      ? formatDate(project.endDate)
+                      : "not specifed"}
+                  </span>
+                </div>
               </div>
             </div>
           </div>

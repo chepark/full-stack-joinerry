@@ -1,5 +1,6 @@
 import express from "express";
 import { isUserAuthenticated } from "../middlewares/authMiddlware.js";
+import { updateUser } from "../controllers/userController.js";
 
 let router = express.Router();
 
@@ -13,6 +14,6 @@ router.get("/:id", (req, res) => {
 });
 
 // When user liked a project.
-router.patch("/:id", (req, res) => {});
+router.patch("/:id", updateUser);
 
 export default router;

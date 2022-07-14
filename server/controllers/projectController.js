@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Project from "../models/projectModel.js";
+import User from "../models/userModel.js";
 
 // get projects sorted by category or tech stack
 
@@ -45,11 +46,15 @@ const getProject = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).json({ error: "Invalid project id." });
 
-  const project = await Project.findById(id);
-
-  if (!project) return res.status(400).json({ error: "No project." });
-
-  res.status(200).json(project);
+  await Project.findById(id)
+    .populate("creator")
+    .exec((err, project) => {
+      if (err) {
+        return res.status(400).json({ error: "No project." });
+      } else {
+        res.status(200).json(project);
+      }
+    });
 };
 
 // create a project

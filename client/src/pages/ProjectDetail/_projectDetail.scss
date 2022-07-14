@@ -18,6 +18,23 @@
   padding: 2rem;
 }
 
+.detail-creator {
+  margin-top: 10px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+
+  color: $text-inactive-color;
+
+  cursor: pointer;
+
+  & > * {
+    color: $text-inactive-color;
+  }
+}
+
 .detail-icons-wrapper {
   border-top: 1px solid $border-color;
   border-bottom: 1px solid $border-color;
@@ -55,4 +72,36 @@
 .detail-subtitle {
   @include subText1;
   color: $primary-green;
+  margin-bottom: 0.5rem;
+}
+
+.detail-role {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
+
+  .detail-role__status {
+    font-size: 12px;
+    color: white;
+    padding: 0.2rem 0.3rem;
+    border-radius: 5px;
+  }
+}
+
+.status-opened {
+  background-color: $primary-green;
+}
+
+.status-filled {
+  background-color: $border-color;
+}
+
+.period-from {
+  margin-bottom: 5px;
+}
+
+.project-date {
+  margin-left: 5px;
 }

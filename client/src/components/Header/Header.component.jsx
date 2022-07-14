@@ -1,9 +1,12 @@
 import "./_header.scss";
+
 import { useEffect, useState } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
+
 import Avatar from "@mui/material/Avatar";
-import useUserContext from "../../hooks/useUserContext";
+import avatarLetter from "../../utils/avatarLetter";
 import { LOGOUT_USER } from "../../constants/actionTypes";
+import useUserContext from "../../hooks/useUserContext";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -15,8 +18,6 @@ const Header = () => {
     if (user?._id) return setIsUserIn(true);
     else setIsUserIn(false);
   }, [user]);
-
-  const avatarLetter = user?.userName?.slice(0, 1) || user?.email?.slice(0, 1);
 
   const handleLogout = async () => {
     const response = await fetch("http://localhost:4000/auth/logout");
@@ -31,7 +32,6 @@ const Header = () => {
   if (pathname === "/success") return null;
   return (
     <header className="container" id="header">
-      {/* {console.log(user)} */}
       <div className="content-wrapper" data-section="header">
         <h1 id="logo">
           <Link to="/" style={{ textDecoration: "none" }}>
@@ -48,7 +48,7 @@ const Header = () => {
           {isUserIn && (
             <>
               <div className="header-profile">
-                <Avatar>{avatarLetter}</Avatar>
+                <Avatar>{avatarLetter(user)}</Avatar>
                 <div>{user.email}</div>
               </div>
               <div className="logout-btn" onClick={handleLogout}>

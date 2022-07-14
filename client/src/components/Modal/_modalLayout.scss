@@ -1,0 +1,91 @@
+@import "../../scss/variables";
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content-wrapper {
+  background-color: white;
+  border-radius: 50px;
+  // position: fixed;
+  // top: 50%;
+  // left: 50%;
+  // transform: "translate(-50%, -50%)";
+  padding: 3rem;
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column;
+
+  max-width: 30vw;
+  width: 800px;
+  height: 400px;
+}
+
+.modal-header {
+  font-family: "Poppins", sans-serif;
+  font-weight: normal;
+  font-size: 1.5rem;
+}
+
+.modal-btn {
+  cursor: pointer;
+}
+
+.modal-btn__close {
+  display: flex;
+  justify-content: flex-end;
+}
+
+// SOCIAL SHARE
+.share-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.share-btns {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+
+  margin-top: 1rem;
+}
+
+.share-link {
+  width: 100%;
+  margin-top: 1rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  position: relative;
+}
+
+.link-inputBox {
+  width: 100%;
+  border: 1px solid $border-color;
+  background-color: transparent;
+  padding: 0.5rem 1rem;
+}
+
+.link-message {
+  width: 100%;
+  margin-top: 10px;
+  text-align: right;
+}
+
+// PROFILE MODAL
