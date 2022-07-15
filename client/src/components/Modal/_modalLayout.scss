@@ -17,10 +17,7 @@
 .modal-content-wrapper {
   background-color: white;
   border-radius: 50px;
-  // position: fixed;
-  // top: 50%;
-  // left: 50%;
-  // transform: "translate(-50%, -50%)";
+
   padding: 3rem;
   z-index: 1000;
 
@@ -29,7 +26,7 @@
 
   max-width: 30vw;
   width: 800px;
-  height: 400px;
+  height: auto;
 }
 
 .modal-header {
@@ -48,7 +45,7 @@
 }
 
 // SOCIAL SHARE
-.share-wrapper {
+.share-modal-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -89,3 +86,53 @@
 }
 
 // PROFILE MODAL
+
+.modal-creator-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+
+  &:first-child {
+    font-size: 15px;
+    color: $text-inactive-color;
+  }
+}
+
+.creator-image__frame {
+  width: 130px;
+  height: 130px;
+
+  .creater-image {
+    width: 130px;
+    height: auto;
+  }
+}
+
+.creator-name[data-section="modal"] {
+  font-size: 2rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: black;
+}
+
+.creator-email {
+  color: black;
+}
+
+.creator-bio {
+  margin: 1rem;
+}
+
+.creator-done {
+  width: 100%;
+  border: 3px solid $primary-green;
+  border-radius: 50px;
+  padding: 0.5rem;
+
+  color: $primary-green;
+  letter-spacing: 3px;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+}

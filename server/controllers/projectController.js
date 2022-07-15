@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Project from "../models/projectModel.js";
 import User from "../models/userModel.js";
+import { addPostToUser } from "./userController.js";
 
 // get projects sorted by category or tech stack
 
@@ -83,6 +84,9 @@ const createProject = async (req, res) => {
       endDate,
       contact,
     });
+
+    // save the project id into posts field of user.
+    const updatedUser = await addPostToUser(project);
 
     res.status(200).json(project);
   } catch (error) {

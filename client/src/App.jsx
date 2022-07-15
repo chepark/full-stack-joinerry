@@ -13,6 +13,9 @@ import PrivateOutlet from "./components/PrivateOutlet/PrivateOutlet";
 import CreateProject from "./pages/CreateProject/CreateProject";
 import EditProject from "./pages/EditProject/EditProject";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import Posts from "./pages/Posts/Posts";
+import Likes from "./pages/Likes/Likes";
+import AccountSetting from "./pages/AccountSetting/AccountSetting";
 
 function App() {
   return (
@@ -30,7 +33,12 @@ function App() {
           <Route element={<PrivateOutlet />}>
             <Route path="/project/create" element={<CreateProject />} />
             <Route path="/project/edit" element={<EditProject />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
+          {/* MOVE DASHBOARD INSIDE OF THE PRIVATE OUTLET */}
+          <Route path="/dashboard" element={<Dashboard />}>
+            <Route path="posts" element={<Posts />} />
+            <Route path="likes" element={<Likes />} />
+            <Route path="account-setting" element={<AccountSetting />} />
           </Route>
         </Routes>
         <Footer />

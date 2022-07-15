@@ -25,4 +25,10 @@ const updateUser = async (req, res) => {
   res.status(200).json({ updatedUser });
 };
 
-export { updateUser };
+const addPostToUser = async (project) => {
+  return await User.findByIdAndUpdate(project.creator.toString(), {
+    $push: { posts: project._id.toString() },
+  });
+};
+
+export { updateUser, addPostToUser };

@@ -60,7 +60,7 @@ export const SocialShareModal = ({ shareUrl, title, summary }) => {
   };
 
   return (
-    <div className="share-wrapper">
+    <div className="share-modal-wrapper">
       <h3 className="modal-header">Share with Friends</h3>
       <div className="share-btns">
         <div className="modal-btn share-btn" onClick={shareOnFacebook}>

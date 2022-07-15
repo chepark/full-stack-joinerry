@@ -1,0 +1,50 @@
+@import "../../scss/variables";
+
+.container[data-section="dashboard"] {
+  background-color: $bg-color;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  padding-top: 5rem;
+}
+
+.contents {
+  display: grid;
+  grid-template-columns: 20% 80%;
+  margin-top: 3rem;
+}
+
+.nav-category {
+  margin-bottom: 2rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: black;
+  padding-bottom: 2px;
+  --link-height: 2px;
+
+  background: linear-gradient(0deg, $primary-green, $primary-green) no-repeat
+    right bottom/ 0 var(--link-height);
+  transition: background-size 300ms;
+
+  &:where(:hover, :focus-visible) {
+    background-size: 100% var(--link-height);
+    background-position-x: left;
+  }
+
+  &:hover {
+    cursor: pointer;
+    color: $primary-green;
+  }
+}
+
+.nav-link.active {
+  color: $primary-green;
+  background: linear-gradient(0deg, $primary-green, $primary-green) no-repeat
+    right bottom/ 0 var(--link-height);
+  background-size: 100% var(--link-height);
+  background-position-x: left;
+}

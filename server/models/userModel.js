@@ -15,8 +15,8 @@ const userSchema = new Schema(
       linkedin: String,
       github: String,
     },
-    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "project" }],
-    posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "project" }],
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Project" }],
+    posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Project" }],
     contact: String,
   },
   { timestamp: true }

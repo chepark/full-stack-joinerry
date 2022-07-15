@@ -3,7 +3,7 @@ import { useState } from "react";
 import useProjectContext from "./useProjectContext";
 import { GET_PROJECTS } from "../constants/actionTypes";
 
-const useFetchProjects = (category, tags, pageNumber) => {
+const useFetchProjects = (category, tags, pageNumber, query) => {
   const { projects, dispatch } = useProjectContext();
 
   const [loading, setLoading] = useState(true);
@@ -56,6 +56,10 @@ const useFetchProjects = (category, tags, pageNumber) => {
 
     return fetchController.abort(signal);
   }, [category, tags, pageNumber]);
+
+  useEffect(() => {
+    console.log("with query", query);
+  }, [query]);
 
   return { loading, error, hasMore };
 };
