@@ -1,13 +1,16 @@
 import express from "express";
 import { isUserAuthenticated } from "../middlewares/authMiddlware.js";
-import { updateUser } from "../controllers/userController.js";
+import { updateUser, getUserPosts } from "../controllers/userController.js";
+import User from "../models/userModel.js";
 
 let router = express.Router();
 
-router.get("/current_user", isUserAuthenticated, (req, res) => {
-  console.log("SESSION??", req.session);
+router.get("/current_user", isUserAuthenticated, async (req, res) => {
+  console.log("current user");
   res.status(200).json(req.user);
 });
+
+router.get("/current_user/posts", getUserPosts);
 
 router.get("/:id", (req, res) => {
   res.json({ message: "it is working" });

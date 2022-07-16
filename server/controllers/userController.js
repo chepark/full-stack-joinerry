@@ -31,4 +31,14 @@ const addPostToUser = async (project) => {
   });
 };
 
-export { updateUser, addPostToUser };
+const getUserPosts = async (req, res) => {
+  const data = await User.findById(req.user._id)
+    .select("posts")
+    .populate("posts");
+
+  if (!data)
+    return res.status(400).json({ error: "Error in getting user posts." });
+  res.status(200).json({ posts: data.posts });
+};
+
+export { updateUser, addPostToUser, getUserPosts };

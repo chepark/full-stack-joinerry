@@ -1,16 +1,33 @@
 import "./_posts.scss";
-import useProjectContext from "../../hooks/useProjectContext";
-import useUserContext from "../../hooks/useUserContext";
-import useFetchProjects from "../../hooks/useFetchProjects";
+import { useEffect, useState } from "react";
+
 import useFetchUser from "../../hooks/useFetchUser";
 
 const Posts = () => {
-  const { user } = useFetchUser();
-  const postIDs = user?.posts;
-  console.log("id", postIDs);
-  const { loading, error, hasMore } = useFetchProjects(...Array(3), postIDs);
+  const [posts, setPosts] = useState();
 
-  return <div></div>;
+  useEffect(() => {
+    const fetchUserProjects = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:4000/api/users/current_user/posts",
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+
+        const json = await response.json();
+        setPosts(json.posts);
+      } catch (error) {
+        console.log("Error occurs while fetching posts", error);
+      }
+    };
+
+    fetchUserProjects();
+  }, []);
+
+  return <div>{console.log("Posts", posts)}</div>;
 };
 
 export default Posts;

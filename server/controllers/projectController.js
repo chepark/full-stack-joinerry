@@ -5,19 +5,21 @@ import { addPostToUser } from "./userController.js";
 
 // get projects sorted by category or tech stack
 
-// get all projects
 const getProjects = async (req, res) => {
-  let query = {};
+  let tempQuery = {};
 
   // create query object.
-  if (req.query.category === "latest" && req.query.tags === "null") query = {};
-  else {
-    req.query.category !== "latest" && (query.category = req.query.category);
-    req.query.tags !== "null" && (query.techStack = { $in: [req.query.tags] });
+
+  if (req.query.category === "latest" && req.query.tags === "null")
+    tempQuery = {};
+  else if (req.query.category !== "latest") {
+    tempQuery.category = req.query.category;
+  } else if (req.query.tags !== "null") {
+    tempQuery.techStack = { $in: [req.query.tags] };
   }
 
   // set values to pass them as skip() and limit() arguments.
-  const numberOfDocuments = await Project.countDocuments(query).exec();
+  const numberOfDocuments = await Project.countDocuments(tempQuery).exec();
   const pageNumber = parseInt(req.query.pageNumber);
   const limit = 15;
 
@@ -32,7 +34,9 @@ const getProjects = async (req, res) => {
     };
   }
 
-  results.projects = await Project.find(query).skip(startIndex).limit(limit);
+  results.projects = await Project.find(tempQuery)
+    .skip(startIndex)
+    .limit(limit);
   // .sort({
   //   createdAt: -1,
   // });
@@ -40,7 +44,6 @@ const getProjects = async (req, res) => {
   res.status(200).json(results);
 };
 
-// get a project
 const getProject = async (req, res) => {
   const { id } = req.params;
 
@@ -58,7 +61,6 @@ const getProject = async (req, res) => {
     });
 };
 
-// create a project
 const createProject = async (req, res) => {
   const {
     title,
@@ -85,7 +87,8 @@ const createProject = async (req, res) => {
       contact,
     });
 
-    // save the project id into posts field of user.
+    //! save the project id into posts field of user.
+    // !Should it be moved to a seperate file?
     const updatedUser = await addPostToUser(project);
 
     res.status(200).json(project);

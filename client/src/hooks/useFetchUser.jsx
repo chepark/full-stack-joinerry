@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { GET_USER } from "../constants/actionTypes";
 import useUserContext from "./useUserContext";
 
-const useFetchUser = () => {
+const useFetchUser = (query) => {
   const { user, dispatch } = useUserContext();
 
   useEffect(() => {
@@ -25,6 +25,9 @@ const useFetchUser = () => {
 
     fetchUser();
   }, []);
+
+  // !!working on here
+
   return { user };
 };
 
