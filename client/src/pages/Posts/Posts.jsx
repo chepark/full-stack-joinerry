@@ -1,13 +1,11 @@
 import "./_posts.scss";
 import { useEffect, useState } from "react";
 
-import useFetchUser from "../../hooks/useFetchUser";
-
 const Posts = () => {
   const [posts, setPosts] = useState();
 
   useEffect(() => {
-    const fetchUserProjects = async () => {
+    const fetchUserPosts = async () => {
       try {
         const response = await fetch(
           "http://localhost:4000/api/users/current_user/posts",
@@ -24,7 +22,7 @@ const Posts = () => {
       }
     };
 
-    fetchUserProjects();
+    fetchUserPosts();
   }, []);
 
   return <div>{console.log("Posts", posts)}</div>;

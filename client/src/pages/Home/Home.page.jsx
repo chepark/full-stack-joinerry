@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import "./_home.scss";
+import { useCallback } from "react";
 import { useState } from "react";
 
 import Banner from "../../components/Banner/Banner.component";
@@ -6,12 +7,40 @@ import CategoryMenu from "../../components/CategoryMenu/CategoryMenu.component";
 import ProjectCards from "../../components/ProjectCards/ProjectCards.component";
 import Sidebar from "../../components/Sidebar/Sibebar.component";
 
-import "./_home.scss";
+import useProjectContext from "../../hooks/useProjectContext";
+import useFetchProjects from "../../hooks/useFetchProjects";
 
 const Home = () => {
   const [category, setCategory] = useState("latest");
   const [techStackTags, setTechStackTags] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
+  const { projects } = useProjectContext();
+  const { loading, error, hasMore } = useFetchProjects(
+    category,
+    techStackTags,
+    pageNumber
+  );
+
+  const lastProjectCardRef = useCallback(
+    (node, observer) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+
+      const option = {
+        root: null,
+        rootMargin: "20px",
+        threshold: 0,
+      };
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPageNumber(hasMore.page);
+        }
+      }, option);
+
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore]
+  );
 
   return (
     <>
@@ -30,10 +59,8 @@ const Home = () => {
               setPageNumber={setPageNumber}
             />
             <ProjectCards
-              category={category}
-              techStackTags={techStackTags}
-              pageNumber={pageNumber}
-              setPageNumber={setPageNumber}
+              lastProjectCardRef={lastProjectCardRef}
+              projects={projects}
             />
           </div>
         </div>
