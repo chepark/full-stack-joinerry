@@ -41,4 +41,14 @@ const getUserPosts = async (req, res) => {
   res.status(200).json({ posts: data.posts });
 };
 
-export { updateUser, addPostToUser, getUserPosts };
+const getUserLikes = async (req, res) => {
+  const data = await User.findById(req.user._id)
+    .select("likes")
+    .populate("likes");
+
+  if (!data)
+    return res.status(400).json({ error: "Error in getting user likes." });
+  res.status(200).json({ posts: data.likes });
+};
+
+export { updateUser, addPostToUser, getUserPosts, getUserLikes };
