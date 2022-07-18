@@ -32,7 +32,7 @@ function App() {
 
           <Route element={<PrivateOutlet />}>
             <Route path="/project/create" element={<CreateProject />} />
-            <Route path="/project/edit" element={<EditProject />} />
+            <Route path="/project/edit/:id" element={<EditProject />} />
           </Route>
           {/* MOVE DASHBOARD INSIDE OF THE PRIVATE OUTLET */}
           <Route path="/dashboard" element={<Dashboard />}>

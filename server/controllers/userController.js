@@ -41,6 +41,24 @@ const getUserPosts = async (req, res) => {
   res.status(200).json({ posts: data.posts });
 };
 
+const deleteUserPost = async (req, res) => {
+  const { id } = req.params;
+
+  const updatedUser = await User.findOneAndUpdate(
+    { _id: req.user._id },
+    { $pull: { posts: id } },
+    { new: true }
+  ).populate("posts");
+
+  if (!updatedUser)
+    return res
+      .status(400)
+      .json({ error: "Error occurs while delete the post" });
+
+  console.log("DELETED POST", updatedUser);
+  res.status(200).json({ updatedUser });
+};
+
 const getUserLikes = async (req, res) => {
   const data = await User.findById(req.user._id)
     .select("likes")
@@ -51,4 +69,10 @@ const getUserLikes = async (req, res) => {
   res.status(200).json({ posts: data.likes });
 };
 
-export { updateUser, addPostToUser, getUserPosts, getUserLikes };
+export {
+  updateUser,
+  addPostToUser,
+  getUserPosts,
+  deleteUserPost,
+  getUserLikes,
+};

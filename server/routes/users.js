@@ -4,6 +4,7 @@ import {
   updateUser,
   getUserPosts,
   getUserLikes,
+  deleteUserPost,
 } from "../controllers/userController.js";
 import User from "../models/userModel.js";
 
@@ -15,6 +16,8 @@ router.get("/current_user", isUserAuthenticated, async (req, res) => {
 });
 
 router.get("/current_user/posts", getUserPosts);
+
+router.delete("/current_user/posts/:id", deleteUserPost);
 
 router.get("/current_user/likes", getUserLikes);
 

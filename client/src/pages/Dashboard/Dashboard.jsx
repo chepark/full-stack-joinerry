@@ -33,7 +33,7 @@ const Dashboard = () => {
       data-section="dashboard"
       style={{ height: windowHeight }}
     >
-      <div className="content-wrapper">
+      <div className="content-wrapper" data-setion="dashboard">
         <h2>Dashboard</h2>
         <div className="contents">
           <nav className="content-nav">
@@ -70,7 +70,9 @@ const Dashboard = () => {
               </Link>
             </div>
           </nav>
-          <Outlet />
+          <div className="dashboard-cards-wrapper">
+            <Outlet />
+          </div>
         </div>
       </div>
     </div>

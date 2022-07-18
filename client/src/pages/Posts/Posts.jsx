@@ -1,8 +1,10 @@
 import "./_posts.scss";
 import { useEffect, useState } from "react";
+import ProjectCards from "../../components/ProjectCards/ProjectCards.component";
+import ProjectCardButtons from "../../components/ProjectCardSubContent/ProjectCardButtons";
 
 const Posts = () => {
-  const [posts, setPosts] = useState();
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const fetchUserPosts = async () => {
@@ -25,7 +27,17 @@ const Posts = () => {
     fetchUserPosts();
   }, []);
 
-  return <div>{console.log("Posts", posts)}</div>;
+  return (
+    <>
+      {posts?.length === 0 ? (
+        "no posts."
+      ) : (
+        <ProjectCards projects={posts}>
+          <ProjectCardButtons setPosts={setPosts} />
+        </ProjectCards>
+      )}
+    </>
+  );
 };
 
 export default Posts;

@@ -9,6 +9,7 @@ import Sidebar from "../../components/Sidebar/Sibebar.component";
 
 import useProjectContext from "../../hooks/useProjectContext";
 import useFetchProjects from "../../hooks/useFetchProjects";
+import ProjectCardMeta from "../../components/ProjectCardSubContent/ProjectCardMeta";
 
 const Home = () => {
   const [category, setCategory] = useState("latest");
@@ -61,7 +62,9 @@ const Home = () => {
             <ProjectCards
               lastProjectCardRef={lastProjectCardRef}
               projects={projects}
-            />
+            >
+              <ProjectCardMeta />
+            </ProjectCards>
           </div>
         </div>
       </main>

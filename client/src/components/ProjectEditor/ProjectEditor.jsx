@@ -65,7 +65,7 @@ const ProjectEditor = ({ mode }) => {
       });
 
       setOnSubmit(false);
-      navigate("/dashboard", { replace: true });
+      navigate("/dashboard/posts", { replace: true });
     }
   };
 
@@ -84,7 +84,7 @@ const ProjectEditor = ({ mode }) => {
   };
 
   const handleCancel = () => {
-    navigate("/", { replace: true });
+    navigate("/dashboard/posts", { replace: true });
   };
 
   return (

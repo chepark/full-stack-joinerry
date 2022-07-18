@@ -5,14 +5,21 @@
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
 
   padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.content-wrapper[data-setion="dashboard"] {
+  padding-left: 2rem;
 }
 
 .contents {
   display: grid;
   grid-template-columns: 20% 80%;
+  grid-template-rows: max-content;
   margin-top: 3rem;
 }
 
@@ -47,4 +54,8 @@
     right bottom/ 0 var(--link-height);
   background-size: 100% var(--link-height);
   background-position-x: left;
+}
+
+.dashboard-cards-wrapper .projects-wrapper {
+  margin-top: 0px;
 }
