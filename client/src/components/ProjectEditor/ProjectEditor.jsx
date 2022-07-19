@@ -34,8 +34,6 @@ const ProjectEditor = ({ mode, projectId }) => {
   }, [mode]);
 
   useEffect(() => {
-    if (editorMode === "add") return;
-
     const fetchProject = async () => {
       const response = await fetch(
         "http://localhost:4000/api/projects/" + projectId
@@ -44,7 +42,7 @@ const ProjectEditor = ({ mode, projectId }) => {
       setValues(json);
     };
 
-    fetchProject();
+    if (editorMode === "edit") fetchProject();
   }, [editorMode]);
 
   const createProject = async () => {
