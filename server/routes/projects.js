@@ -19,7 +19,9 @@ router.get("/:id", getProject);
 router.post("/", createProject);
 
 // Edit a project
-router.patch("/:id", updateProject);
+// router.patch("/:id", updateProject);
+router.put("/:id", updateProject);
+
 // Delete a project
 router.delete("/:id", deleteProject);
 

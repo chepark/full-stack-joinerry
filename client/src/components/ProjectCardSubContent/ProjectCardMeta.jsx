@@ -4,14 +4,19 @@ import Avatar from "@mui/material/Avatar";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import red from "@material-ui/core/colors/red";
 import grey from "@material-ui/core/colors/grey";
+import useLikeToggle from "../../hooks/useLikeToggle";
+import { LikeFilled } from "../../assets/icons";
+import { LikeOutlined } from "../../assets/icons";
 
-const ProjectCardMeta = ({ userId, projectId }) => {
+const ProjectCardMeta = ({ project, likeButtonClicked }) => {
   const [meta, setMeta] = useState(null);
-  const [likeToggle, setLikeToggle] = useState(false);
+  const { likeToggle, likeOrUnlike } = useLikeToggle(project._id);
 
   useEffect(() => {
-    // fetch creator data from backend
-  }, []);
+    if (!likeButtonClicked) return;
+
+    likeButtonClicked(false);
+  }, [likeToggle]);
 
   const stringToColor = (string) => {
     let hash = 0;
@@ -50,7 +55,13 @@ const ProjectCardMeta = ({ userId, projectId }) => {
     );
   };
 
-  const likeButtonColor = likeToggle ? red : grey;
+  const handleLikeClick = (e) => {
+    e.stopPropagation();
+    likeOrUnlike();
+    // In Dashboard/likes,
+    // user's likes are fetched again whenever it is invoked
+    if (likeButtonClicked) likeButtonClicked(true);
+  };
 
   return (
     <div className="card__meta">
@@ -59,8 +70,8 @@ const ProjectCardMeta = ({ userId, projectId }) => {
         <div className="creator-img">{renderAvatar()}</div>
         <p className="creator-name">Jonh Test</p>
       </div>
-      <div className="like-button">
-        <FavoriteIcon sx={{ color: likeButtonColor[400] }} />
+      <div className="like-button" onClick={(e) => handleLikeClick(e)}>
+        {likeToggle ? <LikeFilled /> : <LikeOutlined />}
       </div>
     </div>
   );

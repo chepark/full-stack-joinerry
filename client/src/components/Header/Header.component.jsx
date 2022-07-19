@@ -7,11 +7,13 @@ import Avatar from "@mui/material/Avatar";
 import avatarLetter from "../../utils/avatarLetter";
 import { LOGOUT_USER } from "../../constants/actionTypes";
 import useUserContext from "../../hooks/useUserContext";
+import useFetchUser from "../../hooks/useFetchUser";
 
 const Header = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { user, dispatch } = useUserContext();
+  const { user } = useFetchUser();
+  const { dispatch } = useUserContext();
   const [isUserIn, setIsUserIn] = useState(null);
 
   useEffect(() => {

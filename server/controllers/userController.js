@@ -66,7 +66,7 @@ const getUserLikes = async (req, res) => {
 
   if (!data)
     return res.status(400).json({ error: "Error in getting user likes." });
-  res.status(200).json({ posts: data.likes });
+  res.status(200).json({ likes: data.likes });
 };
 
 export {

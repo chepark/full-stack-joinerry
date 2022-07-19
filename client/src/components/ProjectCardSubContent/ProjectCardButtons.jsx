@@ -1,13 +1,17 @@
 import "./_projectCardSubContent.scss";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import DeleteConfirmModal from "../Modal/DeleteConfirmModal";
 import ModalLayout from "../Modal/ModalLayout";
+import { id } from "date-fns/locale";
 
 const ProjectCardButtons = ({ project, setPosts }) => {
   const [openConfirm, setOpenConfirm] = useState(false);
+  const navigate = useNavigate();
 
   const handleEditClick = (e) => {
     e.stopPropagation();
+    navigate("/project/edit/" + project._id, { replace: true });
   };
   const handleDeleteClick = (e) => {
     e.stopPropagation();

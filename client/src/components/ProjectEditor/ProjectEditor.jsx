@@ -16,7 +16,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import useProjectForm from "../../hooks/useProjectForm";
 import useUserContext from "../../hooks/useUserContext";
 
-const ProjectEditor = ({ mode }) => {
+const ProjectEditor = ({ mode, projectId }) => {
   const categoryOptions = categoriesJson.categories;
   const roleOptions = rolesJson.roles;
   const tagOptions = tagsJson.teachstacks;
@@ -32,6 +32,20 @@ const ProjectEditor = ({ mode }) => {
   useEffect(() => {
     setEditorMode(mode);
   }, [mode]);
+
+  useEffect(() => {
+    if (editorMode === "add") return;
+
+    const fetchProject = async () => {
+      const response = await fetch(
+        "http://localhost:4000/api/projects/" + projectId
+      );
+      const json = await response.json();
+      setValues(json);
+    };
+
+    fetchProject();
+  }, [editorMode]);
 
   const createProject = async () => {
     const project = { ...values, creator: user._id };
@@ -87,13 +101,32 @@ const ProjectEditor = ({ mode }) => {
     navigate("/dashboard/posts", { replace: true });
   };
 
+  const handleEdit = async () => {
+    //! check if the creator and user id matches.
+    //! if it matches, take the value and update data.
+    const project = { ...values, creator: user._id };
+    const response = await fetch(
+      "http://localhost:4000/api/projects/" + projectId,
+      {
+        method: "PUT",
+        body: JSON.stringify(project),
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    console.log("updatedData", data);
+    navigate("/dashboard/posts", { replace: true });
+  };
+
   return (
     <div className="container" data-section="project-editor">
       <form
         className="content-wrapper"
         data-section="project-editor"
         noValidate
-        onSubmit={(e) => handleSubmit(e)}
       >
         <h2>Create Project</h2>
 
@@ -199,9 +232,21 @@ const ProjectEditor = ({ mode }) => {
           <button className="editor-btn cancel" onClick={handleCancel}>
             CANCEL
           </button>
-          <button className="editor-btn publish" type="submit">
-            PUBLISH
-          </button>
+          {editorMode === "add" ? (
+            <button
+              className="editor-btn publish"
+              type="submit"
+              onClick={(e) => {
+                handleSubmit(e);
+              }}
+            >
+              PUBLISH
+            </button>
+          ) : (
+            <button className="editor-btn publish" onClick={handleEdit}>
+              EDIT
+            </button>
+          )}
         </div>
       </form>
     </div>

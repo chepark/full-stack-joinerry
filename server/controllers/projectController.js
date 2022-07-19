@@ -99,17 +99,19 @@ const createProject = async (req, res) => {
 
 // update a project
 const updateProject = async (req, res) => {
-  const { id } = req.params;
+  const projectId = req.params.id;
+  const userId = req.user._id;
   const dataToUpdate = { ...req.body };
 
-  if (!mongoose.Types.ObjectId.isValid(id))
+  if (!mongoose.Types.ObjectId.isValid(projectId))
     return res.status(404).json({ error: "Invalid project id." });
 
   const project = await Project.findOneAndUpdate(
-    { _id: id },
+    { _id: projectId },
     {
       ...dataToUpdate,
-    }
+    },
+    { new: true }
   );
 
   if (!project) return res.status(400).json({ error: "No project to update." });

@@ -1,16 +1,22 @@
 import { useEffect, useState } from "react";
 import { UPDATE_USER } from "../constants/actionTypes";
+import useFetchUser from "./useFetchUser";
 import useUserContext from "./useUserContext";
 
 const useLikeToggle = (projectId) => {
   const [likeToggle, setLikeToggle] = useState(false);
-  const { user, dispatch } = useUserContext();
+  const { dispatch } = useUserContext();
+  const { user } = useFetchUser();
 
   useEffect(() => {
-    if (user?.likes?.length > 0 && user.likes.includes(projectId))
+    console.log("user likes", user.likes);
+    console.log("project id", projectId);
+    if (user?.likes?.length > 0 && user.likes.includes(projectId)) {
       setLikeToggle(true);
-    else setLikeToggle(false);
-  }, [user]);
+    } else {
+      return;
+    }
+  }, [projectId]);
 
   const likeOrUnlike = async () => {
     if (Object.keys(user).length === 0) {
