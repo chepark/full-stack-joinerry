@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
 import "./_projectCardSubContent.scss";
+import { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import red from "@material-ui/core/colors/red";
-import grey from "@material-ui/core/colors/grey";
-import useLikeToggle from "../../hooks/useLikeToggle";
+
 import { LikeFilled } from "../../assets/icons";
 import { LikeOutlined } from "../../assets/icons";
+
+import useLikeToggle from "../../hooks/useLikeToggle";
 
 const ProjectCardMeta = ({ project, likeButtonClicked }) => {
   const [meta, setMeta] = useState(null);

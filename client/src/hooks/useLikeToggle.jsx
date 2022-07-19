@@ -9,8 +9,6 @@ const useLikeToggle = (projectId) => {
   const { user } = useFetchUser();
 
   useEffect(() => {
-    console.log("user likes", user.likes);
-    console.log("project id", projectId);
     if (user?.likes?.length > 0 && user.likes.includes(projectId)) {
       setLikeToggle(true);
     } else {

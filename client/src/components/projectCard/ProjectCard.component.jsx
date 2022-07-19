@@ -33,22 +33,22 @@ const ProjectCard = ({ project, children }, ref) => {
             );
           })}
         </div>
-        <div className="roles">
-          [Open Position]
+        {/* <div className="roles">
+          Open Position
           {roles.map((role) => {
             return (
-              <p className="role" key={uuidv4()}>
-                {/* <div
+              <div className="role" key={uuidv4()}>
+                <div
                   className="role-opened"
                   data-isopened={role.isOpened}
-                ></div> */}
+                ></div> 
                 <p className="role-meta" data-isopened={role.isOpened}>
                   - {role.role}
                 </p>
-              </p>
+              </div>
             );
           })}
-        </div>
+        </div> */}
       </div>
       <div className="card__subContent">{children}</div>
     </div>

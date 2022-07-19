@@ -27,7 +27,6 @@ const Likes = () => {
 
   return (
     <>
-      {console.log("likebutton", likeButtonClicked)}
       {likes?.length === 0 ? (
         "no likes."
       ) : (
