@@ -2,26 +2,35 @@ import mongoose from "mongoose";
 import User from "../models/userModel.js";
 
 const updateUser = async (req, res) => {
-  const { id } = req.params;
-  console.log("REQ", req.body);
+  const user = await User.findById(req.user._id);
 
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).json({ error: "Invalid user id." });
+  let query = { $set: { social: {} } };
 
-  const user = await User.findById(id);
-
-  let query = { $set: {} };
-  for (let key in req.body) {
-    if (user[key] && user[key] !== req.body[key])
-      query.$set[key] = req.body[key];
+  if (req.body) {
+    for (let key in req.body) {
+      if (key === ("linkedin" || "twitter" || "github")) {
+        console.log(req.body.linkedin);
+        query.$set.social[key] = req.body[key];
+      } else {
+        // if (user[key] && user[key] !== req.body[key])
+        query.$set[key] = req.body[key];
+      }
+    }
   }
 
-  const updatedField = await User.updateOne({ _id: id }, query);
-  if (!updatedField)
-    return res.status(400).json({ error: "Error occurs while updating user." });
+  if (req.file) query.$set.profileImage = req.file.id;
+  const updatedUser = await User.findOneAndUpdate(
+    { _id: req.user._id },
+    query,
+    {
+      new: true,
+    }
+  );
 
-  const updatedUser = await User.findById(id);
-  console.log("UPDATED USER:", updatedUser);
+  if (!updatedUser)
+    return res.status(400).json({ error: "Error occurs while updating user." });
+  console.log(updatedUser);
+
   res.status(200).json({ updatedUser });
 };
 
@@ -69,10 +78,35 @@ const getUserLikes = async (req, res) => {
   res.status(200).json({ likes: data.likes });
 };
 
+const updateUserLikes = async (req, res) => {
+  const { id } = req.params;
+  console.log("REQ", req.body);
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).json({ error: "Invalid user id." });
+
+  const user = await User.findById(id);
+
+  let query = { $set: {} };
+  for (let key in req.body) {
+    if (user[key] && user[key] !== req.body[key])
+      query.$set[key] = req.body[key];
+  }
+
+  const updatedField = await User.updateOne({ _id: id }, query);
+  if (!updatedField)
+    return res.status(400).json({ error: "Error occurs while updating user." });
+
+  const updatedUser = await User.findById(id);
+  console.log("UPDATED USER:", updatedUser);
+  res.status(200).json({ updatedUser });
+};
+
 export {
   updateUser,
   addPostToUser,
   getUserPosts,
   deleteUserPost,
   getUserLikes,
+  updateUserLikes,
 };

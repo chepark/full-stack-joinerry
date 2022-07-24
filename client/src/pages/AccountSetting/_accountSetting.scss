@@ -1,6 +1,60 @@
+@import "../../scss/variables.scss";
+
+.account-form-wrapper {
+  max-width: 800px;
+  background-color: white;
+  padding: 2rem 3rem;
+  padding-top: 3rem;
+  border-radius: 30px;
+
+  display: flex;
+  justify-content: center;
+}
+
 .account-form {
-  max-width: 850px;
+  width: 100%;
+  // max-width: 850px;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  > * {
+    width: 100%;
+  }
+
+  padding-bottom: 2rem;
+}
+
+.profile-image-wrapper {
+  width: 100px;
+  height: 100px;
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+  }
+}
+
+.form-image,
+.form-email {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 2rem;
+}
+
+.form-image {
+  position: relative;
+}
+
+.form-submit {
+  background-color: $primary-green;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-radius: 4px;
+
+  color: white;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 1.5px;
+
+  cursor: pointer;
 }

@@ -17,6 +17,8 @@ const useFetchUser = (query) => {
         );
 
         const json = await response.json();
+
+        console.log("user", json);
         dispatch({ type: GET_USER, payload: json });
       } catch (error) {
         console.log("Errors in fetchUser: ", error);

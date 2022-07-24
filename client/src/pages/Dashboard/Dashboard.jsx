@@ -31,7 +31,7 @@ const Dashboard = () => {
     <div
       className="container"
       data-section="dashboard"
-      style={{ height: windowHeight }}
+      style={{ minHeight: windowHeight }}
     >
       <div className="content-wrapper" data-setion="dashboard">
         <h2>Dashboard</h2>
