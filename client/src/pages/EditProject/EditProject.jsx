@@ -9,7 +9,6 @@ const EditProject = () => {
   return (
     <div>
       <ProjectEditor mode="edit" projectId={id} />
-      {console.log(params)}
     </div>
   );
 };

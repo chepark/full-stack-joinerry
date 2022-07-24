@@ -25,6 +25,15 @@
   flex-direction: row;
   align-items: center;
   gap: 10px;
+
+  position: relative;
+  cursor: pointer;
+
+  .header-dropdown {
+    position: absolute;
+    bottom: -120px;
+    right: 0;
+  }
 }
 
 .logout-btn {

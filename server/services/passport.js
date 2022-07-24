@@ -41,7 +41,8 @@ const googleStrategy = () => {
             authId: profile.id,
             userName: profile.displayName,
             email: profile.emails[0].value,
-            profileImage: profile.photos[0] ? profile.photos[0].value : "",
+            // profileImage: profile.photos[0] ? profile.photos[0].value : "",
+            profileImage: "",
           });
           console.log("user created");
           done(null, newUser);

@@ -2,8 +2,8 @@ import "./_projectCardSubContent.scss";
 import { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 
-import { LikeFilled } from "../../assets/icons";
-import { LikeOutlined } from "../../assets/icons";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import useLikeToggle from "../../hooks/useLikeToggle";
 
@@ -70,7 +70,16 @@ const ProjectCardMeta = ({ project, likeButtonClicked }) => {
         <p className="creator-name">Jonh Test</p>
       </div>
       <div className="like-button" onClick={(e) => handleLikeClick(e)}>
-        {likeToggle ? <LikeFilled /> : <LikeOutlined />}
+        {likeToggle ? (
+          <FavoriteIcon sx={{ color: "#E15554" }} />
+        ) : (
+          <FavoriteBorderIcon
+            sx={{
+              color: "#d4d4d4",
+              "&:hover": { color: "#717271" },
+            }}
+          />
+        )}
       </div>
     </div>
   );

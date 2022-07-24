@@ -1,0 +1,28 @@
+@import "../../scss/variables";
+
+.dropdown-wrapper {
+  background-color: white;
+  width: 150px;
+  padding: 5px;
+
+  border: 1px solid $border-color;
+  border-radius: 4px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+
+  font-size: 1rem;
+
+  .dropdown-menu {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 4px;
+    text-align: center;
+    &:hover {
+      background-color: rgba($color: $primary-green, $alpha: 0.1);
+      color: $primary-green;
+    }
+  }
+}

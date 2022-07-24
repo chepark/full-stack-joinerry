@@ -1,0 +1,25 @@
+import "./_dropdown.scss";
+import { useNavigate } from "react-router-dom";
+
+const Dropdown = ({ logout }) => {
+  const navigate = useNavigate();
+
+  return (
+    <div className="dropdown-wrapper">
+      <div
+        className="dropdown-menu"
+        onClick={(e) => {
+          e.stopPropagation();
+          navigate("/dashboard/posts", { replace: true });
+        }}
+      >
+        Dashboard
+      </div>
+      <div className="dropdown-menu" onClick={logout}>
+        Log Out
+      </div>
+    </div>
+  );
+};
+
+export default Dropdown;

@@ -126,7 +126,7 @@ const ProjectEditor = ({ mode, projectId }) => {
         data-section="project-editor"
         noValidate
       >
-        <h2>Create Project</h2>
+        <h2>{mode === "edit" ? "Edit Project" : "Create Project"}</h2>
 
         <div className="editor-meta">
           <AutoCompleteInput

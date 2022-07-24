@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { UPDATE_USER } from "../constants/actionTypes";
-import useFetchUser from "./useFetchUser";
+// import useFetchUser from "./useFetchUser";
 import useUserContext from "./useUserContext";
 
 const useLikeToggle = (projectId) => {
   const [likeToggle, setLikeToggle] = useState(false);
-  const { dispatch } = useUserContext();
-  const { user } = useFetchUser();
+  const { user, dispatch } = useUserContext();
 
   useEffect(() => {
     if (user?.likes?.length > 0 && user.likes.includes(projectId)) {

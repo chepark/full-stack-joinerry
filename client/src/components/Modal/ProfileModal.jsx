@@ -1,69 +1,42 @@
 import React from "react";
-import profileImage from "../../assets/profile.png";
-import FacebookIcon from "@mui/icons-material/Facebook";
+import defaultProfileImage from "../../assets/profile.png";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import InstagramIcon from "@mui/icons-material/Instagram";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
 export const ProfileModal = ({ creator }) => {
-  const onSocialClick = (social) => {
-    let url = "";
-    const instaBaseUrl = "https://www.instagram.com/";
-    const linkedInBaseUrl = "https://www.linkedin.com/";
-    const twitterBaseUrl = "https://twitter.com/";
-    const githubBaseUrl = "https://github.com/";
-
+  const renderSocial = (social) => {
     switch (social) {
-      case "instagram":
-        return (url = instaBaseUrl + creator.social.instagram);
-      case "linkedin":
-        return (url = linkedInBaseUrl + creator.social.linkedin);
-      case "twitter":
-        return (url = twitterBaseUrl + creator.social.twitter);
-      case "github":
-        return (url = githubBaseUrl + creator.social.github);
-      default:
-        return;
-    }
-
-    window.open(url);
-  };
-
-  const renderSocial = (social, username) => {
-    switch (social) {
-      case "instagram":
-        return (
-          <InstagramIcon
-            sx={{ "&:hover": { cursor: "pointer" } }}
-            onClick={onSocialClick("instagram")}
-          />
-        );
       case "linkedin":
         return (
           <LinkedInIcon
             sx={{ "&:hover": { cursor: "pointer" } }}
-            onClick={onSocialClick("linkedin")}
+            onClick={() => window.open(creator.social.linkedin, "_blank")}
           />
         );
       case "twitter":
         return (
           <TwitterIcon
             sx={{ "&:hover": { cursor: "pointer" } }}
-            onClick={onSocialClick("twitter")}
+            onClick={() => window.open(creator.social.twitter, "_blank")}
           />
         );
       case "github":
         return (
           <GitHubIcon
             sx={{ "&:hover": { cursor: "pointer" } }}
-            onClick={onSocialClick("github")}
+            onClick={() => window.open(creator.social.github, "_blank")}
           />
         );
       default:
         return;
     }
   };
+
+  const profileImageSrc = creator?.profileImage
+    ? "http://localhost:4000/api/users/current_user/profileImage/" +
+      creator.profileImage
+    : defaultProfileImage;
 
   return (
     <div className="profile-modal-wrapper">
@@ -73,11 +46,7 @@ export const ProfileModal = ({ creator }) => {
             <img
               className="creater-image"
               alt="profile"
-              src={
-                creator.profileImage?.length > 0
-                  ? creator?.profileImage
-                  : profileImage
-              }
+              src={profileImageSrc}
             />
           </div>
         </div>
@@ -87,7 +56,6 @@ export const ProfileModal = ({ creator }) => {
             {creator?.userName || "no name"}
           </div>
           <div className="creator-social">
-            {creator?.social?.instagram && renderSocial("instagram")}
             {creator?.social?.twitter && renderSocial("twitter")}
             {creator?.social?.linkedin && renderSocial("linkedin")}
             {creator?.social?.github && renderSocial("github")}

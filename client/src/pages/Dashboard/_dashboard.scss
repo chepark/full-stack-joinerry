@@ -8,12 +8,16 @@
   justify-content: flex-start;
   align-items: center;
 
-  padding-top: 5rem;
+  padding-top: 3rem;
   padding-bottom: 5rem;
 }
 
 .content-wrapper[data-setion="dashboard"] {
   padding-left: 2rem;
+
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-radius: 30px;
 }
 
 .contents {

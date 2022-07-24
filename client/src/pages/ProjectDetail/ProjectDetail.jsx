@@ -10,7 +10,11 @@ import useUserContext from "../../hooks/useUserContext";
 import useLikeToggle from "../../hooks/useLikeToggle";
 import OpeningStatus from "./OpeningStatus";
 import { ProfileModal, SocialShareModal } from "../../components/Modal";
-import { LikeFilled, LikeOutlined, ShareOutlined } from "../../assets/icons";
+
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import IosShareIcon from "@mui/icons-material/IosShare";
+
 import { Avatar } from "@mui/material";
 import ModalLayout from "../../components/Modal/ModalLayout";
 
@@ -82,7 +86,9 @@ const ProjectDetail = () => {
               className="detail-icon detail-icon__share"
               onClick={handleShareClick}
             >
-              <ShareOutlined />
+              <IosShareIcon
+                sx={{ color: "#d4d4d4", "&:hover": { color: "#717271" } }}
+              />
             </div>
             {openShare ? (
               <ModalLayout
@@ -98,7 +104,13 @@ const ProjectDetail = () => {
               className="detail-icon detail-icon__like"
               onClick={handleLikeClick}
             >
-              {likeToggle ? <LikeFilled /> : <LikeOutlined />}
+              {likeToggle ? (
+                <FavoriteIcon sx={{ color: "#E15554" }} />
+              ) : (
+                <FavoriteBorderIcon
+                  sx={{ color: "#d4d4d4", "&:hover": { color: "#717271" } }}
+                />
+              )}
             </div>
           </div>
           <div className="detail-about-wrapper">

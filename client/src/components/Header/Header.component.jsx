@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 
 import Avatar from "@mui/material/Avatar";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import avatarLetter from "../../utils/avatarLetter";
 import { LOGOUT_USER } from "../../constants/actionTypes";
 import useUserContext from "../../hooks/useUserContext";
 import useFetchUser from "../../hooks/useFetchUser";
+import Dropdown from "../Dropdown/Dropdown";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -15,6 +17,7 @@ const Header = () => {
   const { user } = useFetchUser();
   const { dispatch } = useUserContext();
   const [isUserIn, setIsUserIn] = useState(null);
+  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
   useEffect(() => {
     if (user?._id) return setIsUserIn(true);
@@ -34,6 +37,7 @@ const Header = () => {
   if (pathname === "/success") return null;
   return (
     <header className="container" id="header">
+      {console.log("dropdown", isDropDownOpen)}
       <div className="content-wrapper" data-section="header">
         <h1 id="logo">
           <Link to="/" style={{ textDecoration: "none" }}>
@@ -49,12 +53,19 @@ const Header = () => {
 
           {isUserIn && (
             <>
-              <div className="header-profile">
+              <div
+                className="header-profile"
+                onClick={() => {
+                  setIsDropDownOpen(!isDropDownOpen);
+                }}
+              >
                 <Avatar>{avatarLetter(user)}</Avatar>
-                <div>{user.email}</div>
-              </div>
-              <div className="logout-btn" onClick={handleLogout}>
-                Log Out
+                <ArrowDropDownIcon />
+                {isDropDownOpen && (
+                  <div className="header-dropdown">
+                    <Dropdown logout={handleLogout} />
+                  </div>
+                )}
               </div>
             </>
           )}

@@ -5,15 +5,15 @@ import mongoose from "mongoose";
 import session from "express-session";
 import passport from "passport";
 import MongoStore from "connect-mongo";
-import { config } from "dotenv";
+import "./utils/loadEnv.js";
 import { googleStrategy, passportConfig } from "./services/passport.js";
 
 import User from "./models/userModel.js";
 import projectRoutes from "./routes/projects.js";
 import userRoutes from "./routes/users.js";
 import authRoutes from "./routes/auths.js";
+import imageRoutes from "./routes/images.js";
 
-config();
 googleStrategy(); //passport googleStrategy
 passportConfig();
 
@@ -47,6 +47,8 @@ app.use("/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
 
 app.use("/api/users", userRoutes);
+
+app.use("/api/images", imageRoutes);
 
 // connect to DB
 mongoose

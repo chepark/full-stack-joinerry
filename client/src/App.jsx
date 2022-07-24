@@ -33,13 +33,13 @@ function App() {
           <Route element={<PrivateOutlet />}>
             <Route path="/project/create" element={<CreateProject />} />
             <Route path="/project/edit/:id" element={<EditProject />} />
+            <Route path="/dashboard" element={<Dashboard />}>
+              <Route path="posts" element={<Posts />} />
+              <Route path="likes" element={<Likes />} />
+              <Route path="account-setting" element={<AccountSetting />} />
+            </Route>
           </Route>
           {/* MOVE DASHBOARD INSIDE OF THE PRIVATE OUTLET */}
-          <Route path="/dashboard" element={<Dashboard />}>
-            <Route path="posts" element={<Posts />} />
-            <Route path="likes" element={<Likes />} />
-            <Route path="account-setting" element={<AccountSetting />} />
-          </Route>
         </Routes>
         <Footer />
       </BrowserRouter>
