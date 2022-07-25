@@ -1,8 +1,6 @@
 import "./_accountSetting.scss";
 import { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
 
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";

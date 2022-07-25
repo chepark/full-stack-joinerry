@@ -1,6 +1,6 @@
 import "./_categoryMenu.scss";
 
-const CategoryMenu = ({ setCategory, setPageNumber }) => {
+const CategoryMenu = ({ category, setCategory, setPageNumber }) => {
   const handleCategoryClick = (e) => {
     setPageNumber(1);
     const selectedCategory = e.target.dataset.category;
@@ -10,22 +10,48 @@ const CategoryMenu = ({ setCategory, setPageNumber }) => {
   return (
     <div className="category-wrapper">
       <ul className="category-list" onClick={handleCategoryClick}>
-        <li className="category-item" data-category="latest">
+        <li
+          className={`category-item ${category === "latest" ? "active" : ""}`}
+          data-category="latest"
+        >
           Latest
         </li>
-        <li className="category-item" data-category="web application">
+        <li
+          className={`category-item ${
+            category === "web application" ? "active" : ""
+          }`}
+          data-category="web application"
+        >
           Web App
         </li>
-        <li className="category-item" data-category="mobile application">
+        <li
+          className={`category-item ${
+            category === "mobile application" ? "active" : ""
+          }`}
+          data-category="mobile application"
+        >
           Mobile App
         </li>
-        <li className="category-item" data-category="game development">
+        <li
+          className={`category-item ${
+            category === "game development" ? "active" : ""
+          }`}
+          data-category="game development"
+        >
           Game Dev
         </li>
-        <li className="category-item" data-category="website development">
+        <li
+          className={`category-item ${
+            category === "website development" ? "active" : ""
+          }`}
+          data-category="website development"
+        >
           Website Dev
         </li>
-        <li className="category-item" data-category="others">
+        <li
+          className={`category-item ${category === "others" ? "active" : ""}`}
+          data-category="others"
+        >
           Others
         </li>
       </ul>

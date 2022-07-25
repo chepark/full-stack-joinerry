@@ -8,7 +8,6 @@ const ProjectCards = ({ projects, lastProjectCardRef, children }) => {
   return (
     <>
       <div className="projects-wrapper">
-        {/* {console.log("projectcards", projects)} */}
         {projects &&
           projects?.map((project, index) => {
             if (projects.length === index + 1) {

@@ -52,10 +52,10 @@ const Home = () => {
             techStackTags={techStackTags}
             setTechStacks={setTechStackTags}
             setPageNumber={setPageNumber}
-            category={category}
           />
           <div className="projects">
             <CategoryMenu
+              category={category}
               setCategory={setCategory}
               setPageNumber={setPageNumber}
             />

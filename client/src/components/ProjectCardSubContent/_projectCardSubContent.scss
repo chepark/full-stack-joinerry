@@ -14,7 +14,7 @@
   .like-button {
     position: absolute;
     right: 0;
-    top: -40px;
+    top: -30px;
 
     width: 40px;
     height: 40px;
@@ -28,6 +28,18 @@
     align-items: center;
 
     cursor: pointer;
+  }
+}
+
+.creator-img {
+  width: 50px;
+  height: 50px;
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    border: 1px solid $border-color;
   }
 }
 

@@ -71,7 +71,7 @@ const deleteUserPost = async (req, res) => {
 const getUserLikes = async (req, res) => {
   const data = await User.findById(req.user._id)
     .select("likes")
-    .populate("likes");
+    .populate({ path: "likes", populate: { path: "creator", model: "User" } });
 
   if (!data)
     return res.status(400).json({ error: "Error in getting user likes." });

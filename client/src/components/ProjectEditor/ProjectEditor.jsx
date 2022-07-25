@@ -146,7 +146,7 @@ const ProjectEditor = ({ mode, projectId }) => {
             )}
           />
           <AutoCompleteInput
-            value={values.teachStack || undefined}
+            value={values.techStack || undefined}
             onChange={(e, newInput) => {
               handleChange("techStack", newInput);
             }}

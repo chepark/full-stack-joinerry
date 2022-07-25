@@ -29,10 +29,12 @@ function App() {
           <Route path="/success" element={<Success />} />
           <Route path="/project/:id" element={<ProjectDetail />} />
           {/* insert into private outlet later. */}
+          <Route path="/project/create" element={<CreateProject />} />
+          <Route path="/project/edit/:id" element={<EditProject />} />
 
           <Route element={<PrivateOutlet />}>
-            <Route path="/project/create" element={<CreateProject />} />
-            <Route path="/project/edit/:id" element={<EditProject />} />
+            {/* <Route path="/project/create" element={<CreateProject />} /> */}
+            {/* <Route path="/project/edit/:id" element={<EditProject />} /> */}
             <Route path="/dashboard" element={<Dashboard />}>
               <Route path="posts" element={<Posts />} />
               <Route path="likes" element={<Likes />} />

@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const useProjectForm = () => {
   const [values, setValues] = useState({
-    category: "",
+    category: null,
     techStack: [],
     roles: [],
     startDate: null,

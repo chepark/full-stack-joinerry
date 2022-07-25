@@ -23,9 +23,9 @@ const useFetchProjects = (category, tags, pageNumber, userData) => {
           "http://localhost:4000/api/projects/?" +
             new URLSearchParams(
               {
-                category: category,
-                tags: tags,
-                pageNumber: pageNumber,
+                category,
+                tags,
+                pageNumber,
               },
               { signal }
             )

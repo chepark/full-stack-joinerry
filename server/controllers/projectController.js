@@ -8,8 +8,6 @@ import { addPostToUser } from "./userController.js";
 const getProjects = async (req, res) => {
   let tempQuery = {};
 
-  // create query object.
-
   if (req.query.category === "latest" && req.query.tags === "null")
     tempQuery = {};
   else if (req.query.category !== "latest") {
@@ -36,11 +34,12 @@ const getProjects = async (req, res) => {
 
   results.projects = await Project.find(tempQuery)
     .skip(startIndex)
-    .limit(limit);
-  // .sort({
-  //   createdAt: -1,
-  // });
-  // console.log(results);
+    .limit(limit)
+    .populate("creator", { userName: 1, profileImage: 1 })
+    .sort({
+      createdAt: -1,
+    });
+  console.log(results);
   res.status(200).json(results);
 };
 

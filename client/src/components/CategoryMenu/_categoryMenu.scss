@@ -9,4 +9,30 @@
 .category-item {
   @include subText1;
   cursor: pointer;
+
+  height: 1.5rem;
+  padding-bottom: 2px;
+  --link-height: 2px;
+
+  background: linear-gradient(0deg, $primary-green, $primary-green) no-repeat
+    right bottom/ 0 var(--link-height);
+  transition: background-size 300ms;
+
+  &:where(:hover, :focus-visible) {
+    background-size: 100% var(--link-height);
+    background-position-x: left;
+  }
+
+  &:hover {
+    cursor: pointer;
+    color: $primary-green;
+  }
+}
+
+.category-item.active {
+  color: $primary-green;
+  background: linear-gradient(0deg, $primary-green, $primary-green) no-repeat
+    right bottom/ 0 var(--link-height);
+  background-size: 100% var(--link-height);
+  background-position-x: left;
 }
