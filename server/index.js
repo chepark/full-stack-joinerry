@@ -12,7 +12,6 @@ import User from "./models/userModel.js";
 import projectRoutes from "./routes/projects.js";
 import userRoutes from "./routes/users.js";
 import authRoutes from "./routes/auths.js";
-import imageRoutes from "./routes/images.js";
 
 googleStrategy(); //passport googleStrategy
 passportConfig();
@@ -47,8 +46,6 @@ app.use("/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
 
 app.use("/api/users", userRoutes);
-
-app.use("/api/images", imageRoutes);
 
 // connect to DB
 mongoose
