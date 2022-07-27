@@ -6,11 +6,8 @@ import categoriesJson from "../../data/categories.json";
 import rolesJson from "../../data/roles.json";
 import tagsJson from "../../data/techstacks.json";
 
-import TextEditor from "../TextEditor/TextEditor";
-
 import CircularProgress from "@mui/material/CircularProgress";
 
-import useProjectForm from "../../hooks/useProjectForm";
 import useUserContext from "../../hooks/useUserContext";
 
 import TextField from "@mui/material/TextField";
@@ -21,11 +18,11 @@ import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
 import { useForm, Controller, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { schema } from "../../utils/projectFormSchema";
 
 import TestTableInput from "../FormInput/TestTableInput";
 import TestTextEditor from "../TextEditor/TestTextEditor";
-import { projectFormSchema } from "../../utils/projectFormSchema";
+import { projectValidationSchema } from "../../utils/projectFormSchema";
 
 const TestProjectEditor = ({ mode, projectId }) => {
   const categoryOptions = categoriesJson.categories;
@@ -46,11 +43,7 @@ const TestProjectEditor = ({ mode, projectId }) => {
     content: "",
   });
 
-  const { handleChange, validate } = useProjectForm();
-
   const navigate = useNavigate();
-
-  const schema = yup.object().shape(projectFormSchema);
 
   const defaultValues = {
     category: "",
@@ -63,6 +56,7 @@ const TestProjectEditor = ({ mode, projectId }) => {
   };
 
   const methods = useForm({
+    mode: "onChange",
     defaultValues,
     resolver: yupResolver(schema),
   });
@@ -70,17 +64,9 @@ const TestProjectEditor = ({ mode, projectId }) => {
   const {
     control,
     handleSubmit,
-    register,
     watch,
-    setValue,
-    getValues,
     formState: { errors },
   } = methods;
-
-  useEffect(() => {
-    setValue("category", null);
-    setValue("techStack", []);
-  }, [useForm]);
 
   useEffect(() => {
     setEditorMode(mode);
@@ -92,15 +78,13 @@ const TestProjectEditor = ({ mode, projectId }) => {
         "http://localhost:4000/api/projects/" + projectId
       );
       const json = await response.json();
-      setValues(json);
+      methods.reset(json);
     };
 
     if (editorMode === "edit") fetchProject();
   }, [editorMode]);
 
-  const createProject = async () => {
-    const project = { ...values, creator: user._id };
-    console.log("user id in editor", user);
+  const createProject = async (values, project) => {
     const response = await fetch("http://localhost:4000/api/projects", {
       method: "POST",
       body: JSON.stringify(project),
@@ -112,50 +96,17 @@ const TestProjectEditor = ({ mode, projectId }) => {
     const json = await response.json();
 
     if (!response.ok) {
-      console.log("Erros in POST request.", json.error);
       setLoading(false);
     }
 
     if (response.ok) {
-      console.log("response ok");
-      setValues({
-        category: "",
-        techStack: [],
-        roles: [],
-        startDate: null,
-        endDate: null,
-        contact: "",
-        title: "",
-        content: "",
-      });
-
+      console.log(json);
       setLoading(false);
       navigate("/dashboard/posts", { replace: true });
     }
   };
 
-  const handleSubmitClick = (e) => {
-    e.preventDefault();
-
-    // setSubmit(true); // If onSubmit is true, TableInput validates role values.
-    setLoading(true);
-
-    if (!validate(values)) {
-      console.log("validate fail", errors);
-      return;
-    }
-
-    createProject();
-  };
-
-  const handleCancel = () => {
-    navigate("/dashboard/posts", { replace: true });
-  };
-
-  const handleEdit = async () => {
-    //! check if the creator and user id matches.
-    //! if it matches, take the value and update data.
-    const project = { ...values, creator: user._id };
+  const editProject = async (values, project) => {
     const response = await fetch(
       "http://localhost:4000/api/projects/" + projectId,
       {
@@ -173,16 +124,27 @@ const TestProjectEditor = ({ mode, projectId }) => {
   };
 
   const onSubmit = async (data) => {
+    let project = { ...data, creator: user._id };
+
     if (editorMode === "edit") {
-      return console.log("edit! data:", data);
+      editProject(data, project);
     }
-    console.log("add ! data: ", data);
+
+    if (editorMode === "add") {
+      createProject(data, project);
+    }
   };
 
   const onError = (data) => {
     console.log("error", data);
   };
-  console.log(watch());
+  console.log("inputs", watch());
+  console.log("errors", errors);
+  console.log("startDate", methods.getValues("startDate"));
+
+  const handleCancel = () => {
+    navigate("/dashboard/posts", { replace: true });
+  };
 
   return (
     <div className="container" data-section="project-editor">
@@ -191,7 +153,7 @@ const TestProjectEditor = ({ mode, projectId }) => {
           className="content-wrapper"
           data-section="project-editor"
           noValidate
-          onSubmit={handleSubmit(handleSubmitClick, onError)}
+          onSubmit={handleSubmit(onSubmit, onError)}
         >
           <h2>{mode === "edit" ? "Edit Project" : "Create Project"}</h2>
 
@@ -206,19 +168,20 @@ const TestProjectEditor = ({ mode, projectId }) => {
                     options={categoryOptions}
                     onChange={(e, value) => {
                       field.onChange(value);
-                      setValues({ ...values, category: value });
                       return value;
                     }}
-                    value={values.category}
+                    isOptionEqualToValue={(option, value) =>
+                      value === undefined ||
+                      value === "" ||
+                      option.id === value.id
+                    }
                     renderInput={(params) => {
                       return (
                         <TextField
                           {...params}
                           label="Category"
-                          error={errors.category}
-                          helperText={
-                            errors.category ? errors.category.message : ""
-                          }
+                          error={!!errors.category}
+                          helperText={errors?.category?.message}
                         />
                       );
                     }}
@@ -238,19 +201,20 @@ const TestProjectEditor = ({ mode, projectId }) => {
                     options={tagOptions}
                     onChange={(e, value) => {
                       field.onChange(value);
-                      setValues({ ...values, techStack: value });
                       return value;
                     }}
-                    value={values.techStack}
+                    isOptionEqualToValue={(option, value) =>
+                      value === undefined ||
+                      value === "" ||
+                      option.id === value.id
+                    }
                     renderInput={(params) => {
                       return (
                         <TextField
                           {...params}
                           label="Tech Stacks"
-                          error={errors.techStack}
-                          helperText={
-                            errors.techStack ? errors.techStack.message : ""
-                          }
+                          error={!!errors.techStack}
+                          helperText={errors?.techStack?.message}
                         />
                       );
                     }}
@@ -261,11 +225,7 @@ const TestProjectEditor = ({ mode, projectId }) => {
           </div>
 
           <div className="editor-roles">
-            <TestTableInput
-              values={values}
-              setValues={setValues}
-              roleOptions={roleOptions}
-            />
+            <TestTableInput roleOptions={roleOptions} />
           </div>
 
           <div className="editor-date">
@@ -279,17 +239,17 @@ const TestProjectEditor = ({ mode, projectId }) => {
                       label="Start Date"
                       onChange={(value) => {
                         field.onChange(value);
-                        setValues({ ...values, startDate: value });
+                        methods.setValue("startDate", new Date(value));
+                        // setValues({ ...values, startDate: value });
                       }}
-                      value={values.startDate}
+                      // value={values.startDate}
+                      value={methods.getValues("startDate")}
                       renderInput={(params) => {
                         return (
                           <TextField
                             {...params}
-                            error={errors.startDate}
-                            helperText={
-                              errors.startDate ? errors.startDate.message : ""
-                            }
+                            error={!!errors.startDate}
+                            helperText={errors?.startDate?.message}
                           />
                         );
                       }}
@@ -309,17 +269,17 @@ const TestProjectEditor = ({ mode, projectId }) => {
                       label="End Date"
                       onChange={(value) => {
                         field.onChange(value);
-                        setValues({ ...values, endDate: value });
+                        // setValues({ ...values, endDate: value });
+                        methods.setValue("endDate", new Date(value));
                       }}
-                      value={values.endDate}
+                      // value={values.endDate}
+                      value={methods.getValues("endDate")}
                       renderInput={(params) => {
                         return (
                           <TextField
                             {...params}
-                            error={errors.endDate}
-                            helperText={
-                              errors.endDate ? errors.endDate.message : ""
-                            }
+                            error={!!errors.endDate}
+                            helperText={errors?.endDate?.message}
                           />
                         );
                       }}
@@ -337,21 +297,15 @@ const TestProjectEditor = ({ mode, projectId }) => {
                 <TextField
                   {...field}
                   label="Contact"
-                  error={errors.contact}
-                  helperText={errors.contact ? errors.contact.message : ""}
+                  error={!!errors.contact}
+                  helperText={errors?.contact?.message}
                 />
               );
             }}
           />
 
           <div className="editor-content">
-            <TestTextEditor
-              handleChange={handleChange}
-              values={values}
-              setValues={setValues}
-              errors={errors}
-              validate={validate}
-            />
+            <TestTextEditor />
           </div>
           <div className="editor-btns">
             <button className="editor-btn cancel" onClick={handleCancel}>

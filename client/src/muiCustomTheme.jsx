@@ -18,6 +18,7 @@ const theme = createTheme({
           borderTop: "1px solid #ccc",
           borderLeft: "1px solid #ccc",
           borderRight: "1px solid #ccc",
+          borderBottom: "1px solid #ccc",
         },
       },
     },

@@ -1,31 +1,56 @@
 import * as yup from "yup";
 
 import categoriesJson from "../data/categories.json";
-// import rolesJson from "../../data/roles.json";
+import rolesJson from "../data/roles.json";
 // import tagsJson from "../../data/techstacks.json";
 
 const categoryOptions = categoriesJson.categories;
+const roleOptions = rolesJson.roles;
+
+const validateRole = (value) => {
+  if (roleOptions.includes(value)) return true;
+  else return false;
+};
+
+const validateRoleOpened = (value) => {
+  const roleStatus = ["opened", "filled"];
+  if (roleStatus.includes(value)) return true;
+  else return false;
+};
+
+const validateCategory = (value) => {
+  if (categoryOptions.includes(value)) return true;
+  else return false;
+};
+
+const validateNumberRange = (value) => {
+  if (value < 1 || value > 99) {
+    return false;
+  } else return true;
+};
 
 const roleSchema = yup.object({
-  role: yup.string(),
+  role: yup.mixed().test("check role", "Select one option.", validateRole),
   number: yup
     .number()
-    .min(1, "Must be greater than 0.")
-    .max(99, "Must be less than 99."),
-  isOpened: yup.string(),
+    .typeError("Must be a number")
+    .test("numberRange", "Must be between 1 to 99", validateNumberRange),
+
+  isOpened: yup
+    .mixed()
+    .test("check role opened", "Select one option.", validateRoleOpened),
 });
 
-export const projectFormSchema = {
+const projectValidationSchema = {
   category: yup
-    .string()
-    .oneOf(categoryOptions, "Select one from the given options.")
-    .required("Required"),
+    .mixed()
+    .test("check null", "Must select one option.", validateCategory),
   techStack: yup
     .array()
     .of(yup.string())
     .min(1, "At least 1 tag.")
     .max(5, "Max 5 tags")
-    .required("Required"),
+    .required("Required."),
   roles: yup.array().of(roleSchema),
   startDate: yup.date().nullable(),
   endDate: yup
@@ -38,12 +63,16 @@ export const projectFormSchema = {
       return schema;
     })
     .nullable(),
-  contact: yup.string().required("Required"),
+  contact: yup
+    .string()
+    .min(3, "Must be more than 3 characters.")
+    .max(30, "Must be less than 30 characters.")
+    .required("Required."),
   title: yup
     .string()
     .min(3, "Must be more than 3 characters.")
     .max(30, "Must be less than 30 characters.")
-    .required("Required"),
+    .required("Required."),
 
   content: yup
     .string()
@@ -51,3 +80,5 @@ export const projectFormSchema = {
     .max(120, "Must be less than 120 characters")
     .required("Required."),
 };
+
+export const schema = yup.object().shape(projectValidationSchema);

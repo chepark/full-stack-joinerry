@@ -1,19 +1,19 @@
 import "./_textEditor.scss";
-import { useState, useRef } from "react";
+import { useRef } from "react";
 
 import TextField from "@mui/material/TextField";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-import { Controller, useFormContext, useFieldArray } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
+import { unstable_getThemeValue } from "@mui/system";
 
-const TestTextEditor = ({ handleChange, values, setValues, validate }) => {
+const TestTextEditor = () => {
   const {
     control,
-    register,
-    watch,
     formState: { errors },
+    getValues,
   } = useFormContext();
 
   const quillFormats = ["h1", "h2"];
@@ -34,14 +34,6 @@ const TestTextEditor = ({ handleChange, values, setValues, validate }) => {
     },
   ];
 
-  const renderQuillErrorMessage = () => {
-    return (
-      errors?.content && (
-        <div className="ql-error-message">{errors.content}</div>
-      )
-    );
-  };
-
   return (
     <div className="textEditor-wrapper">
       {console.log("ref", quillRef.getEditingArea)}
@@ -56,23 +48,30 @@ const TestTextEditor = ({ handleChange, values, setValues, validate }) => {
               variant="standard"
               {...field}
               label="Title"
+              error={!!errors.title}
+              helperText={errors?.title?.message}
             />
           );
         }}
       />
 
       <div>
-        <ReactQuill
-          theme="snow"
-          placeholder="Explain about the project in detail."
-          onChange={(contentHtml) =>
-            setValues({ ...values, content: contentHtml })
-          }
-          onBlur={(e) => validate({ content: e.index })}
-          ref={quillRef}
+        <Controller
+          control={control}
+          name="content"
+          render={({ field: { onChange } }) => {
+            return (
+              <ReactQuill
+                theme="snow"
+                ref={quillRef}
+                onChange={(contentHtml) => onChange(contentHtml)}
+                value={getValues("content")}
+              />
+            );
+          }}
         />
       </div>
-      {renderQuillErrorMessage()}
+      {!!errors.content ? errors.content.message : ""}
     </div>
   );
 };

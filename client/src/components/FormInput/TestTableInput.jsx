@@ -1,7 +1,5 @@
 import "./_tableInput.scss";
 
-import useTableForm from "../../hooks/useTableForm";
-
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -16,38 +14,16 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { Controller, useFormContext, useFieldArray } from "react-hook-form";
 import { Autocomplete } from "@mui/material";
 
-const TestTableInput = ({
-  setFormValues,
-  formValues,
-
-  values,
-  setValues,
-  roleOptions,
-}) => {
-  const { control, watch, formState } = useFormContext();
+const TestTableInput = ({ roleOptions }) => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
   const { fields, remove, insert } = useFieldArray({
     control,
     name: "roles",
     keyName: "roleId",
   });
-
-  console.log("roles are ", watch("roles"));
-
-  const handleEdit = (roleToEdit) => {
-    const { role, number, isOpened } = roleToEdit;
-    // put the value to the last row.
-    setValues({ role: role, number: number, isOpened: isOpened });
-
-    if (formValues.roles.length > 1) {
-      const otherRoles = formValues.roles.filter((role) => {
-        return role.role !== roleToEdit.role;
-      });
-
-      setFormValues({ ...formValues, roles: otherRoles });
-    } else {
-      setFormValues({ ...formValues, roles: [] });
-    }
-  };
 
   return (
     <>
@@ -86,7 +62,19 @@ const TestTableInput = ({
                               option.id === value.id
                             }
                             renderInput={(params) => {
-                              return <TextField {...params} />;
+                              return (
+                                <TextField
+                                  {...params}
+                                  error={
+                                    errors?.roles &&
+                                    !!errors?.roles[index]?.role
+                                  }
+                                  helperText={
+                                    errors?.roles &&
+                                    errors.roles[index]?.role?.message
+                                  }
+                                />
+                              );
                             }}
                           />
                         );
@@ -108,6 +96,13 @@ const TestTableInput = ({
                               inputMode: "numeric",
                               pattern: "[0-9]*",
                             }}
+                            error={
+                              errors?.roles && !!errors.roles[index]?.number
+                            }
+                            helperText={
+                              errors?.roles &&
+                              errors.roles[index]?.number?.message
+                            }
                           />
                         );
                       }}
@@ -135,7 +130,19 @@ const TestTableInput = ({
                               option.id === value.id
                             }
                             renderInput={(params) => {
-                              return <TextField {...params} />;
+                              return (
+                                <TextField
+                                  {...params}
+                                  error={
+                                    errors?.roles &&
+                                    !!errors.roles[index]?.isOpened
+                                  }
+                                  helperText={
+                                    errors?.roles &&
+                                    errors.roles[index]?.isOpened?.message
+                                  }
+                                />
+                              );
                             }}
                           />
                         );
@@ -145,30 +152,10 @@ const TestTableInput = ({
 
                   <TableCell align="center">
                     <div className="btn-wrapper">
-                      {fields.length === index + 1 && (
-                        <>
-                          <AddCircleOutlineIcon
-                            onClick={() => {
-                              insert(parseInt(2, 19), {
-                                role: "",
-                                number: 0,
-                                isOpened: "",
-                              });
-                            }}
-                          />
-                          /
-                          <DeleteOutlineIcon
-                            style={{ cursor: "pointer" }}
-                            onClick={() => remove(index)}
-                          />
-                        </>
-                      )}
-                      {index + 1 < fields.length && (
-                        <DeleteOutlineIcon
-                          style={{ cursor: "pointer" }}
-                          onClick={() => remove(index)}
-                        />
-                      )}
+                      <DeleteOutlineIcon
+                        style={{ cursor: "pointer" }}
+                        onClick={() => remove(index)}
+                      />
                     </div>
                   </TableCell>
                 </TableRow>
@@ -176,6 +163,19 @@ const TestTableInput = ({
             })}
           </TableBody>
         </Table>
+        <div className="add-btn-wrapper">
+          <span
+            onClick={() => {
+              insert(parseInt(2, 19), {
+                role: "",
+                number: 0,
+                isOpened: "",
+              });
+            }}
+          >
+            + Add Role
+          </span>
+        </div>
       </TableContainer>
     </>
   );
