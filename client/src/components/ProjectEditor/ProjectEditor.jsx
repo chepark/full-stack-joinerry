@@ -1,53 +1,84 @@
 import "./_projectEditor.scss";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import categoriesJson from "../../data/categories.json";
 import rolesJson from "../../data/roles.json";
 import tagsJson from "../../data/techstacks.json";
 
-import AutoCompleteInput from "../FormInput/AutoCompleteInput";
-import TableInput from "../FormInput/TableInput";
-import TimePickerInput from "../FormInput/TimePickerInput";
-import TextEditor from "../TextEditor/TextEditor";
-import TextField from "@mui/material/TextField";
-import CircularProgress from "@mui/material/CircularProgress";
+import { TextField, Autocomplete, CircularProgress } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
-import useProjectForm from "../../hooks/useProjectForm";
+import { useForm, Controller, FormProvider } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schema } from "../../utils/projectFormSchema";
+
+import TableInput from "../TableInput/TableInput";
+import TextEditor from "../TextEditor/TextEditor";
 import useUserContext from "../../hooks/useUserContext";
 
-const ProjectEditor = ({ mode, projectId }) => {
+const ProjectEditor = () => {
   const categoryOptions = categoriesJson.categories;
   const roleOptions = rolesJson.roles;
   const tagOptions = tagsJson.teachstacks;
 
   const { user } = useUserContext();
-  const [editorMode, setEditorMode] = useState(null);
-  const [onSubmit, setOnSubmit] = useState(false);
-  const { errors, values, setValues, handleChange, validate } =
-    useProjectForm();
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const { id } = useParams();
 
-  useEffect(() => {
-    setEditorMode(mode);
-  }, [mode]);
+  const defaultValues = {
+    category: "",
+    techStack: [],
+    roles: [{ role: "", number: 0, isOpened: "" }],
+    startDate: null,
+    endDate: null,
+    contact: "",
+    title: "",
+    content: "",
+  };
+
+  const methods = useForm({
+    mode: "onChange",
+    defaultValues,
+    resolver: yupResolver(schema),
+  });
+
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = methods;
 
   useEffect(() => {
     const fetchProject = async () => {
-      const response = await fetch(
-        "http://localhost:4000/api/projects/" + projectId
-      );
+      const response = await fetch("http://localhost:4000/api/projects/" + id);
       const json = await response.json();
-      setValues(json);
+      let project = json;
+
+      if (project.startDate)
+        project.startDate = convertIsoStringToDateObj(project.startDate);
+
+      if (project.endDate)
+        project.endDate = convertIsoStringToDateObj(project.endDate);
+
+      methods.reset(project);
     };
 
-    if (editorMode === "edit") fetchProject();
-  }, [editorMode]);
+    if (!id) return;
+    fetchProject();
+  }, [id]);
 
-  const createProject = async () => {
-    const project = { ...values, creator: user._id };
-    console.log("user id in editor", user);
+  const convertIsoStringToDateObj = (isoString) => {
+    const DateObj = new Date(isoString.slice(0, -1));
+    return DateObj;
+  };
+
+  const createProject = async (values, project) => {
     const response = await fetch("http://localhost:4000/api/projects", {
       method: "POST",
       body: JSON.stringify(project),
@@ -59,194 +90,219 @@ const ProjectEditor = ({ mode, projectId }) => {
     const json = await response.json();
 
     if (!response.ok) {
-      console.log("Erros in POST request.", json.error);
-      setOnSubmit(false);
+      setLoading(false);
     }
 
     if (response.ok) {
-      console.log("response ok");
-      setValues({
-        category: "",
-        techStack: [],
-        roles: [],
-        startDate: null,
-        endDate: null,
-        contact: "",
-        title: "",
-        content: "",
-      });
-
-      setOnSubmit(false);
+      console.log(json);
+      setLoading(false);
       navigate("/dashboard/posts", { replace: true });
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // setSubmit(true); // If onSubmit is true, TableInput validates role values.
-    setOnSubmit(true);
-
-    if (!validate(values)) {
-      console.log("validate fail", errors);
-      return;
-    }
-
-    createProject();
+  const editProject = async (values, project) => {
+    const response = await fetch("http://localhost:4000/api/projects/" + id, {
+      method: "PUT",
+      body: JSON.stringify(project),
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    navigate("/dashboard/posts", { replace: true });
   };
+
+  const onSubmit = async (data) => {
+    let project = { ...data, creator: user._id };
+
+    if (id) editProject(data, project);
+
+    if (!id) createProject(data, project);
+  };
+
+  const onError = (data) => {
+    console.log("error", data);
+  };
+
+  console.log("inputs", watch());
+  console.log("errors", errors);
 
   const handleCancel = () => {
     navigate("/dashboard/posts", { replace: true });
   };
 
-  const handleEdit = async () => {
-    //! check if the creator and user id matches.
-    //! if it matches, take the value and update data.
-    const project = { ...values, creator: user._id };
-    const response = await fetch(
-      "http://localhost:4000/api/projects/" + projectId,
-      {
-        method: "PUT",
-        body: JSON.stringify(project),
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const data = await response.json();
-    console.log("updatedData", data);
-    navigate("/dashboard/posts", { replace: true });
-  };
-
   return (
     <div className="container" data-section="project-editor">
-      <form
-        className="content-wrapper"
-        data-section="project-editor"
-        noValidate
-      >
-        <h2>{mode === "edit" ? "Edit Project" : "Create Project"}</h2>
+      <FormProvider {...methods}>
+        <form
+          className="content-wrapper"
+          data-section="project-editor"
+          noValidate
+          onSubmit={handleSubmit(onSubmit, onError)}
+        >
+          <h2>{id ? "Edit Project" : "Create Project"}</h2>
 
-        <div className="editor-meta">
-          <AutoCompleteInput
-            value={values.category || null}
-            onInputChange={(e, newInput) => {
-              handleChange("category", newInput);
-            }}
-            options={categoryOptions}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                required
-                label="Category"
-                error={errors?.category ? true : undefined}
-                helperText={errors.category}
-              />
-            )}
-          />
-          <AutoCompleteInput
-            value={values.techStack || undefined}
-            onChange={(e, newInput) => {
-              handleChange("techStack", newInput);
-            }}
-            multiple
-            limitTags={5}
-            options={tagOptions}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                required
-                label="Tech Stacks"
-                error={errors?.techStack ? true : undefined}
-                helperText={errors.techStack}
-              />
-            )}
-          />
-        </div>
-        <div className="editor-roles">
-          <TableInput
-            roleOptions={roleOptions}
-            setFormValues={setValues}
-            formValues={values}
-            onSubmit={onSubmit}
-            setOnSubmit={setOnSubmit}
-          />
-        </div>
-        <div className="editor-date">
-          <TimePickerInput
-            label="Start Date"
-            value={values.startDate}
-            onChange={(newValue) => handleChange("startDate", newValue)}
-            inputFormat="MM/dd/yyyy"
-            disablePast
-            onError={(reasons, value) => {
-              console.log("reasons", reasons);
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                error={errors.startDate ? true : undefined}
-                helperText={errors.startDate}
-              />
-            )}
-          />
-          <TimePickerInput
-            label="End Date"
-            value={values.endDate}
-            onChange={(newValue) => handleChange("endDate", newValue)}
-            inputFormat="MM/dd/yyyy"
-            disablePast
-            minDate={values.startDate ? values.startDate : false}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                error={errors.endDate ? true : undefined}
-                helperText={errors.endDate}
-              />
-            )}
-          />
-        </div>
-        <div className="editor-contact">
-          <TextField
-            required
-            label="Contact"
-            value={values.contact}
-            onChange={(e) => handleChange("contact", e.target.value)}
-            error={errors.contact ? true : undefined}
-            helperText={errors.contact}
-          />
-        </div>
-        <div className="editor-content">
-          <TextEditor
-            handleChange={handleChange}
-            values={values}
-            setValues={setValues}
-            errors={errors}
-            validate={validate}
-          />
-        </div>
-        <div className="editor-btns">
-          <button className="editor-btn cancel" onClick={handleCancel}>
-            CANCEL
-          </button>
-          {editorMode === "add" ? (
-            <button
-              className="editor-btn publish"
-              type="submit"
-              onClick={(e) => {
-                handleSubmit(e);
+          <div className="editor-meta">
+            <Controller
+              name="category"
+              control={control}
+              render={({ field }) => {
+                return (
+                  <Autocomplete
+                    {...field}
+                    options={categoryOptions}
+                    onChange={(e, value) => {
+                      field.onChange(value);
+                      return value;
+                    }}
+                    isOptionEqualToValue={(option, value) =>
+                      value === undefined ||
+                      value === "" ||
+                      option.id === value.id
+                    }
+                    renderInput={(params) => {
+                      return (
+                        <TextField
+                          {...params}
+                          label="Category"
+                          error={!!errors.category}
+                          helperText={errors?.category?.message}
+                        />
+                      );
+                    }}
+                  />
+                );
               }}
-            >
-              PUBLISH
+            />
+
+            <Controller
+              name="techStack"
+              control={control}
+              render={({ field }) => {
+                return (
+                  <Autocomplete
+                    {...field}
+                    multiple
+                    options={tagOptions}
+                    onChange={(e, value) => {
+                      field.onChange(value);
+                      return value;
+                    }}
+                    isOptionEqualToValue={(option, value) =>
+                      value === undefined ||
+                      value === "" ||
+                      option.id === value.id
+                    }
+                    renderInput={(params) => {
+                      return (
+                        <TextField
+                          {...params}
+                          label="Tech Stacks"
+                          error={!!errors.techStack}
+                          helperText={errors?.techStack?.message}
+                        />
+                      );
+                    }}
+                  />
+                );
+              }}
+            />
+          </div>
+
+          <div className="editor-roles">
+            <TableInput roleOptions={roleOptions} />
+          </div>
+
+          <div className="editor-date">
+            <Controller
+              name="startDate"
+              control={control}
+              render={({ field }) => {
+                return (
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <MobileDatePicker
+                      label="Start Date"
+                      onChange={(value) => {
+                        field.onChange(value);
+                        methods.setValue("startDate", new Date(value));
+                        // setValues({ ...values, startDate: value });
+                      }}
+                      // value={values.startDate}
+                      value={methods.getValues("startDate")}
+                      renderInput={(params) => {
+                        return (
+                          <TextField
+                            {...params}
+                            error={!!errors.startDate}
+                            helperText={errors?.startDate?.message}
+                          />
+                        );
+                      }}
+                    />
+                  </LocalizationProvider>
+                );
+              }}
+            />
+
+            <Controller
+              name="endDate"
+              control={control}
+              render={({ field }) => {
+                return (
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <MobileDatePicker
+                      label="End Date"
+                      onChange={(value) => {
+                        field.onChange(value);
+                        // setValues({ ...values, endDate: value });
+                        methods.setValue("endDate", new Date(value));
+                      }}
+                      // value={values.endDate}
+                      value={methods.getValues("endDate")}
+                      renderInput={(params) => {
+                        return (
+                          <TextField
+                            {...params}
+                            error={!!errors.endDate}
+                            helperText={errors?.endDate?.message}
+                          />
+                        );
+                      }}
+                    />
+                  </LocalizationProvider>
+                );
+              }}
+            />
+          </div>
+          <Controller
+            name="contact"
+            control={control}
+            render={({ field }) => {
+              return (
+                <TextField
+                  {...field}
+                  label="Contact"
+                  error={!!errors.contact}
+                  helperText={errors?.contact?.message}
+                />
+              );
+            }}
+          />
+
+          <div className="editor-content">
+            <TextEditor />
+          </div>
+          <div className="editor-btns">
+            <button className="editor-btn cancel" onClick={handleCancel}>
+              CANCEL
             </button>
-          ) : (
-            <button className="editor-btn publish" onClick={handleEdit}>
-              EDIT
+            <button className="editor-btn publish" type="submit">
+              {id ? "EDIT" : "PUBLISH"}
             </button>
-          )}
-        </div>
-      </form>
+          </div>
+        </form>
+      </FormProvider>
     </div>
   );
 };

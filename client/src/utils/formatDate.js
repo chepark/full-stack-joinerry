@@ -1,4 +1,4 @@
-const formatDate = (dateData) => {
+export const formatDate = (dateData) => {
   const rawDate = new Date(dateData);
 
   const months = [
@@ -23,5 +23,3 @@ const formatDate = (dateData) => {
 
   return `${date}.${month}.${year}`;
 };
-
-export default formatDate;

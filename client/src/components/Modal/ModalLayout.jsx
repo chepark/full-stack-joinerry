@@ -2,7 +2,7 @@ import "./_modalLayout.scss";
 import { createPortal } from "react-dom";
 import CloseIcon from "@mui/icons-material/Close";
 
-const ModalLayout = ({ onClose, children }) => {
+export const ModalLayout = ({ onClose, children }) => {
   return createPortal(
     <>
       <div className="modal-overlay">
@@ -17,5 +17,3 @@ const ModalLayout = ({ onClose, children }) => {
     document.getElementById("portal")
   );
 };
-
-export default ModalLayout;

@@ -1,12 +1,35 @@
 import "./_textEditor.scss";
-import { useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import TextField from "@mui/material/TextField";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-const TextEditor = ({ handleChange, values, setValues, errors, validate }) => {
+import { Controller, useFormContext } from "react-hook-form";
+import { unstable_getThemeValue } from "@mui/system";
+
+const TextEditor = () => {
+  const { id } = useParams();
+
+  const {
+    control,
+    formState: { errors },
+    setValue,
+    getValues,
+    watch,
+  } = useFormContext();
+  const [content, setContent] = useState("");
+
+  useEffect(() => {
+    if (id) {
+      const initialHtml = getValues("content");
+      return setContent(initialHtml);
+    }
+    return;
+  }, [getValues]);
+
   const quillFormats = ["h1", "h2"];
   const quillRef = useRef();
 
@@ -25,42 +48,48 @@ const TextEditor = ({ handleChange, values, setValues, errors, validate }) => {
     },
   ];
 
-  const renderQuillErrorMessage = () => {
-    return (
-      errors?.content && (
-        <div className="ql-error-message">{errors.content}</div>
-      )
-    );
-  };
+  console.log("content", getValues("content"));
 
   return (
-    <div className="textEditor-wrapper">
+    <div className="textEditor-wrapper" key={getValues("_id") || 0}>
       {console.log("ref", quillRef.getEditingArea)}
-      <TextField
-        sx={customTextFieldStyle}
-        required
-        label="Title"
-        variant="standard"
-        value={values?.title}
-        onChange={(e) => {
-          handleChange("title", e.target.value);
+
+      <Controller
+        name="title"
+        control={control}
+        render={({ field }) => {
+          return (
+            <TextField
+              sx={customTextFieldStyle}
+              variant="standard"
+              {...field}
+              label="Title"
+              error={!!errors.title}
+              helperText={errors?.title?.message}
+            />
+          );
         }}
-        error={errors.title ? true : undefined}
-        helperText={errors.title}
       />
 
       <div>
-        <ReactQuill
-          theme="snow"
-          placeholder="Explain about the project in detail."
-          onChange={(contentHtml) =>
-            setValues({ ...values, content: contentHtml })
-          }
-          onBlur={(e) => validate({ content: e.index })}
-          ref={quillRef}
+        <Controller
+          control={control}
+          name="content"
+          render={({ field }) => {
+            return (
+              <ReactQuill
+                theme="snow"
+                ref={quillRef}
+                defaultValue={id ? getValues("content") : ""}
+                onChange={(contentHtml) => {
+                  setValue("content", contentHtml);
+                }}
+              />
+            );
+          }}
         />
       </div>
-      {renderQuillErrorMessage()}
+      {!!errors.content ? errors.content.message : ""}
     </div>
   );
 };

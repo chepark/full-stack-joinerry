@@ -4,19 +4,23 @@ import { useParams, useLocation } from "react-router-dom";
 import { v4 as uuidV4 } from "uuid";
 import Parser from "html-react-parser";
 import useWindowSize from "../../hooks/useWindowSize";
-import formatDate from "../../utils/formatDate";
-import avatarLetter from "../../utils/avatarLetter";
+
+import { formatDate, avatarLetter } from "../../utils";
+
 import useUserContext from "../../hooks/useUserContext";
 import useLikeToggle from "../../hooks/useLikeToggle";
 import OpeningStatus from "./OpeningStatus";
-import { ProfileModal, SocialShareModal } from "../../components/Modal";
+import {
+  ProfileModal,
+  SocialShareModal,
+  ModalLayout,
+} from "../../components/Modal";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import IosShareIcon from "@mui/icons-material/IosShare";
 
 import { Avatar } from "@mui/material";
-import ModalLayout from "../../components/Modal/ModalLayout";
 
 const ProjectDetail = () => {
   const { id } = useParams();

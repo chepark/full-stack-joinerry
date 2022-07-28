@@ -1,8 +1,7 @@
 import "./_projectCardSubContent.scss";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import DeleteConfirmModal from "../Modal/DeleteConfirmModal";
-import ModalLayout from "../Modal/ModalLayout";
+import { DeleteConfirmModal, ModalLayout } from "../Modal";
 import { id } from "date-fns/locale";
 
 const ProjectCardButtons = ({ project, setPosts }) => {

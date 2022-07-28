@@ -28,20 +28,16 @@ function App() {
           <Route path="/login" element={<LogIn />} />
           <Route path="/success" element={<Success />} />
           <Route path="/project/:id" element={<ProjectDetail />} />
-          {/* insert into private outlet later. */}
-          <Route path="/project/create" element={<CreateProject />} />
-          <Route path="/project/edit/:id" element={<EditProject />} />
 
           <Route element={<PrivateOutlet />}>
-            {/* <Route path="/project/create" element={<CreateProject />} /> */}
-            {/* <Route path="/project/edit/:id" element={<EditProject />} /> */}
+            <Route path="/project/create" element={<CreateProject />} />
+            <Route path="/project/edit/:id" element={<EditProject />} />
             <Route path="/dashboard" element={<Dashboard />}>
               <Route path="posts" element={<Posts />} />
               <Route path="likes" element={<Likes />} />
               <Route path="account-setting" element={<AccountSetting />} />
             </Route>
           </Route>
-          {/* MOVE DASHBOARD INSIDE OF THE PRIVATE OUTLET */}
         </Routes>
         <Footer />
       </BrowserRouter>

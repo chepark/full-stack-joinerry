@@ -3,12 +3,12 @@ import "./_header.scss";
 import { useEffect, useState } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 
-import Avatar from "@mui/material/Avatar";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import avatarLetter from "../../utils/avatarLetter";
 import { LOGOUT_USER } from "../../constants/actionTypes";
+
 import useUserContext from "../../hooks/useUserContext";
 import useFetchUser from "../../hooks/useFetchUser";
+import useprofileImageSrc from "../../hooks/useProfileImageSrc";
+
 import Dropdown from "../Dropdown/Dropdown";
 
 const Header = () => {
@@ -16,6 +16,7 @@ const Header = () => {
   const { pathname } = useLocation();
   const { user } = useFetchUser();
   const { dispatch } = useUserContext();
+  const { profileImageSrc } = useprofileImageSrc();
   const [isUserIn, setIsUserIn] = useState(null);
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
@@ -61,8 +62,8 @@ const Header = () => {
                   setIsDropDownOpen(!isDropDownOpen);
                 }}
               >
-                <Avatar>{avatarLetter(user)}</Avatar>
-                <ArrowDropDownIcon />
+                <img alt={profileImageSrc} src={profileImageSrc} />
+
                 {isDropDownOpen && (
                   <div className="header-dropdown">
                     <Dropdown logout={handleLogout} />

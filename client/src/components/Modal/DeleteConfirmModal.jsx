@@ -1,7 +1,7 @@
 import "./_modalLayout.scss";
 import React from "react";
 
-const DeleteConfirmModal = ({ onClose, onDeleteConfirm }) => {
+export const DeleteConfirmModal = ({ onClose, onDeleteConfirm }) => {
   return (
     <div className="delete-confirm-wrapper">
       <div>Are you sure you want to delete the post?</div>
@@ -28,5 +28,3 @@ const DeleteConfirmModal = ({ onClose, onDeleteConfirm }) => {
     </div>
   );
 };
-
-export default DeleteConfirmModal;

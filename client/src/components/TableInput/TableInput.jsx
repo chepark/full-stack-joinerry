@@ -14,7 +14,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { Controller, useFormContext, useFieldArray } from "react-hook-form";
 import { Autocomplete } from "@mui/material";
 
-const TestTableInput = ({ roleOptions }) => {
+const TableInput = ({ roleOptions }) => {
   const {
     control,
     formState: { errors },
@@ -181,4 +181,4 @@ const TestTableInput = ({ roleOptions }) => {
   );
 };
 
-export default TestTableInput;
+export default TableInput;

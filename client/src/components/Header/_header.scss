@@ -1,3 +1,5 @@
+@import "../../scss/variables";
+
 .content-wrapper[data-section="header"] {
   display: flex;
   flex-direction: row;
@@ -26,6 +28,9 @@
   align-items: center;
   gap: 10px;
 
+  width: 45px;
+  height: 45px;
+
   position: relative;
   cursor: pointer;
 
@@ -33,6 +38,16 @@
     position: absolute;
     bottom: -120px;
     right: 0;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+
+    &:hover {
+      box-shadow: 0 0 5px 1px rgba(52, 204, 153, 0.5);
+    }
   }
 }
 
