@@ -39,7 +39,6 @@ const getProjects = async (req, res) => {
     .sort({
       createdAt: -1,
     });
-  console.log(results);
   res.status(200).json(results);
 };
 
