@@ -52,6 +52,25 @@ const LogIn = () => {
     }
   };
 
+  const redirectToGithubSSO = async (e) => {
+    e.preventDefault();
+    let timer;
+
+    const githubLoginUrl = "http://localhost:4000/auth/github";
+    const newWindow = window.open(githubLoginUrl, "", "width=500,height=600");
+
+    if (newWindow) {
+      timer = setInterval(() => {
+        if (newWindow.closed) {
+          fetchUser();
+          if (timer) clearInterval(timer);
+          // console.log("from", from);
+          navigate("/", { replace: true });
+        }
+      }, 500);
+    }
+  };
+
   return (
     <div
       className="container"
@@ -99,7 +118,11 @@ const LogIn = () => {
 
             <div>Log In with Google</div>
           </button>
-          <button className="auth-btn" id="github">
+          <button
+            className="auth-btn"
+            id="github"
+            onClick={redirectToGithubSSO}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"

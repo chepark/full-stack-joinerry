@@ -6,14 +6,19 @@ import session from "express-session";
 import passport from "passport";
 import MongoStore from "connect-mongo";
 import "./utils/loadEnv.js";
-import { googleStrategy, passportConfig } from "./services/passport.js";
+import {
+  googleStrategy,
+  githubStrategy,
+  passportConfig,
+} from "./services/passport.js";
 
 import User from "./models/userModel.js";
 import projectRoutes from "./routes/projects.js";
 import userRoutes from "./routes/users.js";
 import authRoutes from "./routes/auths.js";
 
-googleStrategy(); //passport googleStrategy
+googleStrategy();
+githubStrategy();
 passportConfig();
 
 const app = express();

@@ -1,5 +1,6 @@
 import passport from "passport";
 import GoogleStrategy from "passport-google-oauth20";
+import GithubStrategy from "passport-github2";
 import mongoose from "mongoose";
 import User from "../models/userModel.js";
 
@@ -41,7 +42,6 @@ const googleStrategy = () => {
             authId: profile.id,
             userName: profile.displayName,
             email: profile.emails[0].value,
-            // profileImage: profile.photos[0] ? profile.photos[0].value : "",
             profileImage: "",
           });
           console.log("user created");
@@ -52,4 +52,34 @@ const googleStrategy = () => {
   );
 };
 
-export { googleStrategy, passportConfig };
+const githubStrategy = () => {
+  passport.use(
+    new GithubStrategy(
+      {
+        clientID: process.env.GITHUB_CLIENT_ID,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET,
+        callbackURL: "/auth/github/callback",
+        scope: ["user:email"],
+      },
+      async (accessToken, refreshToken, profile, done) => {
+        // check if the user exists.
+        const existingUser = await User.findOne({ authId: profile.id });
+        console.log("profile", profile);
+        if (existingUser) {
+          console.log("user exists");
+          done(null, existingUser);
+        } else {
+          const newUser = await User.create({
+            authId: profile.id,
+            userName: profile.displayName,
+            email: profile.emails[0].value,
+            profileImage: "",
+          });
+          done(null, newUser);
+        }
+      }
+    )
+  );
+};
+
+export { googleStrategy, githubStrategy, passportConfig };
