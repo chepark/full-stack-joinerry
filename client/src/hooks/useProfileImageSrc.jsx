@@ -5,11 +5,12 @@ const useProfileImageSrc = (profileImageId = "") => {
   const [profileImageSrc, setProfileImageSrc] = useState();
 
   useEffect(() => {
-    if (profileImageId === "") {
-      return setProfileImageSrc(defaultProfileImage);
-    }
+    if (profileImageId === "") return setProfileImageSrc(defaultProfileImage);
 
-    setProfileImageSrc(
+    if (profileImageId.includes("https" || "http"))
+      return setProfileImageSrc(profileImageId);
+
+    return setProfileImageSrc(
       "http://localhost:4000/api/users/current_user/profileImage/" +
         profileImageId
     );
