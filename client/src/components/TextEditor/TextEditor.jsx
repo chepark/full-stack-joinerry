@@ -8,7 +8,6 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 import { Controller, useFormContext } from "react-hook-form";
-import { unstable_getThemeValue } from "@mui/system";
 
 const TextEditor = () => {
   const { id } = useParams();
@@ -18,7 +17,6 @@ const TextEditor = () => {
     formState: { errors },
     setValue,
     getValues,
-    watch,
   } = useFormContext();
   const [content, setContent] = useState("");
 

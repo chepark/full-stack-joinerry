@@ -81,4 +81,4 @@ const projectValidationSchema = {
     .required("Required."),
 };
 
-export const schema = yup.object().shape(projectValidationSchema);
+export const projectSchema = yup.object().shape(projectValidationSchema);

@@ -4,70 +4,38 @@ import TextField from "@mui/material/TextField";
 
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import {
-  twitterUrlRegEx,
-  githubUrlRegEx,
-  linkedInUrlRegEx,
-} from "../../utils/validationRegEx";
 
 import TwitterIcon from "@mui/icons-material/Twitter";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import defaultProfileImage from "../../assets/profile.png";
 import useUserContext from "../../hooks/useUserContext";
+import useProfileImageSrc from "../../hooks/useProfileImageSrc";
+
+import { accountSchema } from "../../utils";
 
 const AccountSetting = () => {
-  const imageFileFormats = ["image/jpeg", "image/png", "image/gif"];
-  const [profileImageUrl, setProfileImageUrl] = useState();
   const { user } = useUserContext();
+  const [profileImageUrl, setProfileImageUrl] = useState();
+  const { profileImageSrc } = useProfileImageSrc(user.profileImage);
 
-  const schema = yup.object().shape({
-    username: yup
-      .string()
-      .min(2, "Must be at least 2 characters.")
-      .max(20, "Must be less than 20 characters.")
-      .required(),
-    profileImage: yup
-      .mixed()
-      .test(
-        "fileFormat",
-        "File type should be jpg, jpeg, or png.",
-        (value) =>
-          value === (null || "") || imageFileFormats.includes(value[0]?.type)
-      ),
-    bio: yup.string().matches(/^(|.{10,100})$/, "Between 10-100 characters"),
-    twitter: yup.string().matches(twitterUrlRegEx, {
-      message: "ex) https://twitter.com/<YourTwitterAccount>",
-      excludeEmptyString: true,
-    }),
-    github: yup.string().matches(githubUrlRegEx, {
-      message: "ex) https://github.com/<YourGithubAccount>",
-      excludeEmptyString: true,
-    }),
-    linkedin: yup.string().matches(linkedInUrlRegEx, {
-      message: "ex) https://www.linkedin.com/in/yourLinkedInProfile",
-      excludeEmptyString: true,
-    }),
-  });
+  const defaultValues = {
+    profileImage: user.profileImage ? user.profileImage : "",
+    username: user.userName ? user.userName : "",
+    bio: user?.bio ? user.bio : "",
+    twitter: user?.social?.twitter ? user.social.twitter : "",
+    github: user?.social?.github ? user.social.github : "",
+    linkedin: user?.social?.linkedin ? user.social.linkedin : "",
+  };
 
   const {
     control,
     handleSubmit,
-    register,
     watch,
     reset,
     formState: { errors },
   } = useForm({
-    defaultValues: {
-      profileImage: user.profileImage ? user.profileImage : "",
-      username: user.userName ? user.userName : "",
-      bio: user?.bio ? user.bio : "",
-      twitter: user?.social?.twitter ? user.social.twitter : "",
-      github: user?.social?.github ? user.social.github : "",
-      linkedin: user?.social?.linkedin ? user.social.linkedin : "",
-    },
-    resolver: yupResolver(schema),
+    defaultValues,
+    resolver: yupResolver(accountSchema),
   });
 
   const onSubmit = async (data) => {
@@ -116,12 +84,7 @@ const AccountSetting = () => {
   };
 
   useEffect(() => {
-    if (user.profileImage)
-      setProfileImageUrl(
-        "http://localhost:4000/api/users/current_user/profileImage/" +
-          user.profileImage
-      );
-    else setProfileImageUrl(defaultProfileImage);
+    setProfileImageUrl(profileImageSrc);
     reset({
       profileImage: "",
       username: user.userName ? user.userName : "",
@@ -142,7 +105,7 @@ const AccountSetting = () => {
           <>
             <div className="form-sectioon form-image">
               <div className="profile-image-wrapper">
-                <img src={profileImageUrl} alt="profile" />
+                <img src={profileImageUrl && profileImageUrl} alt="profile" />
               </div>
 
               <Controller
@@ -151,7 +114,6 @@ const AccountSetting = () => {
                 type="file"
                 render={({ field }) => (
                   <TextField
-                    // {...field}
                     hidden
                     type="file"
                     onChange={(e) => {

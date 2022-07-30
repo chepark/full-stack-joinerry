@@ -13,7 +13,7 @@ import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
 import { useForm, Controller, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { schema } from "../../utils/projectFormSchema";
+import { projectSchema } from "../../utils/projectFormSchema";
 
 import TableInput from "../TableInput/TableInput";
 import TextEditor from "../TextEditor/TextEditor";
@@ -44,7 +44,7 @@ const ProjectEditor = () => {
   const methods = useForm({
     mode: "onChange",
     defaultValues,
-    resolver: yupResolver(schema),
+    resolver: yupResolver(projectSchema),
   });
 
   const {

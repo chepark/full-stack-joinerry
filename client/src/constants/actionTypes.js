@@ -10,3 +10,9 @@ export const GET_USER = "GET_USER";
 export const CREATE_USER = "CREATE_USER";
 export const LOGOUT_USER = "LOGOUT";
 export const UPDATE_USER = "UPDATE_USER";
+
+// Filter Context
+export const SET_CATEGORY = "SET_CATEGORY";
+export const SET_TAGS = "SET_TAGS";
+export const SET_PAGENUMBER = "SET_PAGENUMBER";
+export const RESET_FILTERS = "RESET_FILTERS";

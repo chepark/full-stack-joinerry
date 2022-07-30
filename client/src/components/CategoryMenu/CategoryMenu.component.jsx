@@ -1,10 +1,15 @@
+import { SET_CATEGORY, SET_PAGENUMBER } from "../../constants/actionTypes";
+import useFilterContext from "../../hooks/useFilterContext";
 import "./_categoryMenu.scss";
 
-const CategoryMenu = ({ category, setCategory, setPageNumber }) => {
+const CategoryMenu = () => {
+  const { category, dispatch } = useFilterContext();
+
   const handleCategoryClick = (e) => {
-    setPageNumber(1);
+    dispatch({ type: SET_PAGENUMBER, payload: 1 });
+
     const selectedCategory = e.target.dataset.category;
-    setCategory(selectedCategory);
+    dispatch({ type: SET_CATEGORY, payload: selectedCategory });
   };
 
   return (

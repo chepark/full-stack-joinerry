@@ -1,6 +1,5 @@
 import "./_home.scss";
-import { useCallback } from "react";
-import { useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 
 import Banner from "../../components/Banner/Banner.component";
 import CategoryMenu from "../../components/CategoryMenu/CategoryMenu.component";
@@ -10,15 +9,15 @@ import Sidebar from "../../components/Sidebar/Sibebar.component";
 import useProjectContext from "../../hooks/useProjectContext";
 import useFetchProjects from "../../hooks/useFetchProjects";
 import ProjectCardMeta from "../../components/ProjectCardSubContent/ProjectCardMeta";
+import useFilterContext from "../../hooks/useFilterContext";
+import { SET_PAGENUMBER } from "../../constants/actionTypes";
 
 const Home = () => {
-  const [category, setCategory] = useState("latest");
-  const [techStackTags, setTechStackTags] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
   const { projects } = useProjectContext();
+  const { category, tags, pageNumber, dispatch } = useFilterContext();
   const { loading, error, hasMore } = useFetchProjects(
     category,
-    techStackTags,
+    tags,
     pageNumber
   );
 
@@ -34,7 +33,7 @@ const Home = () => {
       };
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
-          setPageNumber(hasMore.page);
+          dispatch({ type: SET_PAGENUMBER, payload: hasMore.page });
         }
       }, option);
 
@@ -48,17 +47,9 @@ const Home = () => {
       <Banner />
       <main className="container" data-sectioin="main-projects">
         <div className="content-wrapper" data-section="main-projects">
-          <Sidebar
-            techStackTags={techStackTags}
-            setTechStacks={setTechStackTags}
-            setPageNumber={setPageNumber}
-          />
+          <Sidebar />
           <div className="projects">
-            <CategoryMenu
-              category={category}
-              setCategory={setCategory}
-              setPageNumber={setPageNumber}
-            />
+            <CategoryMenu />
             <ProjectCards
               lastProjectCardRef={lastProjectCardRef}
               projects={projects}
