@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useRef } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 
 import useProjectContext from "./useProjectContext";
 import { GET_PROJECTS } from "../constants/actionTypes";
@@ -6,7 +6,12 @@ import useFilterContext from "./useFilterContext";
 
 const useFetchProjects = () => {
   const { projects, dispatch } = useProjectContext();
-  const { category, tags, pageNumber } = useFilterContext();
+  const {
+    category,
+    tags,
+    pageNumber,
+    dispatch: filterDispatch,
+  } = useFilterContext();
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -22,7 +27,6 @@ const useFetchProjects = () => {
 
     const fetchProjectsByFilter = async (signal) => {
       try {
-        console.log("fetch");
         const response = await fetch(
           "http://localhost:4000/api/projects/?" +
             new URLSearchParams(
@@ -56,12 +60,10 @@ const useFetchProjects = () => {
       }
     };
 
-    fetchProjectsByFilter();
+    fetchProjectsByFilter(signal);
 
     return fetchController.abort(signal);
   }, [category, tags, pageNumber]);
-
-  console.log(projects);
 
   return { loading, error, hasMore };
 };

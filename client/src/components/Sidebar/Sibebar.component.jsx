@@ -4,7 +4,7 @@ import { v4 as uuidV4 } from "uuid";
 import useFilterContext from "../../hooks/useFilterContext";
 import { SET_PAGENUMBER, SET_TAGS } from "../../constants/actionTypes";
 
-const Sidebar = ({ techStackTags, setTechStacks, setPageNumber }) => {
+const Sidebar = () => {
   const techTags = techStacksJson.teachstacks;
   const { tags, dispatch } = useFilterContext();
 
