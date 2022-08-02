@@ -16,7 +16,8 @@ const getProjects = async (req, res) => {
   }
 
   if (req.query.tags !== "null") {
-    tempQuery.techStack = { $in: [req.query.tags] };
+    const tagsArray = req.query.tags.split(",");
+    tempQuery.techStack = { $all: tagsArray };
   }
 
   // set values to pass them as skip() and limit() arguments.
