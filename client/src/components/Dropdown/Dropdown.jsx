@@ -1,5 +1,5 @@
 import "./_dropdown.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Dropdown = ({ logout }) => {
   const navigate = useNavigate();
@@ -13,7 +13,9 @@ const Dropdown = ({ logout }) => {
           navigate("/dashboard/posts", { replace: true });
         }}
       >
+        {/* <Link className="dropdown-menu" to="/dashboard/posts"> */}
         Dashboard
+        {/* </Link> */}
       </div>
       <div className="dropdown-menu" onClick={logout}>
         Log Out

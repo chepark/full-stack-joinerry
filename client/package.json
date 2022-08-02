@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "react-scripts": "^5.0.1",
+    "react-test-renderer": "^18.2.0",
     "sass": "^1.52.3"
   },
   "scripts": {

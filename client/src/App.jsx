@@ -2,8 +2,8 @@ import "./App.scss";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Header from "./components/Header/Header.component";
-import Footer from "./components/Footer/Footer.component";
+import Header from "./components/Header/Header.jsx";
+import Footer from "./components/Footer/Footer.jsx";
 import Home from "./pages/Home/Home.page";
 import SignUp from "./pages/SignUp/SignUp";
 import Success from "./pages/Success/Success";

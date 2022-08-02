@@ -10,9 +10,12 @@ const getProjects = async (req, res) => {
 
   if (req.query.category === "latest" && req.query.tags === "null")
     tempQuery = {};
-  else if (req.query.category !== "latest") {
+
+  if (req.query.category !== "latest") {
     tempQuery.category = req.query.category;
-  } else if (req.query.tags !== "null") {
+  }
+
+  if (req.query.tags !== "null") {
     tempQuery.techStack = { $in: [req.query.tags] };
   }
 

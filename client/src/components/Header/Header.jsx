@@ -10,15 +10,18 @@ import useFetchUser from "../../hooks/useFetchUser";
 import useprofileImageSrc from "../../hooks/useProfileImageSrc";
 
 import Dropdown from "../Dropdown/Dropdown";
+import { logOut } from "../../apis";
 
 const Header = () => {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const [isUserIn, setIsUserIn] = useState(null);
+  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+
   const { user } = useFetchUser();
   const { dispatch } = useUserContext();
   const { profileImageSrc } = useprofileImageSrc();
-  const [isUserIn, setIsUserIn] = useState(null);
-  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     if (user?._id) return setIsUserIn(true);
@@ -26,12 +29,11 @@ const Header = () => {
   }, [user]);
 
   const handleLogout = async () => {
-    const response = await fetch("http://localhost:4000/auth/logout");
-    const json = await response.json();
+    const json = await logOut();
 
     if (json.message === "success") {
       dispatch({ type: LOGOUT_USER });
-      navigate("/login");
+      navigate("/login", { replace: true });
     }
   };
 

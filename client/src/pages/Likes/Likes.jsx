@@ -2,27 +2,16 @@ import "./_likes.scss";
 import React, { useState, useEffect } from "react";
 import ProjectCards from "../../components/ProjectCards/ProjectCards.component";
 import ProjectCardMeta from "../../components/ProjectCardSubContent/ProjectCardMeta";
+import { fetchUserLikes } from "../../apis";
 
 const Likes = () => {
   const [likes, setLikes] = useState([]);
   const [likeButtonClicked, setLikeButtonClicked] = useState(false);
 
   useEffect(() => {
-    const fetchUserLikes = async () => {
-      const response = await fetch(
-        "http://localhost:4000/api/users/current_user/likes",
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
-
-      const json = await response.json();
-
+    fetchUserLikes().then((json) => {
       setLikes(json.likes);
-    };
-
-    fetchUserLikes();
+    });
   }, [likeButtonClicked]);
 
   return (

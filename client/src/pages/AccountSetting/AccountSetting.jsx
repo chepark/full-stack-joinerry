@@ -12,9 +12,11 @@ import useUserContext from "../../hooks/useUserContext";
 import useProfileImageSrc from "../../hooks/useProfileImageSrc";
 
 import { accountSchema } from "../../utils";
+import { updateUser } from "../../apis";
+import { UPDATE_USER } from "../../constants/actionTypes";
 
 const AccountSetting = () => {
-  const { user } = useUserContext();
+  const { user, dispatch } = useUserContext();
   const [profileImageUrl, setProfileImageUrl] = useState();
   const { profileImageSrc } = useProfileImageSrc(user.profileImage);
 
@@ -26,7 +28,7 @@ const AccountSetting = () => {
     github: user?.social?.github ? user.social.github : "",
     linkedin: user?.social?.linkedin ? user.social.linkedin : "",
   };
-
+  console.log("user", user);
   const {
     control,
     handleSubmit,
@@ -52,17 +54,10 @@ const AccountSetting = () => {
       return;
 
     const formData = setFormData(data);
-    const response = await fetch(
-      "http://localhost:4000/api/users/current_user/update",
-      {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      }
-    );
 
-    const json = await response.json();
-    console.log("json", json);
+    updateUser(formData, (updatedValues) => {
+      dispatch({ type: UPDATE_USER, payload: updatedValues });
+    });
   };
 
   const setFormData = (data) => {

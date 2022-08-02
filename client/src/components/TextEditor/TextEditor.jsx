@@ -68,7 +68,7 @@ const TextEditor = () => {
           );
         }}
       />
-
+      {console.log("errors", errors)}
       <div>
         <Controller
           control={control}
@@ -80,8 +80,10 @@ const TextEditor = () => {
                 ref={quillRef}
                 defaultValue={id ? getValues("content") : ""}
                 onChange={(contentHtml) => {
-                  setValue("content", contentHtml);
+                  // setValue("content", contentHtml);
+                  field.onChange(contentHtml);
                 }}
+                style={!!errors.content ? { border: "2px solid red" } : {}}
               />
             );
           }}

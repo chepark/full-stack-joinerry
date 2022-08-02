@@ -22,7 +22,7 @@ export const filterReducer = (state, action) => {
     case SET_PAGENUMBER:
       return { ...state, pageNumber: payload };
     case RESET_FILTERS:
-      return { filterInitialState };
+      return filterInitialState;
     default:
       return state;
   }

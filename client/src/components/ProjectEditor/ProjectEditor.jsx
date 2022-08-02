@@ -19,6 +19,9 @@ import TableInput from "../TableInput/TableInput";
 import TextEditor from "../TextEditor/TextEditor";
 import useUserContext from "../../hooks/useUserContext";
 
+import { createProject, fetchProject, editProject } from "../../apis";
+import { convertIsoStringToDateObj } from "../../utils";
+
 const ProjectEditor = () => {
   const categoryOptions = categoriesJson.categories;
   const roleOptions = rolesJson.roles;
@@ -55,11 +58,9 @@ const ProjectEditor = () => {
   } = methods;
 
   useEffect(() => {
-    const fetchProject = async () => {
-      const response = await fetch("http://localhost:4000/api/projects/" + id);
-      const json = await response.json();
-      let project = json;
+    if (!id) return;
 
+    fetchProject(id).then((project) => {
       if (project.startDate)
         project.startDate = convertIsoStringToDateObj(project.startDate);
 
@@ -67,66 +68,30 @@ const ProjectEditor = () => {
         project.endDate = convertIsoStringToDateObj(project.endDate);
 
       methods.reset(project);
-    };
-
-    if (!id) return;
-    fetchProject();
+    });
   }, [id]);
-
-  const convertIsoStringToDateObj = (isoString) => {
-    const DateObj = new Date(isoString.slice(0, -1));
-    return DateObj;
-  };
-
-  const createProject = async (values, project) => {
-    const response = await fetch("http://localhost:4000/api/projects", {
-      method: "POST",
-      body: JSON.stringify(project),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const json = await response.json();
-
-    if (!response.ok) {
-      setLoading(false);
-    }
-
-    if (response.ok) {
-      console.log(json);
-      setLoading(false);
-      navigate("/dashboard/posts", { replace: true });
-    }
-  };
-
-  const editProject = async (values, project) => {
-    const response = await fetch("http://localhost:4000/api/projects/" + id, {
-      method: "PUT",
-      body: JSON.stringify(project),
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    navigate("/dashboard/posts", { replace: true });
-  };
 
   const onSubmit = async (data) => {
     let project = { ...data, creator: user._id };
 
-    if (id) editProject(data, project);
+    if (id)
+      editProject(project).then((json) => {
+        navigate("/dashboard/posts", { replace: true });
+      });
 
-    if (!id) createProject(data, project);
+    if (!id)
+      createProject(project).then((response) => {
+        setLoading(false);
+        navigate("/dashboard/posts", { replace: true });
+      });
   };
 
   const onError = (data) => {
     console.log("error", data);
   };
 
-  console.log("inputs", watch());
-  console.log("errors", errors);
+  // console.log("inputs", watch());
+  // console.log("errors", errors);
 
   const handleCancel = () => {
     navigate("/dashboard/posts", { replace: true });
