@@ -20,6 +20,7 @@ const Home = () => {
   const { loading, error, hasMore } = useFetchProjects();
 
   useEffect(() => {
+    // reset the filter as default before leaving the Home page.
     return () => dispatch({ type: RESET_FILTERS });
   }, []);
 

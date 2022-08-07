@@ -16,6 +16,7 @@ const getProjects = async (req, res) => {
   }
 
   if (req.query.tags !== "null") {
+    console.log("TAGS", req.query.tags);
     const tagsArray = req.query.tags.split(",");
     tempQuery.techStack = { $all: tagsArray };
   }

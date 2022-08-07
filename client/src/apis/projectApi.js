@@ -1,16 +1,11 @@
-export const fetchProjectsByFilter = async (signal, query, cb) => {
-  try {
-    const response = await fetch(
-      process.env.REACT_APP_SERVER_BASE_URL +
-        "/api/projects/?" +
-        new URLSearchParams(query, { signal })
-    );
-    // const json = await response.json();
+export const fetchProjectsByFilter = async (signal, query) => {
+  const response = await fetch(
+    process.env.REACT_APP_SERVER_BASE_URL +
+      "/api/projects/?" +
+      new URLSearchParams(query, { signal })
+  );
 
-    return response;
-  } catch (error) {
-    return error;
-  }
+  return response;
 };
 
 export const fetchProject = async (projectId) => {
