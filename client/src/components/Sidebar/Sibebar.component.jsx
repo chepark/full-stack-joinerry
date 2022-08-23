@@ -31,7 +31,7 @@ const Sidebar = () => {
 
   return (
     <div className="tags-wrapper">
-      <div className="tags-header">Tech Stack</div>
+      <div className="tags-header">Filter</div>
       <ul className="tag-list">
         {techTags.map((tag) => {
           return (

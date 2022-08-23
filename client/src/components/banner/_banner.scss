@@ -1,13 +1,18 @@
 @import "../../scss/variables";
 
 .container[data-section="banner"] {
-  background-color: $primary-green;
+  // background-color: $primary-green;
+
+  background-image: url("../../assets/banner-background.jpg");
+  background-position: center;
+  background-size: cover;
+  height: 800px;
 }
 
 .content-wrapper[data-section="banner"] {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: flex-start;
   flex-wrap: wrap-reverse;
 
   align-items: center;
@@ -16,17 +21,33 @@
 }
 
 .banner-textContent {
+  width: 100%;
+  padding-right: 1rem;
+
   color: white;
   font-size: 2rem;
   letter-spacing: 1px;
   line-height: 50px;
-}
 
-.banner-imageContent {
-  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 
-  img {
-    max-width: 100%;
-    height: auto;
+  .banner-text__title {
+    font-size: 3rem;
+    font-weight: bold;
+  }
+
+  .banner-text__subTitle {
+    font-size: 1.5rem;
   }
 }
+
+// .banner-imageContent {
+//   width: 300px;
+
+//   img {
+//     max-width: 100%;
+//     height: auto;
+//   }
+// }

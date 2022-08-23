@@ -28,7 +28,7 @@ const AccountSetting = () => {
     github: user?.social?.github ? user.social.github : "",
     linkedin: user?.social?.linkedin ? user.social.linkedin : "",
   };
-  console.log("user", user);
+
   const {
     control,
     handleSubmit,
@@ -100,7 +100,7 @@ const AccountSetting = () => {
           <>
             <div className="form-sectioon form-image">
               <div className="profile-image-wrapper">
-                <img src={profileImageUrl && profileImageUrl} alt="profile" />
+                {profileImageUrl && <img src={profileImageUrl} alt="profile" />}
               </div>
 
               <Controller

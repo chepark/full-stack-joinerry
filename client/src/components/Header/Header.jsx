@@ -44,14 +44,25 @@ const Header = () => {
         <h1 id="logo">
           <Link
             to="/"
-            style={{ textDecoration: "none", color: "black", fontSize: "18px" }}
+            style={{
+              textDecoration: "none",
+              color: "#34cc99",
+              fontSize: "20px",
+            }}
           >
             Joinerry
           </Link>
         </h1>
         <div className="header-right">
           <div>
-            <Link to="/project/create" style={{ textDecoration: "none" }}>
+            <Link
+              to="/project/create"
+              style={{
+                textDecoration: "none",
+                fontSize: "16px",
+                color: "black",
+              }}
+            >
               + Create Project
             </Link>
           </div>
