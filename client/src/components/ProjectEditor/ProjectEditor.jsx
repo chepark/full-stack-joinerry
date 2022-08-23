@@ -71,6 +71,10 @@ const ProjectEditor = () => {
     });
   }, [id]);
 
+  // useEffect(() => {
+  //   methods.register("techStack");
+  // });
+
   const onSubmit = async (data) => {
     let project = { ...data, creator: user._id };
 
@@ -90,7 +94,7 @@ const ProjectEditor = () => {
     console.log("error", data);
   };
 
-  // console.log("inputs", watch());
+  console.log("inputs", watch());
   // console.log("errors", errors);
 
   const handleCancel = () => {
@@ -144,25 +148,28 @@ const ProjectEditor = () => {
             <Controller
               name="techStack"
               control={control}
-              render={({ field }) => {
+              // defaultValue={[]}
+              render={({ field: { ref, ...field }, fieldState: { error } }) => {
                 return (
                   <Autocomplete
                     {...field}
+                    disableClearable
+                    disablePortal
+                    filterSelectedOptions
                     multiple
                     options={tagOptions}
-                    onChange={(e, value) => {
-                      field.onChange(value);
-                      return value;
-                    }}
-                    isOptionEqualToValue={(option, value) =>
-                      value === undefined ||
-                      value === "" ||
-                      option.id === value.id
-                    }
+                    getOptionDisabled={(option) => option.disabled}
+                    onChange={(event, value) => field.onChange(value)}
+                    // isOptionEqualToValue={(option, value) =>
+                    //   value === undefined ||
+                    //   value === "" ||
+                    //   option.id === value.id
+                    // }
                     renderInput={(params) => {
                       return (
                         <TextField
                           {...params}
+                          inputRef={ref}
                           label="Tech Stacks"
                           error={!!errors.techStack}
                           helperText={errors?.techStack?.message}
