@@ -55,14 +55,7 @@ const Header = () => {
         </h1>
         <div className="header-right">
           <div>
-            <Link
-              to="/project/create"
-              style={{
-                textDecoration: "none",
-                fontSize: "16px",
-                color: "black",
-              }}
-            >
+            <Link className="header-link" to="/project/create">
               + Create Project
             </Link>
           </div>
@@ -89,13 +82,13 @@ const Header = () => {
           {!isUserIn && (
             <>
               <div>
-                <Link to="/login" style={{ textDecoration: "none" }}>
+                <Link className="header-link" to="/login">
                   Log In
                 </Link>
               </div>
 
               <div>
-                <Link to="/signup" style={{ textDecoration: "none" }}>
+                <Link className="header-link" to="/signup">
                   Sign Up
                 </Link>
               </div>

@@ -71,10 +71,6 @@ const ProjectEditor = () => {
     });
   }, [id]);
 
-  // useEffect(() => {
-  //   methods.register("techStack");
-  // });
-
   const onSubmit = async (data) => {
     let project = { ...data, creator: user._id };
 

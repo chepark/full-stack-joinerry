@@ -1,5 +1,4 @@
 import "./_banner.scss";
-import bannerImage from "../../assets/banner-image.png";
 
 const Banner = () => {
   return (

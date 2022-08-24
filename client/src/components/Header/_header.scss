@@ -10,6 +10,15 @@
   margin-right: 2rem;
 }
 
+.header-link {
+  text-decoration: none;
+  font-size: 16px;
+  color: black;
+  &:hover {
+    color: $primary-green;
+  }
+}
+
 .header-right {
   display: flex;
   flex-direction: row;

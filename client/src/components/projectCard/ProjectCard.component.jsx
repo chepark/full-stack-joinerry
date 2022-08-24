@@ -4,7 +4,7 @@ import { useState, useEffect, forwardRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ProjectCard = ({ project, children }, ref) => {
-  const { title, techStack, creator, roles, _id } = project;
+  const { title, techStack, _id } = project;
   let [capitalizedTitle, setCapitalizedTitle] = useState("");
   const navigate = useNavigate();
 
