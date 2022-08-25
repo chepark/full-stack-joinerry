@@ -24,6 +24,7 @@ const Home = () => {
     return () => dispatch({ type: RESET_FILTERS });
   }, []);
 
+  console.log("loc", location);
   const lastProjectCardRef = useCallback(
     (node, observer) => {
       if (loading) return;

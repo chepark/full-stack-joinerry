@@ -1,6 +1,6 @@
 import "./App.scss";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 
 import Header from "./components/Header/Header.jsx";
 import Footer from "./components/Footer/Footer.jsx";
@@ -16,6 +16,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Posts from "./pages/Posts/Posts";
 import Likes from "./pages/Likes/Likes";
 import AccountSetting from "./pages/AccountSetting/AccountSetting";
+import Privacy from "./pages/Privacy/Privacy";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/login" element={<LogIn />} />
           <Route path="/success" element={<Success />} />
           <Route path="/project/:id" element={<ProjectDetail />} />
+          <Route path="/privacy" element={<Privacy />} />
 
           <Route element={<PrivateOutlet />}>
             <Route path="/project/create" element={<CreateProject />} />

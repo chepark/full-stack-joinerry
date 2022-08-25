@@ -1,6 +1,9 @@
 import "./_banner.scss";
+import useWindowSize from "../../hooks/useWindowSize";
 
 const Banner = () => {
+  const [windowHeight, windowWidth] = useWindowSize();
+
   return (
     <div className="container" data-section="banner">
       <div className="content-wrapper" data-section="banner">

@@ -1,14 +1,16 @@
 import "./_projectDetail.scss";
 import { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { v4 as uuidV4 } from "uuid";
 import Parser from "html-react-parser";
-import useWindowSize from "../../hooks/useWindowSize";
 
+import { fetchProject } from "../../apis";
 import { formatDate, avatarLetter } from "../../utils";
 
-import useUserContext from "../../hooks/useUserContext";
 import useLikeToggle from "../../hooks/useLikeToggle";
+import useWindowSize from "../../hooks/useWindowSize";
+import useArrowButtons from "../../hooks/useArrowButtons";
+
 import OpeningStatus from "./OpeningStatus";
 import {
   ProfileModal,
@@ -19,12 +21,14 @@ import {
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import IosShareIcon from "@mui/icons-material/IosShare";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 import { Avatar } from "@mui/material";
 
 const ProjectDetail = () => {
   const { id } = useParams();
 
+  const navigate = useNavigate();
   const location = useLocation();
   const shareUrl = location.pathname;
 
@@ -33,15 +37,12 @@ const ProjectDetail = () => {
   const [openProfile, setOpenProfile] = useState(false);
   const [windowHeight, windowWidth] = useWindowSize();
   const { likeToggle, likeOrUnlike } = useLikeToggle(id);
+  // const { handleBackButtonClick } = useArrowButtons();
 
   useEffect(() => {
-    const fetchProject = async () => {
-      const response = await fetch("http://localhost:4000/api/projects/" + id);
-      const json = await response.json();
-      setProject(json);
-    };
-
-    fetchProject();
+    fetchProject(id).then((project) => {
+      setProject(project);
+    });
   }, []);
 
   const handleCreatorClick = () => {
@@ -56,6 +57,8 @@ const ProjectDetail = () => {
     likeOrUnlike();
   };
 
+  console.log("loc", location);
+
   return (
     <div
       className="container"
@@ -63,6 +66,13 @@ const ProjectDetail = () => {
       style={{ height: windowHeight }}
     >
       <div className="content-wrapper" id="detail-wrapper">
+        <div
+          className="detail-backArrow"
+          onClick={() => navigate("/", { replace: true })}
+        >
+          <ArrowBackIosIcon fontSize="large" />
+          <div>Back to Home</div>
+        </div>
         <div className="detail-card">
           <div className="detail-header-wrapper">
             <h2 className="detail-title">{project.title}</h2>

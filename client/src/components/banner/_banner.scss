@@ -1,8 +1,6 @@
 @import "../../scss/variables";
 
 .container[data-section="banner"] {
-  // background-color: $primary-green;
-
   background-image: url("../../assets/banner-background.jpg");
   background-position: center;
   background-size: cover;
@@ -42,12 +40,3 @@
     font-size: 1.5rem;
   }
 }
-
-// .banner-imageContent {
-//   width: 300px;
-
-//   img {
-//     max-width: 100%;
-//     height: auto;
-//   }
-// }

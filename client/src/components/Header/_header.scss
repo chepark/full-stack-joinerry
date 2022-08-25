@@ -1,5 +1,9 @@
 @import "../../scss/variables";
 
+#header {
+  width: 100%;
+}
+
 .content-wrapper[data-section="header"] {
   display: flex;
   flex-direction: row;

@@ -91,7 +91,6 @@ const ProjectEditor = () => {
   };
 
   console.log("inputs", watch());
-  // console.log("errors", errors);
 
   const handleCancel = () => {
     navigate("/dashboard/posts", { replace: true });
@@ -144,7 +143,6 @@ const ProjectEditor = () => {
             <Controller
               name="techStack"
               control={control}
-              // defaultValue={[]}
               render={({ field: { ref, ...field }, fieldState: { error } }) => {
                 return (
                   <Autocomplete
@@ -156,11 +154,6 @@ const ProjectEditor = () => {
                     options={tagOptions}
                     getOptionDisabled={(option) => option.disabled}
                     onChange={(event, value) => field.onChange(value)}
-                    // isOptionEqualToValue={(option, value) =>
-                    //   value === undefined ||
-                    //   value === "" ||
-                    //   option.id === value.id
-                    // }
                     renderInput={(params) => {
                       return (
                         <TextField
@@ -194,9 +187,7 @@ const ProjectEditor = () => {
                       onChange={(value) => {
                         field.onChange(value);
                         methods.setValue("startDate", new Date(value));
-                        // setValues({ ...values, startDate: value });
                       }}
-                      // value={values.startDate}
                       value={methods.getValues("startDate")}
                       renderInput={(params) => {
                         return (
@@ -223,10 +214,8 @@ const ProjectEditor = () => {
                       label="End Date"
                       onChange={(value) => {
                         field.onChange(value);
-                        // setValues({ ...values, endDate: value });
                         methods.setValue("endDate", new Date(value));
                       }}
-                      // value={values.endDate}
                       value={methods.getValues("endDate")}
                       renderInput={(params) => {
                         return (
