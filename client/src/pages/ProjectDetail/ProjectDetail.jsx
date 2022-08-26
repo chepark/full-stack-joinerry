@@ -9,7 +9,6 @@ import { formatDate, avatarLetter } from "../../utils";
 
 import useLikeToggle from "../../hooks/useLikeToggle";
 import useWindowSize from "../../hooks/useWindowSize";
-import useArrowButtons from "../../hooks/useArrowButtons";
 
 import OpeningStatus from "./OpeningStatus";
 import {
@@ -37,7 +36,6 @@ const ProjectDetail = () => {
   const [openProfile, setOpenProfile] = useState(false);
   const [windowHeight, windowWidth] = useWindowSize();
   const { likeToggle, likeOrUnlike } = useLikeToggle(id);
-  // const { handleBackButtonClick } = useArrowButtons();
 
   useEffect(() => {
     fetchProject(id).then((project) => {
@@ -57,7 +55,8 @@ const ProjectDetail = () => {
     likeOrUnlike();
   };
 
-  console.log("loc", location);
+  // console.log("loc", location);
+  console.log(project);
 
   return (
     <div
@@ -175,6 +174,10 @@ const ProjectDetail = () => {
                       : "not specifed"}
                   </span>
                 </div>
+              </div>
+              <div className="detail-submeta">
+                <div className="detail-subtitle">Contact</div>
+                {project?.contact ? <div>{project.contact}</div> : <div>-</div>}
               </div>
             </div>
           </div>
