@@ -17,6 +17,7 @@ import Posts from "./pages/Posts/Posts";
 import Likes from "./pages/Likes/Likes";
 import AccountSetting from "./pages/AccountSetting/AccountSetting";
 import Privacy from "./pages/Privacy/Privacy";
+import Faq from "./pages/Faq/Faq";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/success" element={<Success />} />
           <Route path="/project/:id" element={<ProjectDetail />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/faq" element={<Faq />} />
 
           <Route element={<PrivateOutlet />}>
             <Route path="/project/create" element={<CreateProject />} />
