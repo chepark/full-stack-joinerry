@@ -15,7 +15,6 @@ const TextEditor = () => {
   const {
     control,
     formState: { errors },
-    setValue,
     getValues,
   } = useFormContext();
   const [content, setContent] = useState("");
@@ -33,6 +32,7 @@ const TextEditor = () => {
 
   const customTextFieldStyle = [
     {
+      marginBottom: "1rem",
       "& .MuiInput-underline": {
         "&::before": {
           borderBottom: "1px solid #ccc",
@@ -50,8 +50,6 @@ const TextEditor = () => {
 
   return (
     <div className="textEditor-wrapper" key={getValues("_id") || 0}>
-      {console.log("ref", quillRef.getEditingArea)}
-
       <Controller
         name="title"
         control={control}
@@ -68,7 +66,7 @@ const TextEditor = () => {
           );
         }}
       />
-      {console.log("errors", errors)}
+
       <div>
         <Controller
           control={control}
@@ -76,6 +74,7 @@ const TextEditor = () => {
           render={({ field }) => {
             return (
               <ReactQuill
+                className={errors.content ? "ql-error" : null}
                 theme="snow"
                 ref={quillRef}
                 defaultValue={id ? getValues("content") : ""}
@@ -83,13 +82,14 @@ const TextEditor = () => {
                   // setValue("content", contentHtml);
                   field.onChange(contentHtml);
                 }}
-                style={!!errors.content ? { border: "2px solid red" } : {}}
               />
             );
           }}
         />
       </div>
-      {!!errors.content ? errors.content.message : ""}
+      {!!errors.content ? (
+        <div className="ql-error__message">{errors.content.message}</div>
+      ) : null}
     </div>
   );
 };
