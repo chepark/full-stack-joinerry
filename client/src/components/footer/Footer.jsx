@@ -12,8 +12,12 @@ const Footer = () => {
         <Link className="footer-link" to="/">
           &copy; Joinnerry
         </Link>
-        <p>FAQ</p>
-        <p>Terms</p>
+        <Link className="footer-link" to="/faq">
+          FAQ
+        </Link>
+        <Link className="footer-link" to="/terms">
+          Terms
+        </Link>
         <Link className="footer-link" to="/privacy">
           Privacy
         </Link>

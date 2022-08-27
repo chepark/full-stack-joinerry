@@ -18,10 +18,18 @@
   background-color: $bg-color;
   padding-top: 50px;
   padding-bottom: 80px;
+
+  align-items: flex-start;
+  height: 100%;
+}
+
+.content-wrapper[data-section="terms"] {
+  max-width: 800px;
 }
 
 .content-wrapper[data-section="terms"] > div {
   margin-bottom: 30px;
+  line-height: 1.5;
 }
 
 button {

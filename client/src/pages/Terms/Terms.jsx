@@ -26,6 +26,8 @@ const Terms = () => {
           capitalization and/or he/she or they, are taken as interchangeable and
           therefore as referring to same.
         </div>
+        <br />
+
         <h3>Cookies</h3>
         <div>
           We employ the use of cookies. By accessing Joinerry, you agreed to use
@@ -36,6 +38,8 @@ const Terms = () => {
           our website. Some of our affiliate/advertising partners may also use
           cookies.
         </div>
+        <br />
+
         <h3>License</h3>
         <div>
           Unless otherwise stated, Joinerry and/or its licensors own the
@@ -43,13 +47,15 @@ const Terms = () => {
           intellectual property rights are reserved. You may access this from
           Joinerry for your own personal use subjected to restrictions set in
           these terms and conditions. You must not:
+          <br />
+          <br />
           <ul>
             <li>Republish material from Joinerry</li>
             <li>Sell, rent or sub-license material from Joinerry</li>
             <li>Reproduce, duplicate or copy material from Joinerry</li>
             <li>Redistribute content from Joinerry</li>
-            <li></li>
           </ul>
+          <br />
           This Agreement shall begin on the date hereof. Our Terms and
           Conditions were created with the help of the Free Terms and Conditions
           Generator. Parts of this website offer an opportunity for users to
@@ -65,6 +71,8 @@ const Terms = () => {
           reserves the right to monitor all Comments and to remove any Comments
           which can be considered inappropriate, offensive or causes breach of
           these Terms and Conditions. You warrant and represent that:
+          <br />
+          <br />
           <ul>
             <li>
               You are entitled to post the Comments on our website and have all
@@ -91,10 +99,13 @@ const Terms = () => {
             </li>
           </ul>
         </div>
+        <br />
         <h3>Hyperlinking to our Content</h3>
         <div>
           The following organizations may link to our Website without prior
           written approval:
+          <br />
+          <br />
           <ul>
             <li>Government agencies;</li>
             <li>Search engines;</li>
@@ -118,8 +129,11 @@ const Terms = () => {
               party’s site.
             </li>
           </ul>
+          <br />
           We may consider and approve other link requests from the following
           types of organizations:
+          <br />
+          <br />
           <ul>
             <li>
               commonly-known consumer and/or business information sources;{" "}
@@ -130,6 +144,7 @@ const Terms = () => {
             <li>accounting, law and consulting firms;</li>
             <li>and educational institutions and trade associations.</li>
           </ul>
+          <br />
           We will approve link requests from these organizations if we decide
           that: (a) the link would not make us look unfavorably to ourselves or
           to our accredited businesses; (b) the organization does not have any
@@ -137,10 +152,12 @@ const Terms = () => {
           the hyperlink compensates the absence of Joinerry; and (d) the link is
           in the context of general resource information.
           <br />
+          <br />
           These organizations may link to our home page so long as the link: (a)
           is not in any way deceptive; (b) does not falsely imply sponsorship,
           endorsement or approval of the linking party and its products or
           services; and (c) fits within the context of the linking party’s site.
+          <br />
           <br />
           If you are one of the organizations listed in paragraph 2 above and
           are interested in linking to our website, you must inform us by
@@ -150,7 +167,10 @@ const Terms = () => {
           and a list of the URLs on our site to which you would like to link.
           Wait 2-3 weeks for a response.
           <br />
+          <br />
           Approved organizations may hyperlink to our Website as follows:
+          <br />
+          <br />
           <ul>
             <li> By use of our corporate name; or</li>
             <li>By use of the uniform resource locator being linked to; or</li>
@@ -160,6 +180,7 @@ const Terms = () => {
               linking party’s site.
             </li>
           </ul>
+          <br />
           No use of Joinerry's logo or other artwork will be allowed for linking
           absent a trademark license agreement.
         </div>

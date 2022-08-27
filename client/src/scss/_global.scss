@@ -72,9 +72,12 @@ body {
   line-height: 1;
 }
 
-ol,
-ul {
+ol {
   list-style: none;
+}
+
+ul {
+  margin-left: 1.5rem;
 }
 
 table {
@@ -103,4 +106,10 @@ input {
   color: $primary-green;
   padding: 1rem 2rem;
   cursor: pointer;
+}
+
+.text-bold {
+  color: $primary-green;
+  font-weight: bold;
+  text-decoration: underline;
 }
