@@ -18,11 +18,14 @@ import Likes from "./pages/Likes/Likes";
 import AccountSetting from "./pages/AccountSetting/AccountSetting";
 import Privacy from "./pages/Privacy/Privacy";
 import Faq from "./pages/Faq/Faq";
+import Terms from "./pages/Terms/Terms";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        <ScrollToTop />
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -32,6 +35,7 @@ function App() {
           <Route path="/project/:id" element={<ProjectDetail />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/faq" element={<Faq />} />
+          <Route path="/terms" element={<Terms />} />
 
           <Route element={<PrivateOutlet />}>
             <Route path="/project/create" element={<CreateProject />} />
