@@ -1,6 +1,6 @@
 import "./_dashboard.scss";
-import { useState, useRef } from "react";
-import { Routes, Route, Link, Outlet } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
 import useUserContext from "../../hooks/useUserContext";
 
@@ -13,6 +13,23 @@ const Dashboard = () => {
     likes: false,
     accountSetting: false,
   });
+
+  const location = useLocation();
+
+  useEffect(() => {
+    let currentLocation = location.pathname.slice(11);
+    if (currentLocation === "account-setting")
+      currentLocation = "accountSetting";
+
+    let tempSelected = {};
+    for (const key in selected) {
+      if (key === currentLocation) {
+        tempSelected[key] = true;
+      } else tempSelected[key] = false;
+    }
+
+    setSelected(tempSelected);
+  }, [location]);
 
   const handleLinkClick = (e) => {
     const linkTitle = e.target.getAttribute("data-link");

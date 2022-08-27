@@ -33,8 +33,8 @@ const roleSchema = yup.object({
   role: yup.mixed().test("check role", "Select one option.", validateRole),
   number: yup
     .number()
-    .typeError("Must be a number")
-    .test("numberRange", "Must be between 1 to 99", validateNumberRange),
+    .typeError("Must be a number.")
+    .test("numberRange", "Must be between 1 to 99.", validateNumberRange),
 
   isOpened: yup
     .mixed()
@@ -76,8 +76,8 @@ const projectValidationSchema = {
 
   content: yup
     .string()
-    .min(10, "Must be more than 10 characters")
-    .max(120, "Must be less than 120 characters")
+    .min(10, "Must be more than 10 characters.")
+    .max(120, "Must be less than 120 characters.")
     .required("Required."),
 };
 

@@ -1,5 +1,6 @@
 import "./_banner.scss";
 import useWindowSize from "../../hooks/useWindowSize";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
   const [windowHeight, windowWidth] = useWindowSize();
@@ -14,6 +15,9 @@ const Banner = () => {
           <div className="banner-text__subTitle">
             Exciting place to level up portfolio with future developers.
           </div>
+          <Link className="banner-button btn-primary" to="/faq">
+            Learn More
+          </Link>
         </div>
         {/* <div className="banner-imageContent">
           <img src={bannerImage} alt="banner" />

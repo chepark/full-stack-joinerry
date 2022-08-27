@@ -5,17 +5,11 @@ const PrivateOutlet = () => {
   const { user } = useUserContext();
   const location = useLocation();
 
-  return user ? (
+  return user?._id ? (
     <Outlet />
   ) : (
     <Navigate to="/login" state={{ from: location }} replace />
   );
-
-  // return user._id ? (
-  //   <Outlet />
-  // ) : (
-  //   <Navigate to="/login" state={{ from: location }} replace />
-  // );
 };
 
 export default PrivateOutlet;
