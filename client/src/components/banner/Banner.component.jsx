@@ -1,5 +1,4 @@
 import "./_banner.scss";
-import useWindowSize from "../../hooks/useWindowSize";
 import { Link } from "react-router-dom";
 
 const Banner = () => {
