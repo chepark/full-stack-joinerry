@@ -12,7 +12,6 @@ const useWindowSize = () => {
       setSize([window.innerHeight - HEADER_FOOTER_HEIGHTS, window.innerWidth]);
     };
 
-    // window.addEventListener("resize", handleResize);
     window.addEventListener("resize", handleResize);
 
     return () => {

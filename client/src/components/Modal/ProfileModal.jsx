@@ -34,7 +34,8 @@ export const ProfileModal = ({ creator }) => {
   };
 
   const profileImageSrc = creator?.profileImage
-    ? "http://localhost:4000/api/users/current_user/profileImage/" +
+    ? process.env.REACT_APP_SERVER_BASE_URL +
+      "/api/users/current_user/profileImage/" +
       creator.profileImage
     : defaultProfileImage;
 

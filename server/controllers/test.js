@@ -35,53 +35,6 @@ const getProjects = async (req, res) => {
   res.status(200).json(results);
 };
 
-/// FIRST WORKING MODEL
-// const getProjects = async (req, res) => {
-//   let projects;
-//   const pageNumber = parseInt(req.query.page);
-//   const PAGE_SIZE = 20;
-
-//   let query = {};
-
-//   if (req.query.category === "latest" && req.query.tags === "null") {
-//     query = {};
-//   } else {
-//     req.query.category !== "latest" && (query.category = req.query.category);
-//     req.query.tags !== "null" && (query.techStack = { $in: [req.query.tags] });
-//   }
-
-//   projects = await Project.find(query)
-//     .skip(PAGE_SIZE * (pageNumber - 1))
-//     .limit(PAGE_SIZE)
-//     .sort({ createdAt: -1 });
-//   console.log(projects);
-//   res.status(200).json(projects);
-// };
-
-// SECOND WORKING MODEL
-// const getProjects = async (req, res) => {
-//     let projects;
-//     const pageNumber = parseInt(req.query.page);
-//     const PAGE_SIZE = 20;
-
-//     let query = {};
-
-//     if (req.query.category === "latest" && req.query.tags === "null") {
-//       query = {};
-//     } else {
-//       req.query.category !== "latest" && (query.category = req.query.category);
-//       req.query.tags !== "null" && (query.techStack = { $in: [req.query.tags] });
-//     }
-
-//     projects = await Project.find(query)
-//       .skip(PAGE_SIZE * (pageNumber - 1))
-//       .limit(PAGE_SIZE)
-//       .sort({ createdAt: -1 });
-//     console.log("query:", req.query);
-
-//     res.status(200).json(projects);
-// }
-
 useEffect(() => {
   setLoading(true);
   setError(false);
