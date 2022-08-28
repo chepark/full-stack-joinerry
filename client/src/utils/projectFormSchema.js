@@ -76,7 +76,7 @@ const projectValidationSchema = {
   content: yup
     .string()
     .min(10, "Must be more than 10 characters.")
-    .max(120, "Must be less than 120 characters.")
+    .max(2500, "Must be less than 120 characters.")
     .required("Required."),
 };
 

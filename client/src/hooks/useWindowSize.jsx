@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const useWindowSize = () => {
-  const HEADER_FOOTER_HEIGHTS = 227;
+  const HEADER_FOOTER_HEIGHTS = 200;
   const [size, setSize] = useState([
     window.innerHeight - HEADER_FOOTER_HEIGHTS,
     window.innerWidth,

@@ -5,7 +5,7 @@ const Faq = () => {
   const [height, width] = useWindowSize();
 
   return (
-    <div className="container" data-section="terms">
+    <div className="container" data-section="terms" style={{ height }}>
       <div className="content-wrapper" data-section="terms">
         <h2>FAQ</h2>
         <div>
