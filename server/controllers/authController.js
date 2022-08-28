@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 export const logoutUser = async (req, res) => {
   req.logout((error) => {
     if (error) next(error);

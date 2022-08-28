@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createContext, useReducer } from "react";
 
 import { filterInitialState, filterReducer } from "../reducers/filterReducer";

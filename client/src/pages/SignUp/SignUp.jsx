@@ -13,7 +13,7 @@ const SignUp = () => {
   const fetchUser = async () => {
     try {
       const response = await fetch(
-        process.env.REACT_APP_SERVER_BASE_URL + "/api/users/current_user",
+        "http://localhost:4000/api/users/current_user",
         {
           method: "GET",
           credentials: "include",
@@ -32,8 +32,7 @@ const SignUp = () => {
     e.preventDefault();
     let timer;
 
-    const googleLoginUrl =
-      process.env.REACT_APP_SERVER_BASE_URL + "/auth/google";
+    const googleLoginUrl = "http://localhost:4000/auth/google";
     const newWindow = window.open(googleLoginUrl, "", "width=500,height=600");
 
     if (newWindow) {
@@ -51,8 +50,7 @@ const SignUp = () => {
     e.preventDefault();
     let timer;
 
-    const githubLoginUrl =
-      process.env.REACT_APP_SERVER_BASE_URL + "/auth/github";
+    const githubLoginUrl = "http://localhost:4000/auth/github";
     const newWindow = window.open(githubLoginUrl, "", "width=500,height=600");
 
     if (newWindow) {

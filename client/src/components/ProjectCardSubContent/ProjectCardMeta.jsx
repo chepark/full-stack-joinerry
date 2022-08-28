@@ -29,6 +29,7 @@ const ProjectCardMeta = ({ project, likeButtonClicked }) => {
 
   return (
     <div className="card__meta">
+      {/* <p className="createdBy">created by</p> */}
       <div className="creator">
         <div className="creator-img">
           <img src={profileImageSrc} alt="profile" />

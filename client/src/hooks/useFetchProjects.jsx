@@ -22,6 +22,7 @@ const useFetchProjects = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [hasMore, setHasMore] = useState(false);
+  const [rendered, setRendered] = useState(false);
 
   useEffect(() => {
     setLoading(true);

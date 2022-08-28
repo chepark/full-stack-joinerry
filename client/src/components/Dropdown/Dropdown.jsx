@@ -13,7 +13,9 @@ const Dropdown = ({ logout }) => {
           navigate("/dashboard/posts", { replace: true });
         }}
       >
+        {/* <Link className="dropdown-menu" to="/dashboard/posts"> */}
         Dashboard
+        {/* </Link> */}
       </div>
       <div className="dropdown-menu" onClick={logout}>
         Log Out

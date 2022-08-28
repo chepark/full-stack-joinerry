@@ -3,6 +3,8 @@ import useWindowSize from "../../hooks/useWindowSize";
 import { Link } from "react-router-dom";
 
 const Banner = () => {
+  const [windowHeight, windowWidth] = useWindowSize();
+
   return (
     <div className="container" data-section="banner">
       <div className="content-wrapper" data-section="banner">
@@ -17,6 +19,9 @@ const Banner = () => {
             Learn More
           </Link>
         </div>
+        {/* <div className="banner-imageContent">
+          <img src={bannerImage} alt="banner" />
+        </div> */}
       </div>
     </div>
   );

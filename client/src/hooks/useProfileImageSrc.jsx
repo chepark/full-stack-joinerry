@@ -11,8 +11,7 @@ const useProfileImageSrc = (profileImageId = "") => {
       return setProfileImageSrc(profileImageId);
 
     return setProfileImageSrc(
-      process.env.REACT_APP_SERVER_BASE_URL +
-        "/api/users/current_user/profileImage/" +
+      "http://localhost:4000/api/users/current_user/profileImage/" +
         profileImageId
     );
   }, [profileImageId]);
