@@ -114,7 +114,11 @@ const ProjectDetail = () => {
                   setOpenShare(false);
                 }}
               >
-                <SocialShareModal shareUrl={shareUrl} />
+                <SocialShareModal
+                  shareUrl={shareUrl}
+                  title={project.title}
+                  summary={project.content.slice(0, 50)}
+                />
               </ModalLayout>
             ) : null}
             <div
