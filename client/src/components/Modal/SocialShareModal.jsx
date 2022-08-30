@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
@@ -11,8 +10,7 @@ export const SocialShareModal = ({ shareUrl, title, summary }) => {
   const POPUP_SIZE = "width=500,height=600";
 
   const shareOnFacebook = () => {
-    const { pathname } = useLocation();
-    const sendUrl = process.env.REACT_REACT_APP_SERVER_BASE_URL + pathname;
+    const sendUrl = process.env.REACT_REACT_APP_SERVER_BASE_URL + shareUrl;
 
     window.open(
       "http://www.facebook.com/sharer/sharer.php?u=" + sendUrl,
@@ -48,7 +46,7 @@ export const SocialShareModal = ({ shareUrl, title, summary }) => {
   };
 
   const copyLink = () => {
-    navigator.clipboard.writeText(shareUrl);
+    navigator.clipboard.writeText(sendUrl);
     setCopied(true);
   };
 
