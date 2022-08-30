@@ -74,9 +74,9 @@ const AccountSetting = () => {
     return formData;
   };
 
-  // const onError = (data) => {
-  //   console.log("error", data);
-  // };
+  const onError = (data) => {
+    console.log("error", data);
+  };
 
   useEffect(() => {
     setProfileImageUrl(profileImageSrc);

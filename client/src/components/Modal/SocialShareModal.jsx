@@ -8,10 +8,9 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 export const SocialShareModal = ({ shareUrl, title, summary }) => {
   const [copied, setCopied] = useState(false);
   const POPUP_SIZE = "width=500,height=600";
+  const sendUrl = process.env.REACT_REACT_APP_SERVER_BASE_URL + shareUrl;
 
   const shareOnFacebook = () => {
-    const sendUrl = process.env.REACT_REACT_APP_SERVER_BASE_URL + shareUrl;
-
     window.open(
       "http://www.facebook.com/sharer/sharer.php?u=" + sendUrl,
       "",

@@ -86,9 +86,9 @@ const ProjectEditor = () => {
       });
   };
 
-  // const onError = (data) => {
-  //   console.log("error", data);
-  // };
+  const onError = (data) => {
+    console.log("error", data);
+  };
 
   const handleCancel = () => {
     navigate("/dashboard/posts", { replace: true });
