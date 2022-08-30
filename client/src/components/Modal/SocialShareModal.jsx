@@ -8,7 +8,7 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 export const SocialShareModal = ({ shareUrl, title, summary }) => {
   const [copied, setCopied] = useState(false);
   const POPUP_SIZE = "width=500,height=600";
-  const sendUrl = process.env.REACT_REACT_APP_SERVER_BASE_URL + shareUrl;
+  const sendUrl = "https://joinerry.herokuapp.com" + shareUrl;
 
   const shareOnFacebook = () => {
     window.open(
@@ -19,7 +19,6 @@ export const SocialShareModal = ({ shareUrl, title, summary }) => {
   };
 
   const shareOnLinkedIn = () => {
-    var sendUrl = "devpad.tistory.com/";
     window.open(
       `http://www.linkedin.com/shareArticle?mini=true&url=${sendUrl}&title="hello"&summary="test"&source=` +
         sendUrl,
@@ -29,8 +28,8 @@ export const SocialShareModal = ({ shareUrl, title, summary }) => {
   };
 
   const shareOnTwitter = () => {
-    var sendText = "개발새발"; // 전달할 텍스트
-    var sendUrl = "devpad.tistory.com/"; // 전달할 URL
+    const sendText = "Joinerry-Easiest way to find group projects.";
+
     window.open(
       "https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl,
       "",
@@ -39,7 +38,6 @@ export const SocialShareModal = ({ shareUrl, title, summary }) => {
   };
 
   const shareWithEmail = () => {
-    var sendUrl = "devpad.tistory.com/";
     const title = "testing title";
     window.open(`mailto:?subject=${title}&body=${sendUrl}`, "", POPUP_SIZE);
   };
