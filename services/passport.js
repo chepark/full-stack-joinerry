@@ -28,7 +28,7 @@ const googleStrategy = () => {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "https://joinerry-test.herokuapp.com/auth/google/callback",
+        callbackURL: "https://joinerry.herokuapp.com/auth/google/callback",
       },
       async (accessToken, refreshToken, profile, done) => {
         // check if the user exists.
