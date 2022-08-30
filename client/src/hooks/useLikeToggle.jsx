@@ -36,7 +36,7 @@ const useLikeToggle = (projectId) => {
     }
 
     const response = await fetch(
-      "http://localhost:4000/api/users/" + user._id,
+      process.env.REACT_APP_SERVER_BASE_URL + "/api/users/" + user._id,
       {
         method: "PATCH",
         body: JSON.stringify({ likes: likesArray }),
