@@ -20,7 +20,7 @@ export const SocialShareModal = ({ shareUrl, title, summary }) => {
 
   const shareOnLinkedIn = () => {
     window.open(
-      `http://www.linkedin.com/shareArticle?mini=true&url=${sendUrl}&title="hello"&summary="test"&source=` +
+      `http://www.linkedin.com/shareArticle?mini=true&url=${sendUrl}&title=${title}&summary=${summary}&source=` +
         sendUrl,
       "",
       POPUP_SIZE
@@ -38,7 +38,7 @@ export const SocialShareModal = ({ shareUrl, title, summary }) => {
   };
 
   const shareWithEmail = () => {
-    const title = "testing title";
+    const title = title;
     window.open(`mailto:?subject=${title}&body=${sendUrl}`, "", POPUP_SIZE);
   };
 
@@ -87,7 +87,12 @@ export const SocialShareModal = ({ shareUrl, title, summary }) => {
         </div>
       </div>
       <div className="share-link">
-        <input className="link-inputBox" type="text" value={sendUrl} disabled />
+        <input
+          className="link-inputBox"
+          type="text"
+          value={"https://joinerry.herokuapp.com" + shareUrl}
+          disabled
+        />
         <ContentCopyIcon
           sx={{
             position: "absolute",
