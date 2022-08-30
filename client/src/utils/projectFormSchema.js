@@ -2,6 +2,7 @@ import * as yup from "yup";
 
 import categoriesJson from "../data/categories.json";
 import rolesJson from "../data/roles.json";
+// import tagsJson from "../../data/techstacks.json";
 
 const categoryOptions = categoriesJson.categories;
 const roleOptions = rolesJson.roles;

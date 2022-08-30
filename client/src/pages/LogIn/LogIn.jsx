@@ -67,7 +67,7 @@ const LogIn = () => {
         if (newWindow.closed) {
           fetchUser();
           if (timer) clearInterval(timer);
-
+          // console.log("from", from);
           navigate("/", { replace: true });
         }
       }, 500);

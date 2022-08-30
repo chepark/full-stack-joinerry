@@ -1,5 +1,3 @@
-// const SERVICE_BASE_URL = "http://localhost:4000";
-
 export const logOut = async () => {
   const response = await fetch(
     process.env.REACT_APP_SERVER_BASE_URL + "/auth/logout"
