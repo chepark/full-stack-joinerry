@@ -1,4 +1,1 @@
-/* Temporary Solution for Quill Bug */
-.quill > .ql-toolbar:first-child {
-  display: none !important;
-}
+

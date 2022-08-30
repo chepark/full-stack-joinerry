@@ -4,7 +4,7 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
-export const ProfileModal = ({ creator }) => {
+export const ProfileModal = ({ creator, onClose }) => {
   const renderSocial = (social) => {
     switch (social) {
       case "linkedin":
@@ -66,7 +66,9 @@ export const ProfileModal = ({ creator }) => {
       </div>
       <div className="creator-bio">{creator?.bio ? creator?.bio : null}</div>
       <div>
-        <button className="modal-btn creator-done">DONE</button>
+        <button className="modal-btn creator-done" onClick={onClose}>
+          DONE
+        </button>
       </div>
     </div>
   );

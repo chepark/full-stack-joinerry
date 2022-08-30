@@ -90,7 +90,12 @@ const ProjectDetail = () => {
                   setOpenProfile(false);
                 }}
               >
-                <ProfileModal creator={project.creator} />
+                <ProfileModal
+                  creator={project.creator}
+                  onClose={() => {
+                    setOpenProfile(false);
+                  }}
+                />
               </ModalLayout>
             )}
           </div>
