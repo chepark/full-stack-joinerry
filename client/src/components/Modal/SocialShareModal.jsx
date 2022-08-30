@@ -87,12 +87,7 @@ export const SocialShareModal = ({ shareUrl, title, summary }) => {
         </div>
       </div>
       <div className="share-link">
-        <input
-          className="link-inputBox"
-          type="text"
-          value={shareUrl}
-          disabled
-        />
+        <input className="link-inputBox" type="text" value={sendUrl} disabled />
         <ContentCopyIcon
           sx={{
             position: "absolute",
