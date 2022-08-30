@@ -27,7 +27,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const port = process.env.PORT || 4000;
 
-app.use(cors({ origin: "http://localhost:3000", credentials: true })); // Resolve No-Access-Control-Allow origin issue.
+app.use(
+  cors({ origin: "https://joinerry-test.herokuapp.com", credentials: true })
+); // Resolve No-Access-Control-Allow origin issue.
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
