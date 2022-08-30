@@ -74,9 +74,9 @@ const AccountSetting = () => {
     return formData;
   };
 
-  const onError = (data) => {
-    console.log("error", data);
-  };
+  // const onError = (data) => {
+  //   console.log("error", data);
+  // };
 
   useEffect(() => {
     setProfileImageUrl(profileImageSrc);
@@ -90,8 +90,6 @@ const AccountSetting = () => {
       linkedin: user?.social?.linkedin ? user?.social?.linkedin : "",
     });
   }, [user]);
-
-  console.log(watch());
 
   return (
     <div className="account-form-wrapper">

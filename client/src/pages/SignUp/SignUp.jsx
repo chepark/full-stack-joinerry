@@ -22,9 +22,8 @@ const SignUp = () => {
 
       const json = await response.json();
       dispatch({ type: GET_USER, payload: json });
-      console.log(json);
     } catch (error) {
-      console.log("Errors in fetchUser: ", error);
+      // console.log("Errors in fetchUser: ", error);
     }
   };
 

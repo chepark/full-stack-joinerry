@@ -17,7 +17,7 @@ const useLikeToggle = (projectId) => {
 
   const likeOrUnlike = async () => {
     if (Object.keys(user).length === 0) {
-      console.log("Login first to like the project");
+      // console.log("Login first to like the project");
       return;
     }
 

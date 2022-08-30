@@ -23,9 +23,10 @@ const ProjectCardButtons = ({ project, setPosts }) => {
   };
 
   const handleDeleteConfirm = async () => {
-    console.log("delete confirm");
     const response = await fetch(
-      "http://localhost:4000/api/users/current_user/posts/" + project._id,
+      process.env.REACT_APP_SERVER_BASE_URL +
+        "/api/users/current_user/posts/" +
+        project._id,
       {
         method: "DELETE",
         credentials: "include",

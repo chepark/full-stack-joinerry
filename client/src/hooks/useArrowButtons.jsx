@@ -5,7 +5,6 @@ const useArrowButtons = () => {
   const location = useLocation();
 
   const handleBackButtonClick = () => {
-    console.log("click");
     navigate(-1);
   };
 

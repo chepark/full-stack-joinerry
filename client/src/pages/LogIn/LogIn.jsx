@@ -28,7 +28,6 @@ const LogIn = () => {
       const json = await response.json();
       dispatch({ type: GET_USER, payload: json });
       navigate(from, { replace: true });
-      console.log(json);
     } catch (error) {
       console.log("Errors in fetchUser: ", error);
     }
@@ -47,7 +46,7 @@ const LogIn = () => {
         if (newWindow.closed) {
           fetchUser();
           if (timer) clearInterval(timer);
-          // console.log("from", from);
+
           navigate("/", { replace: true });
         }
       }, 500);
@@ -67,7 +66,7 @@ const LogIn = () => {
         if (newWindow.closed) {
           fetchUser();
           if (timer) clearInterval(timer);
-          // console.log("from", from);
+
           navigate("/", { replace: true });
         }
       }, 500);

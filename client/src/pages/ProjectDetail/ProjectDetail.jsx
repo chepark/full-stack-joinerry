@@ -56,7 +56,6 @@ const ProjectDetail = () => {
   };
 
   // console.log("loc", location);
-  console.log(project);
 
   return (
     <div

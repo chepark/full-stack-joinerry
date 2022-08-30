@@ -17,7 +17,7 @@ const ProjectCards = ({ projects, lastProjectCardRef, children }) => {
                     lastProjectCardRef
                       ? (node) => lastProjectCardRef(node, observer)
                       : () => {
-                          console.log("ref");
+                          // console.log("ref");
                         }
                   }
                   key={project._id}

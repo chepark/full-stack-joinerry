@@ -46,8 +46,6 @@ const TextEditor = () => {
     },
   ];
 
-  console.log("content", getValues("content"));
-
   return (
     <div className="textEditor-wrapper" key={getValues("_id") || 0}>
       <Controller

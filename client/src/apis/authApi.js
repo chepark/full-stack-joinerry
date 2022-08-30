@@ -9,7 +9,6 @@ export const logOut = async () => {
 
 export const fetchUser = async () => {
   try {
-    console.log("fetch user");
     const response = await fetch(
       process.env.REACT_APP_SERVER_BASE_URL + "/api/users/current_user",
       {
@@ -21,9 +20,7 @@ export const fetchUser = async () => {
     const json = await response.json();
 
     return json;
-  } catch (error) {
-    console.log("Errors in fetchUser: ", error);
-  }
+  } catch (error) {}
 };
 
 export const updateUser = async (newValue, cb) => {
