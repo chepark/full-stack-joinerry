@@ -4,7 +4,7 @@ Joinerry is an online community where future developers can find group projects.
 Users can create projects they want to build with others or find and join into existing projects.
 
 <p align="center">
-  <img width="460" height="auto" src="./client/assets/demo.gif">
+  <img width="460" height="auto" src="./client/src/assets/demo.gif">
 </p>
 
 ## 🎥 [Demo Video](https://youtu.be/ra7B2-lIfO4)
