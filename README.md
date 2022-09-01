@@ -7,6 +7,8 @@ Users can create projects they want to build with others or find and join into e
   <img width="460" height="auto" src="./assets/demo.gif">
 </p>
 
+## 🎥 [Demo Video](https://youtu.be/ra7B2-lIfO4)
+
 ## ⚙️ Features
 
 - Login with Google OAuth and Github OAuth.
