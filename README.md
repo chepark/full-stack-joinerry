@@ -32,6 +32,7 @@ Users can create projects they want to build with others or find and join into e
 - Add comments on the ProjectDetail page.
 - Add a notification function for a user's account.
 - Add login with email and password using JWT.
+- Improve the TextEditor(ReactQuill) to handle images and links.
 
 ## 💻 Technologies
 
