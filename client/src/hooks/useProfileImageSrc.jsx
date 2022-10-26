@@ -11,7 +11,7 @@ const useProfileImageSrc = (profileImageId = "") => {
       return setProfileImageSrc(profileImageId);
 
     return setProfileImageSrc(
-      "http://localhost:4000/api/users/current_user/profileImage/" +
+      "https://joinerry.herokuapp.com/api/users/current_user/profileImage/" +
         profileImageId
     );
   }, [profileImageId]);
